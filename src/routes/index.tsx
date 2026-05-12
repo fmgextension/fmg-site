@@ -538,7 +538,7 @@ function RevenueConstellationLayout() {
       {/* Mobile sticky wrapper: simple top-down block stack, fixed gaps.
           top offset = navbar height so diagram isn't clipped behind fixed nav. */}
       <div
-        className="sticky lg:hidden block w-full overflow-hidden"
+        className="sticky lg:hidden flex flex-col justify-center w-full overflow-hidden"
         style={{ top: 64, height: "calc(100vh - 64px)", paddingTop: 16, paddingBottom: 16 }}
       >
         <div className="mx-auto" style={{ maxWidth: 280 }}>
