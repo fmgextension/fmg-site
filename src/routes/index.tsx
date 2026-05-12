@@ -54,7 +54,7 @@ function Index() {
           <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="btn-primary hidden md:inline-flex px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium">
             Book a Demo
           </a>
-          <MobileMenu items={navItems} ctaHref="https://bit.ly/bookingfmg" ctaLabel="Book a Demo" />
+          <MobileMenu items={navItems} ctaHref="tel:+17866347595" ctaLabel="Call Our AI Now" />
         </div>
       </Reveal>
 
