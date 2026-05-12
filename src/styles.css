@@ -237,11 +237,9 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    scroll-padding-left: 24px;
-    padding: 8px 24px;
+    scroll-padding-inline: 0;
+    padding: 8px calc((100vw - (100vw - 96px)) / 2);
     -webkit-overflow-scrolling: touch;
-    padding-left: max(24px, env(safe-area-inset-left));
-    padding-right: max(24px, env(safe-area-inset-right));
   }
   @media (min-width: 1024px) {
     .services-carousel-track {
@@ -252,14 +250,14 @@
   }
   .services-carousel-card {
     flex: 0 0 auto;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
     scroll-snap-stop: always;
     width: calc(100vw - 96px);
-    min-height: 480px;
+    min-height: 400px;
     background-color: hsl(var(--card));
     border: 1px solid hsl(var(--border));
     border-radius: 20px;
-    padding: 32px;
+    padding: 28px 32px;
     overflow: hidden;
     opacity: 0.6;
     transform: scale(0.98);
