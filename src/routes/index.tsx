@@ -112,8 +112,7 @@ function Index() {
             <Reveal variant="scaleIn" delay={0.3} className="relative">
               <div className="absolute -inset-4 rounded-3xl blur-3xl opacity-30 bg-primary" />
               <motion.div
-                className="relative"
-                style={{ ["--phone-max" as never]: "320px" }}
+                className="relative [--phone-max:240px] lg:[--phone-max:320px]"
                 animate={heroFloat}
                 transition={{ duration: 6, ease: EASE_IN_OUT, repeat: Infinity, repeatType: "loop", delay: 1.5 }}
               >
