@@ -285,30 +285,27 @@ export function RevenueConstellation({ activeKey = "ai" }: ConstellationProps) {
         const isActive = n.key === activeKey;
         const Icon = n.icon;
         return (
-          <div key={n.key}>
+          <div
+            key={n.key}
+            className={`rc-node${isActive ? " is-active" : ""}`}
+            style={{
+              position: "absolute",
+              left: `${(x / VIEW) * 100}%`,
+              top: `${(y / VIEW) * 100}%`,
+              width: `${(NODE_SIZE / VIEW) * 100}%`,
+              height: `${(NODE_SIZE / VIEW) * 100}%`,
+              transform: "translate(-50%, -50%)",
+              backgroundColor: "hsl(var(--card))",
+              borderRadius: 16,
+              borderWidth: 1,
+              borderStyle: "solid",
+              overflow: "visible",
+            }}
+          >
+            <Icon size={24} style={{ color: "hsl(var(--primary))" }} />
             <div
-              className={`rc-node${isActive ? " is-active" : ""}`}
               style={{
-                position: "absolute",
-                left: `${(x / VIEW) * 100}%`,
-                top: `${(y / VIEW) * 100}%`,
-                width: `${(NODE_SIZE / VIEW) * 100}%`,
-                height: `${(NODE_SIZE / VIEW) * 100}%`,
-                transform: "translate(-50%, -50%)",
-                backgroundColor: "hsl(var(--card))",
-                borderRadius: 16,
-                borderWidth: 1,
-                borderStyle: "solid",
-              }}
-            >
-              <Icon size={24} style={{ color: "hsl(var(--primary))" }} />
-            </div>
-            <div
-              style={{
-                position: "absolute",
-                left: `${(x / VIEW) * 100}%`,
-                top: `calc(${(y / VIEW) * 100}% + ${(NODE_SIZE / 2 / VIEW) * 100}% - 18px)`,
-                transform: "translate(-50%, 0)",
+                marginTop: 6,
                 fontSize: "clamp(9px, 1.8vw, 11px)",
                 fontWeight: 600,
                 color: "hsl(var(--foreground))",
@@ -317,7 +314,6 @@ export function RevenueConstellation({ activeKey = "ai" }: ConstellationProps) {
                 textAlign: "center",
                 lineHeight: 1,
                 whiteSpace: "nowrap",
-                pointerEvents: "none",
               }}
             >
               {n.label}
