@@ -442,10 +442,7 @@ function RevenueConstellationLayout() {
             Desktop: single grid row fills remaining space. */}
         <div className="flex flex-col lg:flex-row lg:flex-1 lg:min-h-0 lg:py-10 lg:gap-12 lg:items-center w-full">
           {/* Diagram region */}
-          <div
-            className="flex items-center justify-center w-full lg:flex-[3] lg:h-full lg:min-h-0"
-            style={{ height: "50vh" }}
-          >
+          <div className="flex items-center justify-center w-full h-[50vh] lg:h-full lg:flex-[3] lg:min-h-0">
             <div className="w-full lg:hidden mx-auto px-4" style={{ maxWidth: 320 }}>
               <RevenueConstellation activeKey={activeKey} />
             </div>
@@ -455,10 +452,7 @@ function RevenueConstellationLayout() {
           </div>
 
           {/* Feature display region — single visible feature, cross-fade */}
-          <div
-            className="relative w-full flex items-center justify-center lg:flex-[2] lg:h-full"
-            style={{ height: "38vh", paddingLeft: 24, paddingRight: 24 }}
-          >
+          <div className="relative w-full flex items-center justify-center h-[38vh] px-6 lg:h-full lg:flex-[2] lg:px-0">
             {FEATURE_BLOCKS.map((f, i) => {
               const isActive = i === activeIndex;
               return (
@@ -527,8 +521,8 @@ function RevenueConstellationLayout() {
 
         {/* Progress indicator */}
         <div
-          className="flex justify-center items-center w-full lg:pt-4 lg:h-auto"
-          style={{ gap: 6, height: "12vh" }}
+          className="flex justify-center items-center w-full h-[12vh] lg:h-auto lg:pt-4"
+          style={{ gap: 6 }}
           aria-hidden="true"
         >
           {FEATURE_BLOCKS.map((_, i) => {
