@@ -242,9 +242,9 @@ export function HeroPhoneMockup() {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: isAI ? "flex-start" : "flex-end",
+                    alignItems: isAI ? "flex-end" : "flex-start",
                     maxWidth: "85%",
-                    alignSelf: isAI ? "flex-start" : "flex-end",
+                    alignSelf: isAI ? "flex-end" : "flex-start",
                   }}
                 >
                   <div
@@ -268,8 +268,8 @@ export function HeroPhoneMockup() {
                       fontWeight: 500,
                       lineHeight: 1.3,
                       borderRadius: isAI
-                        ? "14px 14px 14px 4px"
-                        : "14px 14px 4px 14px",
+                        ? "14px 14px 4px 14px"
+                        : "14px 14px 14px 4px",
                       background: isAI
                         ? "hsl(var(--primary) / 0.15)"
                         : "hsl(var(--muted))",
