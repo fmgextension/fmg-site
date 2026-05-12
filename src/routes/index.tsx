@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import heroImage from "@/assets/hero-abstract.jpg";
 import {
   ArrowRight,
@@ -13,6 +14,7 @@ import {
   Clock,
   Users,
   BarChart3,
+  X,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const [videoOpen, setVideoOpen] = useState(false);
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* Nav */}
@@ -59,9 +62,9 @@ function Index() {
               <a href="#contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition">
                 Test Drive Our AI <ArrowRight className="w-4 h-4" />
               </a>
-              <a href="#" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 font-medium hover:bg-card/60 transition">
+              <button onClick={() => setVideoOpen(true)} className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 font-medium hover:bg-card/60 transition">
                 <Play className="w-4 h-4" /> Watch Demo
-              </a>
+              </button>
             </div>
             <div className="grid grid-cols-3 gap-6 max-w-md">
               {[
@@ -240,6 +243,34 @@ function Index() {
       <footer className="py-8 px-6 border-t border-border text-center text-sm text-muted-foreground">
         © {new Date().getFullYear()} FMG. All rights reserved.
       </footer>
+
+      {videoOpen && (
+        <div
+          onClick={() => setVideoOpen(false)}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md p-4 animate-in fade-in"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-4xl aspect-video rounded-2xl overflow-hidden border border-border"
+            style={{ boxShadow: "var(--shadow-glow)" }}
+          >
+            <button
+              onClick={() => setVideoOpen(false)}
+              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center bg-background/80 hover:bg-background border border-border"
+              aria-label="Close"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <iframe
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+              title="FMG Demo"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
