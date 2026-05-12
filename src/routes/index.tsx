@@ -62,7 +62,7 @@ function Index() {
               <a href="tel:+17866347595" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition">
                 Test Drive Our AI <ArrowRight className="w-4 h-4" />
               </a>
-              <button onClick={() => setVideoOpen(true)} className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 font-medium hover:bg-card/60 transition">
+              <button type="button" onClick={() => setVideoOpen(true)} className="relative z-10 inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 font-medium hover:bg-card/60 transition cursor-pointer touch-manipulation">
                 <Play className="w-4 h-4" /> Watch Demo
               </button>
             </div>
@@ -266,9 +266,9 @@ function Index() {
               <X className="w-4 h-4" />
             </button>
             <iframe
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+              src="https://www.loom.com/embed/59b4eb299cfa4d43bc619ce332cc3f4a?autoplay=1"
               title="FMG Demo"
-              allow="autoplay; encrypted-media; picture-in-picture"
+              allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
               className="w-full h-full"
             />
