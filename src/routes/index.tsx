@@ -218,7 +218,7 @@ function Index() {
               </div>
             </Reveal>
 
-            <div className="flex flex-col" style={{ gap: "var(--feature-gap, 64px)" }}>
+            <div className="flex flex-col gap-8 lg:gap-16">
               {[
                 { n: "01", title: "Lightning Fast Setup", desc: "Get up and running in minutes, not weeks. Our AI learns your business instantly.", mapped: "WEBSITE" },
                 { n: "02", title: "Enterprise Security", desc: "Bank-level encryption and compliance. Your data is always safe with us.", mapped: "EMAIL" },
