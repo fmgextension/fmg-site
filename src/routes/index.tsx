@@ -276,7 +276,7 @@ function Index() {
           <Reveal delay={0.2}>
             <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4">
               <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium w-full sm:w-auto">
-                Book a Free Demo <ArrowRight className="w-4 h-4 btn-arrow" />
+                Book a Free Demo <PArrowRight className="btn-arrow" size={16} weight="bold" />
               </a>
               <a href="tel:+17866347595" className="btn-secondary inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium w-full sm:w-auto">
                 Schedule a Call
@@ -309,7 +309,7 @@ function Index() {
               className="icon-btn absolute top-3 right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center bg-background/80 border border-border"
               aria-label="Close"
             >
-              <X className="w-4 h-4" />
+              <PX size={16} weight="bold" />
             </button>
             <iframe
               src="https://www.loom.com/embed/59b4eb299cfa4d43bc619ce332cc3f4a?autoplay=1"
