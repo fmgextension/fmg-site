@@ -435,129 +435,145 @@ function RevenueConstellationLayout() {
   const activeKey: NodeKey = FEATURE_BLOCKS[activeIndex].key;
   const fadeDur = reduced ? 0 : 0.2;
 
+  const featureBlocks = (
+    <>
+      {FEATURE_BLOCKS.map((f, i) => {
+        const isActive = i === activeIndex;
+        return (
+          <motion.div
+            key={f.n}
+            initial={false}
+            animate={{ opacity: isActive ? 1 : 0 }}
+            transition={{ duration: fadeDur, ease: "easeOut" }}
+            className="flex flex-col mx-auto w-full"
+            style={{
+              gridColumn: 1,
+              gridRow: 1,
+              maxWidth: 480,
+              pointerEvents: isActive ? "auto" : "none",
+            }}
+          >
+            <div
+              style={{
+                fontSize: 14,
+                fontWeight: 700,
+                color: "hsl(var(--primary))",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+              }}
+            >
+              {f.n}
+            </div>
+            <h3
+              style={{
+                marginTop: 16,
+                fontSize: "clamp(22px, 4vw, 32px)",
+                fontWeight: 600,
+                color: "hsl(var(--foreground))",
+                lineHeight: 1.15,
+                letterSpacing: "-0.01em",
+              }}
+            >
+              {f.title}
+            </h3>
+            <p
+              style={{
+                marginTop: 16,
+                fontSize: "clamp(15px, 2.4vw, 16px)",
+                fontWeight: 400,
+                color: "hsl(var(--muted-foreground))",
+                lineHeight: 1.6,
+              }}
+            >
+              {f.desc}
+            </p>
+            <div
+              style={{
+                marginTop: 24,
+                fontSize: 11,
+                fontWeight: 600,
+                color: "hsl(var(--muted-foreground))",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+              }}
+            >
+              Mapped to — {f.mapped}
+            </div>
+          </motion.div>
+        );
+      })}
+    </>
+  );
+
+  const dots = (
+    <>
+      {FEATURE_BLOCKS.map((_, i) => {
+        const isActive = i === activeIndex;
+        const isPast = i < activeIndex;
+        return (
+          <span
+            key={i}
+            style={{
+              display: "block",
+              width: isActive ? 36 : 24,
+              height: 2,
+              borderRadius: 1,
+              backgroundColor:
+                isActive || isPast
+                  ? "hsl(var(--primary))"
+                  : "hsl(var(--muted-foreground))",
+              opacity: isActive ? 1 : isPast ? 0.6 : 0.3,
+              transition: reduced
+                ? "none"
+                : "width 300ms ease-out, opacity 300ms ease-out, background-color 300ms ease-out",
+            }}
+          />
+        );
+      })}
+    </>
+  );
+
   return (
     <div ref={outerRef} className="rc-outer relative">
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-start py-4 lg:py-0">
-        {/* Mobile: top-down stack (diagram auto, 32px gap, feature auto, flex-1 spacer, dots auto).
-            Desktop: row, diagram + feature centered, dots below. */}
-        <div className="flex flex-col w-full lg:flex-1 lg:min-h-0 lg:flex-row lg:py-10 lg:gap-12 lg:items-center">
-          {/* Diagram region */}
-          <div className="flex items-center justify-center w-full h-auto shrink-0 pt-2 lg:pt-0 lg:h-full lg:flex-[3] lg:min-h-0 lg:shrink">
-            <div className="w-full lg:hidden mx-auto px-4" style={{ maxWidth: 320 }}>
-              <RevenueConstellation activeKey={activeKey} compact />
-            </div>
-            <div className="hidden lg:block w-full mx-auto" style={{ maxWidth: 600 }}>
+      {/* Mobile sticky wrapper: simple top-down block stack, fixed gaps */}
+      <div
+        className="sticky top-0 lg:hidden block w-full overflow-hidden"
+        style={{ height: "100vh", paddingTop: 16, paddingBottom: 16 }}
+      >
+        <div className="mx-auto" style={{ maxWidth: 280 }}>
+          <RevenueConstellation activeKey={activeKey} compact />
+        </div>
+        <div className="grid w-full" style={{ marginTop: 24, paddingLeft: 24, paddingRight: 24 }}>
+          {featureBlocks}
+        </div>
+        <div
+          className="flex justify-center items-center w-full"
+          style={{ marginTop: 32, gap: 6 }}
+          aria-hidden="true"
+        >
+          {dots}
+        </div>
+      </div>
+
+      {/* Desktop sticky wrapper: original two-column layout */}
+      <div className="sticky top-0 h-screen w-full hidden lg:flex lg:flex-col lg:justify-start">
+        <div className="flex flex-1 min-h-0 flex-row py-10 gap-12 items-center w-full">
+          <div className="flex items-center justify-center w-full h-full flex-[3] min-h-0 shrink">
+            <div className="block w-full mx-auto" style={{ maxWidth: 600 }}>
               <RevenueConstellation activeKey={activeKey} />
             </div>
           </div>
-
-          {/* Mobile-only fixed gap between diagram and feature */}
-          <div className="h-8 shrink-0 lg:hidden" aria-hidden="true" />
-
-          {/* Feature display region — single visible feature, cross-fade */}
-          <div className="grid w-full shrink-0 px-6 lg:flex-[2] lg:h-full lg:px-0 lg:items-center lg:justify-items-center lg:shrink">
-            {FEATURE_BLOCKS.map((f, i) => {
-              const isActive = i === activeIndex;
-              return (
-                <motion.div
-                  key={f.n}
-                  initial={false}
-                  animate={{ opacity: isActive ? 1 : 0 }}
-                  transition={{ duration: fadeDur, ease: "easeOut" }}
-                  className="flex flex-col mx-auto w-full"
-                  style={{
-                    gridColumn: 1,
-                    gridRow: 1,
-                    maxWidth: 480,
-                    pointerEvents: isActive ? "auto" : "none",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 700,
-                      color: "hsl(var(--primary))",
-                      letterSpacing: "0.15em",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {f.n}
-                  </div>
-                  <h3
-                    style={{
-                      marginTop: 16,
-                      fontSize: "clamp(22px, 4vw, 32px)",
-                      fontWeight: 600,
-                      color: "hsl(var(--foreground))",
-                      lineHeight: 1.15,
-                      letterSpacing: "-0.01em",
-                    }}
-                  >
-                    {f.title}
-                  </h3>
-                  <p
-                    style={{
-                      marginTop: 16,
-                      fontSize: "clamp(15px, 2.4vw, 16px)",
-                      fontWeight: 400,
-                      color: "hsl(var(--muted-foreground))",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    {f.desc}
-                  </p>
-                  <div
-                    style={{
-                      marginTop: 24,
-                      fontSize: 11,
-                      fontWeight: 600,
-                      color: "hsl(var(--muted-foreground))",
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    Mapped to — {f.mapped}
-                  </div>
-                </motion.div>
-              );
-            })}
+          <div className="grid w-full shrink-0 flex-[2] h-full items-center justify-items-center shrink">
+            {featureBlocks}
           </div>
-
         </div>
-
-        {/* Progress indicator */}
         <div
-          className="flex justify-center items-center w-full shrink-0 mt-6 lg:mt-0 lg:h-auto lg:pt-4"
+          className="flex justify-center items-center w-full shrink-0 h-auto pt-4"
           style={{ gap: 6 }}
           aria-hidden="true"
         >
-          {FEATURE_BLOCKS.map((_, i) => {
-            const isActive = i === activeIndex;
-            const isPast = i < activeIndex;
-            return (
-              <span
-                key={i}
-                style={{
-                  display: "block",
-                  width: isActive ? 36 : 24,
-                  height: 2,
-                  borderRadius: 1,
-                  backgroundColor:
-                    isActive || isPast
-                      ? "hsl(var(--primary))"
-                      : "hsl(var(--muted-foreground))",
-                  opacity: isActive ? 1 : isPast ? 0.6 : 0.3,
-                  transition: reduced
-                    ? "none"
-                    : "width 300ms ease-out, opacity 300ms ease-out, background-color 300ms ease-out",
-                }}
-              />
-            );
-          })}
+          {dots}
         </div>
-
-        {/* Mobile-only flex spacer absorbing leftover space below the dots */}
-        <div className="flex-1 lg:hidden" aria-hidden="true" />
       </div>
     </div>
   );
