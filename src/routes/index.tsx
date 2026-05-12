@@ -54,7 +54,7 @@ function Index() {
           <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="btn-primary hidden md:inline-flex px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium">
             Book a Demo
           </a>
-          <MobileMenu items={navItems} ctaHref="https://bit.ly/bookingfmg" ctaLabel="Book a Demo" />
+          <MobileMenu items={navItems} ctaHref="tel:+17866347595" ctaLabel="Call Our AI Now" />
         </div>
       </Reveal>
 
@@ -364,10 +364,10 @@ function TestimonialsCarousel() {
           <div
             key={t.name}
             data-tcard
-            className="snap-center shrink-0 w-[85%]"
+            className="snap-center shrink-0 w-[85%] rounded-2xl bg-card border border-border overflow-hidden"
           >
-            <InteractiveCard showArrow={false} className="rounded-2xl">
-              <div className="p-6 flex flex-col h-full bg-card">
+            <InteractiveCard showArrow={false} className="rounded-2xl bg-card">
+              <div className="p-6 flex flex-col h-full bg-card rounded-2xl">
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <PStar key={i} size={16} weight="fill" className="text-primary" />
