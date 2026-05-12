@@ -10,7 +10,7 @@ const variantMap: Record<string, Variants> = {
 
 type RevealProps = {
   children: React.ReactNode;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
   variant?: "fadeUp" | "fadeIn" | "scaleIn";
   delay?: number;
   className?: string;
