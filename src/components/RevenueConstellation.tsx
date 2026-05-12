@@ -76,9 +76,13 @@ function curvedPath(n: ConstellationNode, flip: boolean) {
 
 export type ConstellationProps = {
   activeKey?: NodeKey;
+  compact?: boolean;
 };
 
-export function RevenueConstellation({ activeKey = "ai" }: ConstellationProps) {
+const COMPACT_VIEWBOX_Y = 20;
+const COMPACT_VIEWBOX_HEIGHT = 564;
+
+export function RevenueConstellation({ activeKey = "ai", compact = false }: ConstellationProps) {
   const reduced = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -139,18 +143,21 @@ export function RevenueConstellation({ activeKey = "ai" }: ConstellationProps) {
 
   const pill = PILL_BY_KEY[activeKey];
   const transitionDur = reduced ? 0 : 0.4;
+  const viewBoxY = compact ? COMPACT_VIEWBOX_Y : 0;
+  const viewBoxHeight = compact ? COMPACT_VIEWBOX_HEIGHT : VIEW;
+  const yPct = (y: number) => ((y - viewBoxY) / viewBoxHeight) * 100;
 
   return (
     <div
       ref={containerRef}
-      className="w-full mx-auto flex flex-col items-center"
+      className="diagram-region w-full mx-auto flex flex-col items-center"
       style={{ maxWidth: 600 }}
       aria-hidden="true"
     >
-      <div className="relative w-full" style={{ aspectRatio: "1 / 1" }}>
+      <div className="relative w-full" style={{ aspectRatio: `${VIEW} / ${viewBoxHeight}` }}>
       <svg
         ref={svgRef}
-        viewBox={`0 0 ${VIEW} ${VIEW}`}
+        viewBox={`0 ${viewBoxY} ${VIEW} ${viewBoxHeight}`}
         className="absolute inset-0 w-full h-full"
         aria-hidden="true"
       >
@@ -219,9 +226,9 @@ export function RevenueConstellation({ activeKey = "ai" }: ConstellationProps) {
         className="absolute flex flex-col items-center justify-center"
         style={{
           left: `${(CENTER / VIEW) * 100}%`,
-          top: `${(CENTER / VIEW) * 100}%`,
+          top: `${yPct(CENTER)}%`,
           width: `${(CENTER_SIZE / VIEW) * 100}%`,
-          height: `${(CENTER_SIZE / VIEW) * 100}%`,
+          aspectRatio: "1 / 1",
           transform: "translate(-50%, -50%)",
           backgroundColor: "hsl(var(--card))",
           border: "1px solid hsl(var(--primary) / 0.4)",
@@ -290,9 +297,9 @@ export function RevenueConstellation({ activeKey = "ai" }: ConstellationProps) {
             style={{
               position: "absolute",
               left: `${(x / VIEW) * 100}%`,
-              top: `${(y / VIEW) * 100}%`,
+              top: `${yPct(y)}%`,
               width: `${(NODE_SIZE / VIEW) * 100}%`,
-              height: `${(NODE_SIZE / VIEW) * 100}%`,
+              aspectRatio: "1 / 1",
               transform: "translate(-50%, -50%)",
               backgroundColor: "hsl(var(--card))",
               borderRadius: 16,
@@ -324,8 +331,9 @@ export function RevenueConstellation({ activeKey = "ai" }: ConstellationProps) {
 
       {/* Info pill — fixed position below the diagram, content cross-fades */}
       <div
+        className="info-pill"
         style={{
-          marginTop: 16,
+          margin: "12px auto 0",
           backgroundColor: "hsl(var(--card))",
           border: "1px solid hsl(var(--border))",
           borderRadius: 12,
