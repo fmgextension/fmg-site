@@ -1,9 +1,8 @@
 import * as React from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { CaretLeft, CaretRight, type Icon as PhosphorIcon } from "@phosphor-icons/react";
 
 export type ServiceItem = {
-  icon: LucideIcon;
+  icon: PhosphorIcon;
   title: string;
   desc: string;
   items: string[];
@@ -82,7 +81,7 @@ export function ServicesCarousel({ items }: Props) {
                 {counter}
               </div>
               <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-primary/10 mb-6">
-                <Icon className="w-6 h-6 text-primary" />
+                <Icon size={24} weight="bold" className="text-primary" />
               </div>
               <h3
                 className="font-semibold text-foreground mb-4"
@@ -121,7 +120,7 @@ export function ServicesCarousel({ items }: Props) {
           disabled={atStart}
           onClick={() => scrollToIdx(active - 1)}
         >
-          <ChevronLeft className="w-5 h-5" />
+          <CaretLeft size={20} weight="bold" />
         </button>
         <div className="carousel-dots" role="tablist">
           {items.map((s, i) => (
@@ -144,7 +143,7 @@ export function ServicesCarousel({ items }: Props) {
           disabled={atEnd}
           onClick={() => scrollToIdx(active + 1)}
         >
-          <ChevronRight className="w-5 h-5" />
+          <CaretRight size={20} weight="bold" />
         </button>
       </div>
     </div>
