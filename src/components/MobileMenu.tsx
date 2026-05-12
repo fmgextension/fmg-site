@@ -1,4 +1,5 @@
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { List, X } from "@phosphor-icons/react";
 
@@ -7,6 +8,8 @@ type Item = { href: string; label: string };
 export function MobileMenu({ items, ctaHref, ctaLabel }: { items: Item[]; ctaHref: string; ctaLabel: string }) {
   const [open, setOpen] = React.useState(false);
   const reduced = useReducedMotion();
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
 
   React.useEffect(() => {
     if (open) document.body.classList.add("no-scroll");
@@ -26,7 +29,8 @@ export function MobileMenu({ items, ctaHref, ctaLabel }: { items: Item[]; ctaHre
         {open ? <X size={24} weight="bold" /> : <List size={24} weight="bold" />}
       </button>
 
-      <AnimatePresence>
+      {mounted && createPortal(
+        <AnimatePresence>
         {open && (
           <motion.div
             key="overlay"
@@ -70,7 +74,9 @@ export function MobileMenu({ items, ctaHref, ctaLabel }: { items: Item[]; ctaHre
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+        </AnimatePresence>,
+        document.body
+      )}
     </>
   );
 }
