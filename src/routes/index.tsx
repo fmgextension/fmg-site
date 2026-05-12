@@ -12,7 +12,6 @@ import { HeroPhoneMockup } from "@/components/HeroPhoneMockup";
 import {
   ArrowRight,
   Play,
-  Star,
 } from "lucide-react";
 import {
   ArrowRight as PArrowRight,
