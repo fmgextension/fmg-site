@@ -128,7 +128,41 @@
   body.no-scroll { overflow: hidden; }
 }
 
+@keyframes wave-drift-slow {
+  from { transform: translateX(0); }
+  to { transform: translateX(-25%); }
+}
+
+@keyframes wave-drift-medium {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33%); }
+}
+
 @layer utilities {
+  .awb-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    will-change: transform;
+  }
+  .awb-slow {
+    animation: wave-drift-slow 50s linear infinite;
+  }
+  .awb-fast {
+    animation: wave-drift-medium 35s linear infinite;
+  }
+  .awb-slow svg { stroke-opacity: 0.14; }
+  .awb-fast svg { stroke-opacity: 0.18; }
+  @media (max-width: 767px) {
+    .awb-slow svg { stroke-opacity: 0.098; }
+    .awb-fast svg { stroke-opacity: 0.126; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .awb-layer { animation: none !important; }
+  }
+
   .text-gradient-primary {
     color: hsl(var(--primary));
   }
