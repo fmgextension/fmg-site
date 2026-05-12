@@ -364,10 +364,10 @@ function TestimonialsCarousel() {
           <div
             key={t.name}
             data-tcard
-            className="snap-center shrink-0 w-[85%]"
+            className="snap-center shrink-0 w-[85%] rounded-2xl bg-card border border-border overflow-hidden"
           >
-            <InteractiveCard showArrow={false} className="rounded-2xl">
-              <div className="p-6 flex flex-col h-full bg-card">
+            <InteractiveCard showArrow={false} className="rounded-2xl bg-card">
+              <div className="p-6 flex flex-col h-full bg-card rounded-2xl">
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <PStar key={i} size={16} weight="fill" className="text-primary" />
