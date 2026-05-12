@@ -438,7 +438,7 @@ function RevenueConstellationLayout() {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16">
+    <div className="block lg:grid lg:grid-cols-[3fr_2fr] lg:gap-16">
       <Reveal delay={0.25}>
         <div className="rc-sticky-wrap">
           <div className="mx-auto" style={{ maxWidth: 600 }}>
@@ -452,7 +452,7 @@ function RevenueConstellationLayout() {
         </div>
       </Reveal>
 
-      <div className="flex flex-col gap-8 lg:gap-16">
+      <div className="flex flex-col gap-12 lg:gap-16">
         {FEATURE_BLOCKS.map((f, i) => (
           <Reveal key={f.n} delay={0.3 + i * 0.04}>
             <div
