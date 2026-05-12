@@ -35,7 +35,7 @@ function Index() {
             <a href="#reviews" className="hover:text-foreground transition">Reviews</a>
             <a href="#contact" className="hover:text-foreground transition">Contact</a>
           </nav>
-          <a href="#contact" className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition">
+          <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition">
             Book a Demo
           </a>
         </div>
@@ -59,7 +59,7 @@ function Index() {
               AI Receptionists that never sleep. High-end web design that converts. We're FMG.
             </p>
             <div className="flex flex-wrap gap-4 mb-12">
-              <a href="#contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition">
+              <a href="tel:+17866347595" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition">
                 Test Drive Our AI <ArrowRight className="w-4 h-4" />
               </a>
               <button onClick={() => setVideoOpen(true)} className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 font-medium hover:bg-card/60 transition">
@@ -230,12 +230,16 @@ function Index() {
             Join 500+ businesses already using FMG to capture more leads, earn more reviews, and grow faster. Let's talk about your goals.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="#" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition">
+            <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition">
               Book a Free Demo <ArrowRight className="w-4 h-4" />
             </a>
-            <a href="#" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 font-medium hover:bg-card/60 transition">
+            <a href="tel:+17866347595" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 font-medium hover:bg-card/60 transition">
               Schedule a Call
             </a>
+          </div>
+          <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+            <a href="tel:+17866347595" className="hover:text-foreground transition">786-634-7595</a>
+            <a href="mailto:fmg.protocol@gmail.com" className="hover:text-foreground transition">fmg.protocol@gmail.com</a>
           </div>
         </div>
       </section>
