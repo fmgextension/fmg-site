@@ -1,26 +1,245 @@
 import { createFileRoute } from "@tanstack/react-router";
+import heroImage from "@/assets/hero-abstract.jpg";
+import {
+  ArrowRight,
+  Play,
+  Phone,
+  Star,
+  Globe,
+  TrendingUp,
+  Zap,
+  Shield,
+  DollarSign,
+  Clock,
+  Users,
+  BarChart3,
+} from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Nav */}
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/40 border-b border-border">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="text-xl font-bold">Your Agency</div>
+          <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
+            <a href="#services" className="hover:text-foreground transition">Services</a>
+            <a href="#features" className="hover:text-foreground transition">Features</a>
+            <a href="#reviews" className="hover:text-foreground transition">Reviews</a>
+            <a href="#contact" className="hover:text-foreground transition">Contact</a>
+          </nav>
+          <a href="#contact" className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition">
+            Book a Demo
+          </a>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="relative pt-32 pb-20 px-6" style={{ background: "var(--gradient-hero)" }}>
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/40 text-sm mb-6">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              Powered by Advanced AI
+            </div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+              5-Star Google Reviews on{" "}
+              <span className="bg-clip-text text-transparent" style={{ backgroundImage: "var(--gradient-text)" }}>
+                Autopilot
+              </span>
+            </h1>
+            <p className="text-lg text-muted-foreground mb-8 max-w-xl">
+              AI Receptionists that never sleep. High-end web design that converts. We're Your Agency.
+            </p>
+            <div className="flex flex-wrap gap-4 mb-12">
+              <a href="#contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition">
+                Test Drive Our AI <ArrowRight className="w-4 h-4" />
+              </a>
+              <a href="#" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 font-medium hover:bg-card/60 transition">
+                <Play className="w-4 h-4" /> Watch Demo
+              </a>
+            </div>
+            <div className="grid grid-cols-3 gap-6 max-w-md">
+              {[
+                { n: "500+", l: "Businesses Served" },
+                { n: "10k+", l: "Calls Handled Daily" },
+                { n: "4.9★", l: "Average Review Score" },
+              ].map((s) => (
+                <div key={s.l}>
+                  <div className="text-3xl font-bold">{s.n}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="relative">
+            <div className="absolute -inset-4 rounded-3xl blur-3xl opacity-40" style={{ background: "var(--gradient-text)" }} />
+            <div className="relative rounded-3xl overflow-hidden border border-border" style={{ boxShadow: "var(--shadow-glow)" }}>
+              <img src={heroImage} alt="AI Technology" width={1280} height={960} className="w-full h-auto" />
+              <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3 p-4 rounded-2xl bg-background/80 backdrop-blur-md border border-border">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-primary-foreground" style={{ background: "var(--gradient-text)" }}>AI</div>
+                <div>
+                  <div className="font-semibold text-sm">AI Receptionist Active</div>
+                  <div className="text-xs text-muted-foreground">Handling 47 calls right now</div>
+                </div>
+                <span className="ml-auto w-2 h-2 rounded-full bg-primary animate-pulse" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section id="services" className="py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="text-sm text-primary font-medium mb-3">Our Services</div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Everything Your Business Needs to Grow</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              We combine cutting-edge AI technology with premium design to deliver solutions that actually move the needle.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              { icon: Phone, title: "AI Receptionists", desc: "24/7 AI-powered receptionists that answer calls, book appointments, and never miss a lead.", items: ["24/7 Availability", "Natural Conversations", "Appointment Booking", "Lead Capture"] },
+              { icon: Star, title: "5-Star Review Generation", desc: "Automatically collect and boost your Google reviews. Turn happy customers into your best marketing.", items: ["Automated Follow-ups", "Review Monitoring", "Response Templates", "Analytics Dashboard"] },
+              { icon: Globe, title: "High-End Web Design", desc: "Premium websites that convert visitors into customers. Stunning designs backed by conversion science.", items: ["Custom Design", "Mobile Optimized", "SEO Ready", "Fast Loading"] },
+              { icon: TrendingUp, title: "Increase Lead Flow", desc: "Supercharge your pipeline with AI-driven lead generation. More appointments, more revenue.", items: ["Book More Appts", "Schedule Consultations", "Lead Nurturing", "Pipeline Automation"] },
+            ].map((s) => (
+              <div key={s.title} className="p-8 rounded-2xl border border-border hover:border-primary/40 transition group" style={{ background: "var(--gradient-card)", boxShadow: "var(--shadow-card)" }}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: "var(--gradient-text)" }}>
+                  <s.icon className="w-6 h-6 text-primary-foreground" />
+                </div>
+                <h3 className="text-2xl font-bold mb-2">{s.title}</h3>
+                <p className="text-muted-foreground mb-5">{s.desc}</p>
+                <ul className="grid grid-cols-2 gap-2 text-sm">
+                  {s.items.map((i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      {i}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section id="features" className="py-24 px-6 border-t border-border">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 mb-16">
+            <div>
+              <div className="text-sm text-primary font-medium mb-3">Why Choose Us</div>
+              <h2 className="text-4xl md:text-5xl font-bold">Built for Businesses That Demand Excellence</h2>
+            </div>
+            <div className="flex flex-col justify-center">
+              <p className="text-muted-foreground mb-6">
+                We don't just build tools—we build growth engines. Every feature is designed to help your business capture more leads, build trust, and scale without limits.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl border border-border" style={{ background: "var(--gradient-card)" }}>
+                  <div className="text-3xl font-bold text-primary">99.9%</div>
+                  <div className="text-sm text-muted-foreground">Uptime Guarantee</div>
+                </div>
+                <div className="p-4 rounded-xl border border-border" style={{ background: "var(--gradient-card)" }}>
+                  <div className="text-3xl font-bold text-primary">&lt;2s</div>
+                  <div className="text-sm text-muted-foreground">Response Time</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { icon: Zap, title: "Lightning Fast Setup", desc: "Get up and running in minutes, not weeks. Our AI learns your business instantly." },
+              { icon: Shield, title: "Enterprise Security", desc: "Bank-level encryption and compliance. Your data is always safe with us." },
+              { icon: DollarSign, title: "Proven ROI", desc: "Average 300% increase in captured leads. Real results, measured in dollars." },
+              { icon: Clock, title: "24/7 Availability", desc: "Never miss a call again. AI that works while you sleep." },
+              { icon: Users, title: "Human Handoff", desc: "Seamless transfer to your team when needed. AI + human, perfectly balanced." },
+              { icon: BarChart3, title: "Real-Time Analytics", desc: "Track every call, review, and conversion. Data-driven decisions made easy." },
+            ].map((f) => (
+              <div key={f.title} className="p-6 rounded-2xl border border-border" style={{ background: "var(--gradient-card)" }}>
+                <f.icon className="w-8 h-8 text-primary mb-4" />
+                <h3 className="text-xl font-bold mb-2">{f.title}</h3>
+                <p className="text-sm text-muted-foreground">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section id="reviews" className="py-24 px-6 border-t border-border">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="text-sm text-primary font-medium mb-3">Testimonials</div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Loved by 500+ Businesses</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Don't just take our word for it. Here's what our clients say about working with Your Agency.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { quote: "Your Agency's AI receptionist has been a game-changer. We went from missing 30% of calls to capturing every single lead. Our reviews jumped from 3.8 to 4.9 stars in just 3 months.", initials: "SM", name: "Sarah Mitchell", role: "Owner, Mitchell Dental" },
+              { quote: "The ROI speaks for itself. We've seen a 400% increase in booked appointments and our Google ranking has skyrocketed thanks to the review system.", initials: "DC", name: "David Chen", role: "CEO, Premier Auto Group" },
+              { quote: "Not only did they build us a stunning website, but the AI handles our after-hours inquiries perfectly. It's like having a 24/7 sales team.", initials: "JW", name: "Jessica Williams", role: "Director, Luxe Real Estate" },
+            ].map((t) => (
+              <div key={t.name} className="p-8 rounded-2xl border border-border flex flex-col" style={{ background: "var(--gradient-card)" }}>
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-foreground/90 mb-6 flex-1">"{t.quote}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-primary-foreground" style={{ background: "var(--gradient-text)" }}>
+                    {t.initials}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-sm">{t.name}</div>
+                    <div className="text-xs text-muted-foreground">{t.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-16 text-center">
+            <p className="text-sm text-muted-foreground mb-6">Trusted by leading businesses across industries</p>
+            <div className="flex flex-wrap justify-center gap-8 opacity-60">
+              {["Google Partner", "Meta Certified", "HubSpot", "Salesforce", "Stripe"].map((b) => (
+                <div key={b} className="text-lg font-semibold">{b}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section id="contact" className="py-24 px-6 border-t border-border">
+        <div className="max-w-4xl mx-auto text-center p-12 rounded-3xl border border-border" style={{ background: "var(--gradient-hero)", boxShadow: "var(--shadow-glow)" }}>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to Transform Your Business?</h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Join 500+ businesses already using Your Agency to capture more leads, earn more reviews, and grow faster. Let's talk about your goals.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href="#" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition">
+              Book a Free Demo <ArrowRight className="w-4 h-4" />
+            </a>
+            <a href="#" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 font-medium hover:bg-card/60 transition">
+              Schedule a Call
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer className="py-8 px-6 border-t border-border text-center text-sm text-muted-foreground">
+        © {new Date().getFullYear()} Your Agency. All rights reserved.
+      </footer>
     </div>
   );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
 }
