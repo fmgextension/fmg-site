@@ -7,6 +7,7 @@ import { Reveal } from "@/components/Reveal";
 import { StaggerGroup } from "@/components/StaggerGroup";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { MobileMenu } from "@/components/MobileMenu";
+import { StickyCardStack } from "@/components/StickyCardStack";
 import {
   ArrowRight,
   Play,
@@ -161,8 +162,8 @@ function Index() {
       </section>
 
       {/* Services */}
-      <section id="services" className="py-16 md:py-24 px-6">
-        <div className="max-w-7xl mx-auto">
+      <section id="services" className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12 md:mb-16">
             <Reveal><div className="text-sm text-primary font-medium mb-3">Our Services</div></Reveal>
             <Reveal delay={0.1}><h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>Everything Your Business Needs to Grow</h2></Reveal>
@@ -172,35 +173,15 @@ function Index() {
               </p>
             </Reveal>
           </div>
-          <StaggerGroup className="grid sm:grid-cols-2 gap-4 md:gap-6">
-            {[
-              { icon: Phone, title: "AI Receptionists", desc: "24/7 AI-powered receptionists that answer calls, book appointments, and never miss a lead.", items: ["24/7 Availability", "Natural Conversations", "Appointment Booking", "Lead Capture"] },
-              { icon: Star, title: "5-Star Review Generation", desc: "Automatically collect and boost your Google reviews. Turn happy customers into your best marketing.", items: ["Automated Follow-ups", "Review Monitoring", "Response Templates", "Analytics Dashboard"] },
-              { icon: Globe, title: "High-End Web Design", desc: "Premium websites that convert visitors into customers. Stunning designs backed by conversion science.", items: ["Custom Design", "Mobile Optimized", "SEO Ready", "Fast Loading"] },
-              { icon: TrendingUp, title: "Increase Lead Flow", desc: "Supercharge your pipeline with AI-driven lead generation. More appointments, more revenue.", items: ["Book More Appts", "Schedule Consultations", "Lead Nurturing", "Pipeline Automation"] },
-            ].map((s) => (
-              <Reveal key={s.title}>
-                <InteractiveCard className="rounded-2xl">
-                  <div className="p-6 md:p-8 bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-primary/10">
-                      <s.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <h3 className="text-xl md:text-2xl font-bold mb-2">{s.title}</h3>
-                    <p className="text-[15px] md:text-base text-muted-foreground mb-5">{s.desc}</p>
-                    <ul className="grid grid-cols-2 gap-2 text-sm">
-                      {s.items.map((i) => (
-                        <li key={i} className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                          {i}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </InteractiveCard>
-              </Reveal>
-            ))}
-          </StaggerGroup>
         </div>
+        <StickyCardStack
+          items={[
+            { icon: Phone, title: "AI Receptionists", desc: "24/7 AI-powered receptionists that answer calls, book appointments, and never miss a lead.", items: ["24/7 Availability", "Natural Conversations", "Appointment Booking", "Lead Capture"] },
+            { icon: Star, title: "5-Star Review Generation", desc: "Automatically collect and boost your Google reviews. Turn happy customers into your best marketing.", items: ["Automated Follow-ups", "Review Monitoring", "Response Templates", "Analytics Dashboard"] },
+            { icon: Globe, title: "High-End Web Design", desc: "Premium websites that convert visitors into customers. Stunning designs backed by conversion science.", items: ["Custom Design", "Mobile Optimized", "SEO Ready", "Fast Loading"] },
+            { icon: TrendingUp, title: "Increase Lead Flow", desc: "Supercharge your pipeline with AI-driven lead generation. More appointments, more revenue.", items: ["Book More Appts", "Schedule Consultations", "Lead Nurturing", "Pipeline Automation"] },
+          ]}
+        />
       </section>
 
       {/* Features */}
