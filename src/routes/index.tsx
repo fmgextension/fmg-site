@@ -8,7 +8,7 @@ import { StaggerGroup } from "@/components/StaggerGroup";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ServicesCarousel } from "@/components/ServicesCarousel";
-import { RevenueConstellation } from "@/components/RevenueConstellation";
+import { RevenueConstellation, type NodeKey } from "@/components/RevenueConstellation";
 import {
   ArrowRight,
   Play,
@@ -203,84 +203,7 @@ function Index() {
             </Reveal>
           </div>
 
-          {/* Two-column: diagram + feature list */}
-          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16">
-            <Reveal delay={0.25}>
-              <div className="lg:sticky" style={{ top: 80 }}>
-                <div className="mx-auto" style={{ maxWidth: 600 }}>
-                  <div className="lg:hidden mx-auto" style={{ maxWidth: 320 }}>
-                    <RevenueConstellation />
-                  </div>
-                  <div className="hidden lg:block">
-                    <RevenueConstellation />
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-
-            <div className="flex flex-col gap-8 lg:gap-16">
-              {[
-                { n: "01", title: "Lightning Fast Setup", desc: "Get up and running in minutes, not weeks. Our AI learns your business instantly.", mapped: "WEBSITE" },
-                { n: "02", title: "Enterprise Security", desc: "Bank-level encryption and compliance. Your data is always safe with us.", mapped: "EMAIL" },
-                { n: "03", title: "Proven ROI", desc: "Average 300% increase in captured leads. Real results, measured in dollars.", mapped: "PAID MEDIA" },
-                { n: "04", title: "24/7 Availability", desc: "Never miss a call again. AI that works while you sleep.", mapped: "AI RECEPTIONIST" },
-                { n: "05", title: "Human Handoff", desc: "Seamless transfer to your team when needed. AI + human, perfectly balanced.", mapped: "SOCIAL" },
-                { n: "06", title: "Real-Time Analytics", desc: "Track every call, review, and conversion. Data-driven decisions made easy.", mapped: "SEO" },
-              ].map((f, i) => (
-                <Reveal key={f.n} delay={0.3 + i * 0.04}>
-                  <div className="feature-block">
-                    <div
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 700,
-                        color: "hsl(var(--primary))",
-                        letterSpacing: "0.15em",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      {f.n}
-                    </div>
-                    <h3
-                      style={{
-                        marginTop: 24,
-                        fontSize: "clamp(22px, 4vw, 32px)",
-                        fontWeight: 600,
-                        color: "hsl(var(--foreground))",
-                        lineHeight: 1.15,
-                        letterSpacing: "-0.01em",
-                      }}
-                    >
-                      {f.title}
-                    </h3>
-                    <p
-                      style={{
-                        marginTop: 16,
-                        fontSize: "clamp(15px, 2.4vw, 16px)",
-                        fontWeight: 400,
-                        color: "hsl(var(--muted-foreground))",
-                        lineHeight: 1.6,
-                        maxWidth: "90%",
-                      }}
-                    >
-                      {f.desc}
-                    </p>
-                    <div
-                      style={{
-                        marginTop: 24,
-                        fontSize: 11,
-                        fontWeight: 600,
-                        color: "hsl(var(--muted-foreground))",
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      Mapped to — {f.mapped}
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
+          <RevenueConstellationLayout />
         </div>
       </section>
 
@@ -473,6 +396,116 @@ function TestimonialsCarousel() {
                 : "hsl(var(--muted-foreground) / 0.3)",
             }}
           />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const FEATURE_BLOCKS: { n: string; title: string; desc: string; mapped: string; key: NodeKey }[] = [
+  { n: "01", title: "Lightning Fast Setup", desc: "Get up and running in minutes, not weeks. Our AI learns your business instantly.", mapped: "WEBSITE", key: "website" },
+  { n: "02", title: "Enterprise Security", desc: "Bank-level encryption and compliance. Your data is always safe with us.", mapped: "EMAIL", key: "email" },
+  { n: "03", title: "Proven ROI", desc: "Average 300% increase in captured leads. Real results, measured in dollars.", mapped: "PAID MEDIA", key: "paid" },
+  { n: "04", title: "24/7 Availability", desc: "Never miss a call again. AI that works while you sleep.", mapped: "AI RECEPTIONIST", key: "ai" },
+  { n: "05", title: "Human Handoff", desc: "Seamless transfer to your team when needed. AI + human, perfectly balanced.", mapped: "SOCIAL", key: "social" },
+  { n: "06", title: "Real-Time Analytics", desc: "Track every call, review, and conversion. Data-driven decisions made easy.", mapped: "SEO", key: "seo" },
+];
+
+function RevenueConstellationLayout() {
+  const [activeKey, setActiveKey] = useState<NodeKey>("ai");
+  const blockRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    blockRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveKey(FEATURE_BLOCKS[i].key);
+          }
+        },
+        { rootMargin: "-50% 0px -50% 0px", threshold: 0 },
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16">
+      <Reveal delay={0.25}>
+        <div className="lg:sticky" style={{ top: 80 }}>
+          <div className="mx-auto" style={{ maxWidth: 600 }}>
+            <div className="lg:hidden mx-auto" style={{ maxWidth: 320 }}>
+              <RevenueConstellation activeKey={activeKey} />
+            </div>
+            <div className="hidden lg:block">
+              <RevenueConstellation activeKey={activeKey} />
+            </div>
+          </div>
+        </div>
+      </Reveal>
+
+      <div className="flex flex-col gap-8 lg:gap-16">
+        {FEATURE_BLOCKS.map((f, i) => (
+          <Reveal key={f.n} delay={0.3 + i * 0.04}>
+            <div
+              ref={(el) => {
+                blockRefs.current[i] = el;
+              }}
+              className="feature-block"
+            >
+              <div
+                style={{
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: "hsl(var(--primary))",
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                }}
+              >
+                {f.n}
+              </div>
+              <h3
+                style={{
+                  marginTop: 24,
+                  fontSize: "clamp(22px, 4vw, 32px)",
+                  fontWeight: 600,
+                  color: "hsl(var(--foreground))",
+                  lineHeight: 1.15,
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                {f.title}
+              </h3>
+              <p
+                style={{
+                  marginTop: 16,
+                  fontSize: "clamp(15px, 2.4vw, 16px)",
+                  fontWeight: 400,
+                  color: "hsl(var(--muted-foreground))",
+                  lineHeight: 1.6,
+                  maxWidth: "90%",
+                }}
+              >
+                {f.desc}
+              </p>
+              <div
+                style={{
+                  marginTop: 24,
+                  fontSize: 11,
+                  fontWeight: 600,
+                  color: "hsl(var(--muted-foreground))",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                }}
+              >
+                Mapped to — {f.mapped}
+              </div>
+            </div>
+          </Reveal>
         ))}
       </div>
     </div>
