@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { EASE_IN_OUT } from "@/lib/motion";
 import heroImage from "@/assets/hero-abstract.jpg";
 import { Reveal } from "@/components/Reveal";
 import { StaggerGroup } from "@/components/StaggerGroup";
@@ -26,6 +28,12 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [videoOpen, setVideoOpen] = useState(false);
+  const reduced = useReducedMotion();
+  const heroFloat = reduced
+    ? {}
+    : { y: [0, -8, 0], rotate: [0, 0.5, 0] };
+  const cardFloat = reduced ? {} : { y: [0, -4, 0] };
+  const dotPulse = reduced ? {} : { scale: [1, 1.15, 1], opacity: [1, 0.7, 1] };
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* Nav */}
@@ -50,7 +58,11 @@ function Index() {
           <div>
             <Reveal delay={0.1}>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/40 text-sm mb-6">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                <motion.span
+                  className="w-2 h-2 rounded-full bg-primary"
+                  animate={dotPulse}
+                  transition={{ duration: 2, ease: EASE_IN_OUT, repeat: Infinity }}
+                />
                 Powered by Advanced AI
               </div>
             </Reveal>
@@ -96,19 +108,32 @@ function Index() {
           </div>
           <Reveal variant="scaleIn" delay={0.3} className="relative">
             <div className="absolute -inset-4 rounded-3xl blur-3xl opacity-40" style={{ background: "var(--gradient-text)" }} />
-            <div className="relative rounded-3xl overflow-hidden border border-border" style={{ boxShadow: "var(--shadow-glow)" }}>
+            <motion.div
+              className="relative rounded-3xl overflow-hidden border border-border"
+              style={{ boxShadow: "var(--shadow-glow)" }}
+              animate={heroFloat}
+              transition={{ duration: 6, ease: EASE_IN_OUT, repeat: Infinity, repeatType: "loop", delay: 1.5 }}
+            >
               <img src={heroImage} alt="AI Technology" width={1280} height={960} className="w-full h-auto" />
               <Reveal variant="fadeUp" delay={0.9} className="absolute bottom-4 left-4 right-4">
-                <div className="flex items-center gap-3 p-4 rounded-2xl bg-background/80 backdrop-blur-md border border-border">
+                <motion.div
+                  className="flex items-center gap-3 p-4 rounded-2xl bg-background/80 backdrop-blur-md border border-border"
+                  animate={cardFloat}
+                  transition={{ duration: 4.5, ease: EASE_IN_OUT, repeat: Infinity, delay: 2 }}
+                >
                   <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-primary-foreground" style={{ background: "var(--gradient-text)" }}>AI</div>
                   <div>
                     <div className="font-semibold text-sm">AI Receptionist Active</div>
                     <div className="text-xs text-muted-foreground">Handling 47 calls right now</div>
                   </div>
-                  <span className="ml-auto w-2 h-2 rounded-full bg-primary animate-pulse" />
-                </div>
+                  <motion.span
+                    className="ml-auto w-2 h-2 rounded-full bg-primary"
+                    animate={dotPulse}
+                    transition={{ duration: 2, ease: EASE_IN_OUT, repeat: Infinity }}
+                  />
+                </motion.div>
               </Reveal>
-            </div>
+            </motion.div>
           </Reveal>
         </div>
       </section>
