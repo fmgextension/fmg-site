@@ -9,6 +9,7 @@ import { MobileMenu } from "@/components/MobileMenu";
 import { ServicesCarousel } from "@/components/ServicesCarousel";
 import { RevenueConstellation, type NodeKey } from "@/components/RevenueConstellation";
 import { HeroPhoneMockup } from "@/components/HeroPhoneMockup";
+import { WaveTexture } from "@/components/WaveTexture";
 import {
   ArrowRight,
   Play,
@@ -60,7 +61,8 @@ function Index() {
 
       {/* Hero */}
       <section className="relative pt-28 md:pt-32 pb-16 md:pb-20 px-6" style={{ background: "var(--gradient-hero)" }}>
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+        <WaveTexture variant="hero" />
+        <div className="relative z-[1] max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           <div className="order-1">
             <Reveal delay={0.1}>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/40 text-sm mb-6">
@@ -160,8 +162,9 @@ function Index() {
       </section>
 
       {/* Services */}
-      <section id="services" className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="services" className="relative overflow-hidden py-16 md:py-24">
+        <WaveTexture variant="services" />
+        <div className="relative z-[1] max-w-7xl mx-auto px-6">
           <div className="text-center mb-12 md:mb-16">
             <Reveal><div className="text-sm text-primary font-medium mb-3">Our Services</div></Reveal>
             <Reveal delay={0.1}><h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>Everything Your Business Needs to Grow</h2></Reveal>
@@ -172,7 +175,7 @@ function Index() {
             </Reveal>
           </div>
         </div>
-        <Reveal delay={0.3}>
+        <Reveal delay={0.3} className="relative z-[1]">
           <ServicesCarousel
             items={[
               { icon: PPhoneCall, title: "AI Receptionists", desc: "24/7 AI-powered receptionists that answer calls, book appointments, and never miss a lead.", items: ["24/7 Availability", "Natural Conversations", "Appointment Booking", "Lead Capture"] },
@@ -264,8 +267,9 @@ function Index() {
       </section>
 
       {/* CTA */}
-      <section id="contact" className="py-16 md:py-24 px-6 border-t border-border">
-        <div className="max-w-4xl mx-auto text-center p-8 md:p-12 rounded-3xl border border-border" style={{ background: "var(--gradient-hero)", boxShadow: "var(--shadow-glow)" }}>
+      <section id="contact" className="relative overflow-hidden py-16 md:py-24 px-6 border-t border-border">
+        <WaveTexture variant="cta" />
+        <div className="relative z-[1] max-w-4xl mx-auto text-center p-8 md:p-12 rounded-3xl border border-border" style={{ background: "var(--gradient-hero)", boxShadow: "var(--shadow-glow)" }}>
           <Reveal><h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 7vw, 48px)" }}>Ready to Transform Your Business?</h2></Reveal>
           <Reveal delay={0.1}>
             <p className="text-base text-muted-foreground mb-8 max-w-2xl mx-auto">
