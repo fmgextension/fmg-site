@@ -226,6 +226,23 @@
     opacity: 1;
   }
 
+  /* Hide scrollbar utility (mobile carousel) */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Safe area helpers for notch / home indicator */
+  .safe-top { padding-top: env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+  /* Mobile tap states (touch devices only) */
+  @media (hover: none) {
+    .btn-primary:active { transform: scale(0.97); filter: brightness(0.95); transition: transform 100ms ease-out, filter 100ms ease-out; }
+    .btn-secondary:active { background-color: hsl(var(--primary) / 0.12); transform: scale(0.98); transition: background-color 100ms ease-out, transform 100ms ease-out; }
+    .interactive-card:active { border-color: hsl(var(--primary) / 0.4); transition: border-color 150ms ease-out; }
+    /* Always-on subtle bottom accent on touch (no hover) */
+    .interactive-card .ic-accent { transform: scaleX(1) !important; opacity: 0.3; }
+  }
+
   .btn-primary:focus-visible,
   .btn-secondary:focus-visible,
   .nav-link:focus-visible,
