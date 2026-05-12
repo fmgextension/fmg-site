@@ -137,18 +137,17 @@ export function RevenueConstellation({ activeKey = "ai" }: ConstellationProps) {
     };
   }, [reduced, inView]);
 
-  const activeNode = NODES.find((n) => n.key === activeKey) ?? NODES[5];
-  const activePos = nodeCenter(activeNode);
   const pill = PILL_BY_KEY[activeKey];
   const transitionDur = reduced ? 0 : 0.4;
 
   return (
     <div
       ref={containerRef}
-      className="relative w-full mx-auto"
-      style={{ maxWidth: 600, aspectRatio: "1 / 1" }}
+      className="w-full mx-auto flex flex-col items-center"
+      style={{ maxWidth: 600 }}
       aria-hidden="true"
     >
+      <div className="relative w-full" style={{ aspectRatio: "1 / 1" }}>
       <svg
         ref={svgRef}
         viewBox={`0 0 ${VIEW} ${VIEW}`}
@@ -321,25 +320,19 @@ export function RevenueConstellation({ activeKey = "ai" }: ConstellationProps) {
           </div>
         );
       })}
+      </div>
 
-      {/* Info pill — moves to active node */}
-      <motion.div
-        initial={false}
-        animate={{
-          left: `${(activePos.x / VIEW) * 100}%`,
-          top: `calc(${(activePos.y / VIEW) * 100}% + ${(NODE_SIZE / 2 / VIEW) * 100}% + 16px)`,
-        }}
-        transition={{ duration: transitionDur, ease: "easeOut" }}
+      {/* Info pill — fixed position below the diagram, content cross-fades */}
+      <div
         style={{
-          position: "absolute",
-          transform: "translate(-50%, 0)",
+          marginTop: 16,
           backgroundColor: "hsl(var(--card))",
           border: "1px solid hsl(var(--border))",
           borderRadius: 12,
           padding: "8px 12px",
-          maxWidth: 180,
+          maxWidth: 240,
           width: "max-content",
-          zIndex: 2,
+          textAlign: "center",
           pointerEvents: "none",
         }}
       >
@@ -377,7 +370,7 @@ export function RevenueConstellation({ activeKey = "ai" }: ConstellationProps) {
             </div>
           </motion.div>
         </AnimatePresence>
-      </motion.div>
+      </div>
     </div>
   );
 }

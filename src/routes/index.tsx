@@ -437,12 +437,12 @@ function RevenueConstellationLayout() {
 
   return (
     <div ref={outerRef} className="rc-outer relative">
-      <div className="sticky top-0 h-screen w-full flex flex-col">
-        {/* Mobile: 55vh diagram / 37vh feature / 8vh progress.
-            Desktop: single grid row fills remaining space. */}
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-start py-4 lg:py-0">
+        {/* Mobile: top-down stack (diagram auto, 24px gap, feature auto, flex-1 spacer, dots auto).
+            Desktop: row, diagram + feature centered, dots below. */}
         <div className="flex flex-col flex-1 min-h-0 lg:flex-row lg:py-10 lg:gap-12 lg:items-center w-full">
           {/* Diagram region */}
-          <div className="flex items-center justify-center w-full h-auto shrink-0 pt-6 pb-4 lg:pt-0 lg:pb-0 lg:h-full lg:flex-[3] lg:min-h-0 lg:shrink">
+          <div className="flex items-center justify-center w-full h-auto shrink-0 pt-2 lg:pt-0 lg:h-full lg:flex-[3] lg:min-h-0 lg:shrink">
             <div className="w-full lg:hidden mx-auto px-4" style={{ maxWidth: 320 }}>
               <RevenueConstellation activeKey={activeKey} />
             </div>
@@ -451,8 +451,11 @@ function RevenueConstellationLayout() {
             </div>
           </div>
 
+          {/* Mobile-only fixed gap between diagram and feature */}
+          <div className="h-6 shrink-0 lg:hidden" aria-hidden="true" />
+
           {/* Feature display region — single visible feature, cross-fade */}
-          <div className="relative w-full flex-1 min-h-0 flex items-center justify-center px-6 lg:h-full lg:flex-[2] lg:px-0">
+          <div className="grid w-full shrink-0 px-6 lg:flex-[2] lg:h-full lg:px-0 lg:items-center lg:justify-items-center lg:shrink">
             {FEATURE_BLOCKS.map((f, i) => {
               const isActive = i === activeIndex;
               return (
@@ -461,8 +464,10 @@ function RevenueConstellationLayout() {
                   initial={false}
                   animate={{ opacity: isActive ? 1 : 0 }}
                   transition={{ duration: fadeDur, ease: "easeOut" }}
-                  className="absolute inset-0 flex flex-col justify-center mx-auto"
+                  className="flex flex-col mx-auto w-full"
                   style={{
+                    gridColumn: 1,
+                    gridRow: 1,
                     maxWidth: 480,
                     pointerEvents: isActive ? "auto" : "none",
                   }}
@@ -517,11 +522,14 @@ function RevenueConstellationLayout() {
               );
             })}
           </div>
+
+          {/* Mobile-only flex spacer pushing dots down */}
+          <div className="flex-1 shrink lg:hidden" aria-hidden="true" />
         </div>
 
         {/* Progress indicator */}
         <div
-          className="flex justify-center items-start w-full h-[8vh] pt-2 lg:items-center lg:h-auto lg:pt-4"
+          className="flex justify-center items-center w-full shrink-0 pb-4 lg:h-auto lg:pt-4 lg:pb-0"
           style={{ gap: 6 }}
           aria-hidden="true"
         >
