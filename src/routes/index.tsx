@@ -40,13 +40,13 @@ function Index() {
       <Reveal variant="fadeIn" as="header" className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/40 border-b border-border">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="text-xl font-bold">FMG</div>
-          <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
-            <a href="#services" className="hover:text-foreground transition">Services</a>
-            <a href="#features" className="hover:text-foreground transition">Features</a>
-            <a href="#reviews" className="hover:text-foreground transition">Reviews</a>
-            <a href="#contact" className="hover:text-foreground transition">Contact</a>
+          <nav className="hidden md:flex items-center gap-8 text-sm">
+            <a href="#services" className="nav-link">Services</a>
+            <a href="#features" className="nav-link">Features</a>
+            <a href="#reviews" className="nav-link">Reviews</a>
+            <a href="#contact" className="nav-link">Contact</a>
           </nav>
-          <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition">
+          <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="btn-primary px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium">
             Book a Demo
           </a>
         </div>
@@ -79,13 +79,13 @@ function Index() {
             </Reveal>
             <StaggerGroup tight className="flex flex-wrap gap-4 mb-12">
               <Reveal delay={0.5}>
-                <a href="tel:+17866347595" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition">
-                  Test Drive Our AI <ArrowRight className="w-4 h-4" />
+                <a href="tel:+17866347595" className="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium">
+                  Test Drive Our AI <ArrowRight className="w-4 h-4 btn-arrow" />
                 </a>
               </Reveal>
               <Reveal delay={0.55}>
-                <button type="button" onClick={() => setVideoOpen(true)} className="relative z-10 inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 font-medium hover:bg-card/60 transition cursor-pointer touch-manipulation">
-                  <Play className="w-4 h-4" /> Watch Demo
+                <button type="button" onClick={() => setVideoOpen(true)} className="btn-secondary relative z-10 inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-transparent text-foreground font-medium touch-manipulation">
+                  <Play className="w-4 h-4 btn-icon" /> Watch Demo
                 </button>
               </Reveal>
             </StaggerGroup>
@@ -301,17 +301,17 @@ function Index() {
           </Reveal>
           <Reveal delay={0.2}>
             <div className="flex flex-wrap justify-center gap-4">
-              <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition">
-                Book a Free Demo <ArrowRight className="w-4 h-4" />
+              <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium">
+                Book a Free Demo <ArrowRight className="w-4 h-4 btn-arrow" />
               </a>
-              <a href="tel:+17866347595" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 font-medium hover:bg-card/60 transition">
+              <a href="tel:+17866347595" className="btn-secondary inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-transparent text-foreground font-medium">
                 Schedule a Call
               </a>
             </div>
           </Reveal>
-          <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-            <a href="tel:+17866347595" className="hover:text-foreground transition">786-634-7595</a>
-            <a href="mailto:fmg.protocol@gmail.com" className="hover:text-foreground transition">fmg.protocol@gmail.com</a>
+          <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm">
+            <a href="tel:+17866347595" className="text-link">786-634-7595</a>
+            <a href="mailto:fmg.protocol@gmail.com" className="text-link">fmg.protocol@gmail.com</a>
           </div>
         </div>
       </section>
@@ -332,7 +332,7 @@ function Index() {
           >
             <button
               onClick={() => setVideoOpen(false)}
-              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center bg-background/80 hover:bg-background border border-border"
+              className="icon-btn absolute top-3 right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center bg-background/80 border border-border"
               aria-label="Close"
             >
               <X className="w-4 h-4" />
