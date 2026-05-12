@@ -12,12 +12,16 @@ import { HeroPhoneMockup } from "@/components/HeroPhoneMockup";
 import {
   ArrowRight,
   Play,
-  Phone,
   Star,
-  Globe,
-  TrendingUp,
-  X,
 } from "lucide-react";
+import {
+  ArrowRight as PArrowRight,
+  Star as PStar,
+  Globe as PGlobe,
+  PhoneCall as PPhoneCall,
+  Lightning as PLightning,
+  X as PX,
+} from "@phosphor-icons/react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -172,10 +176,10 @@ function Index() {
         <Reveal delay={0.3}>
           <ServicesCarousel
             items={[
-              { icon: Phone, title: "AI Receptionists", desc: "24/7 AI-powered receptionists that answer calls, book appointments, and never miss a lead.", items: ["24/7 Availability", "Natural Conversations", "Appointment Booking", "Lead Capture"] },
-              { icon: Star, title: "5-Star Review Generation", desc: "Automatically collect and boost your Google reviews. Turn happy customers into your best marketing.", items: ["Automated Follow-ups", "Review Monitoring", "Response Templates", "Analytics Dashboard"] },
-              { icon: Globe, title: "High-End Web Design", desc: "Premium websites that convert visitors into customers. Stunning designs backed by conversion science.", items: ["Custom Design", "Mobile Optimized", "SEO Ready", "Fast Loading"] },
-              { icon: TrendingUp, title: "Increase Lead Flow", desc: "Supercharge your pipeline with AI-driven lead generation. More appointments, more revenue.", items: ["Book More Appts", "Schedule Consultations", "Lead Nurturing", "Pipeline Automation"] },
+              { icon: PPhoneCall, title: "AI Receptionists", desc: "24/7 AI-powered receptionists that answer calls, book appointments, and never miss a lead.", items: ["24/7 Availability", "Natural Conversations", "Appointment Booking", "Lead Capture"] },
+              { icon: PStar, title: "5-Star Review Generation", desc: "Automatically collect and boost your Google reviews. Turn happy customers into your best marketing.", items: ["Automated Follow-ups", "Review Monitoring", "Response Templates", "Analytics Dashboard"] },
+              { icon: PGlobe, title: "High-End Web Design", desc: "Premium websites that convert visitors into customers. Stunning designs backed by conversion science.", items: ["Custom Design", "Mobile Optimized", "SEO Ready", "Fast Loading"] },
+              { icon: PLightning, title: "Increase Lead Flow", desc: "Supercharge your pipeline with AI-driven lead generation. More appointments, more revenue.", items: ["Book More Appts", "Schedule Consultations", "Lead Nurturing", "Pipeline Automation"] },
             ]}
           />
         </Reveal>
