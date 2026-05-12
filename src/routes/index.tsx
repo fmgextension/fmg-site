@@ -189,10 +189,10 @@ function Index() {
       >
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mx-auto" style={{ maxWidth: 640, marginBottom: 80 }}>
+          <div className="text-center mx-auto mb-8 lg:mb-12" style={{ maxWidth: 640 }}>
             <Reveal><div className="text-sm text-primary font-medium mb-3">Why Choose Us</div></Reveal>
             <Reveal delay={0.1}>
-              <h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>
+              <h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 5vw, 48px)", lineHeight: 1.15 }}>
                 Built for Businesses That <span style={{ color: "hsl(var(--primary))" }}>Demand Excellence</span>
               </h2>
             </Reveal>
@@ -406,7 +406,7 @@ const FEATURE_BLOCKS: { n: string; title: string; desc: string; mapped: string; 
   { n: "01", title: "Lightning Fast Setup", desc: "Get up and running in minutes, not weeks. Our AI learns your business instantly.", mapped: "WEBSITE", key: "website" },
   { n: "02", title: "Enterprise Security", desc: "Bank-level encryption and compliance. Your data is always safe with us.", mapped: "EMAIL", key: "email" },
   { n: "03", title: "Proven ROI", desc: "Average 300% increase in captured leads. Real results, measured in dollars.", mapped: "PAID MEDIA", key: "paid" },
-  { n: "04", title: "24/7 Availability", desc: "Never miss a call again. AI that works while you sleep.", mapped: "AI RECEPTIONIST", key: "ai" },
+  { n: "04", title: "24/7 Availability", desc: "Never miss a call again. AI that works while you sleep.", mapped: "RECEPTIONIST", key: "ai" },
   { n: "05", title: "Human Handoff", desc: "Seamless transfer to your team when needed. AI + human, perfectly balanced.", mapped: "SOCIAL", key: "social" },
   { n: "06", title: "Real-Time Analytics", desc: "Track every call, review, and conversion. Data-driven decisions made easy.", mapped: "SEO", key: "seo" },
 ];
@@ -437,11 +437,16 @@ function RevenueConstellationLayout() {
 
   return (
     <div ref={outerRef} className="rc-outer relative">
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-between py-6 lg:py-10">
-        <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-6 lg:gap-12 items-center">
-          {/* Diagram column */}
-          <div className="flex items-center justify-center w-full h-full min-h-0">
-            <div className="w-full lg:hidden mx-auto" style={{ maxWidth: 280 }}>
+      <div className="sticky top-0 h-screen w-full flex flex-col">
+        {/* Mobile: 50vh diagram / 38vh feature / 12vh progress.
+            Desktop: single grid row fills remaining space. */}
+        <div className="flex flex-col lg:flex-row lg:flex-1 lg:min-h-0 lg:py-10 lg:gap-12 lg:items-center w-full">
+          {/* Diagram region */}
+          <div
+            className="flex items-center justify-center w-full lg:flex-[3] lg:h-full lg:min-h-0"
+            style={{ height: "50vh" }}
+          >
+            <div className="w-full lg:hidden mx-auto px-4" style={{ maxWidth: 320 }}>
               <RevenueConstellation activeKey={activeKey} />
             </div>
             <div className="hidden lg:block w-full mx-auto" style={{ maxWidth: 600 }}>
@@ -449,8 +454,11 @@ function RevenueConstellationLayout() {
             </div>
           </div>
 
-          {/* Feature display column — single visible feature, cross-fade */}
-          <div className="relative w-full" style={{ minHeight: 220 }}>
+          {/* Feature display region — single visible feature, cross-fade */}
+          <div
+            className="relative w-full flex items-center justify-center lg:flex-[2] lg:h-full"
+            style={{ height: "38vh", paddingLeft: 24, paddingRight: 24 }}
+          >
             {FEATURE_BLOCKS.map((f, i) => {
               const isActive = i === activeIndex;
               return (
@@ -459,7 +467,7 @@ function RevenueConstellationLayout() {
                   initial={false}
                   animate={{ opacity: isActive ? 1 : 0 }}
                   transition={{ duration: fadeDur, ease: "easeOut" }}
-                  className="absolute inset-0 flex flex-col justify-center mx-auto px-2 lg:px-0"
+                  className="absolute inset-0 flex flex-col justify-center mx-auto"
                   style={{
                     maxWidth: 480,
                     pointerEvents: isActive ? "auto" : "none",
@@ -519,8 +527,8 @@ function RevenueConstellationLayout() {
 
         {/* Progress indicator */}
         <div
-          className="flex justify-center items-center pt-4"
-          style={{ gap: 6 }}
+          className="flex justify-center items-center w-full lg:pt-4 lg:h-auto"
+          style={{ gap: 6, height: "12vh" }}
           aria-hidden="true"
         >
           {FEATURE_BLOCKS.map((_, i) => {
