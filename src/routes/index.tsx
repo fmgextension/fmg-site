@@ -440,7 +440,7 @@ function RevenueConstellationLayout() {
       <div className="sticky top-0 h-screen w-full flex flex-col justify-start py-4 lg:py-0">
         {/* Mobile: top-down stack (diagram auto, 32px gap, feature auto, flex-1 spacer, dots auto).
             Desktop: row, diagram + feature centered, dots below. */}
-        <div className="flex flex-col flex-1 min-h-0 lg:flex-row lg:py-10 lg:gap-12 lg:items-center w-full">
+        <div className="flex flex-col w-full lg:flex-1 lg:min-h-0 lg:flex-row lg:py-10 lg:gap-12 lg:items-center">
           {/* Diagram region */}
           <div className="flex items-center justify-center w-full h-auto shrink-0 pt-2 lg:pt-0 lg:h-full lg:flex-[3] lg:min-h-0 lg:shrink">
             <div className="w-full lg:hidden mx-auto px-4" style={{ maxWidth: 320 }}>
@@ -523,13 +523,11 @@ function RevenueConstellationLayout() {
             })}
           </div>
 
-          {/* Mobile-only flex spacer pushing dots down */}
-          <div className="flex-1 shrink lg:hidden" aria-hidden="true" />
         </div>
 
         {/* Progress indicator */}
         <div
-          className="flex justify-center items-center w-full shrink-0 mb-4 lg:h-auto lg:pt-4 lg:mb-0"
+          className="flex justify-center items-center w-full shrink-0 mt-6 lg:mt-0 lg:h-auto lg:pt-4"
           style={{ gap: 6 }}
           aria-hidden="true"
         >
@@ -557,6 +555,9 @@ function RevenueConstellationLayout() {
             );
           })}
         </div>
+
+        {/* Mobile-only flex spacer absorbing leftover space below the dots */}
+        <div className="flex-1 lg:hidden" aria-hidden="true" />
       </div>
     </div>
   );
