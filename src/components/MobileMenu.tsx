@@ -46,6 +46,16 @@ export function MobileMenu({ items, ctaHref, ctaLabel }: { items: Item[]; ctaHre
               WebkitBackdropFilter: "blur(20px)",
             }}
           >
+            <div className="flex justify-end p-4" onClick={(e) => e.stopPropagation()}>
+              <button
+                type="button"
+                aria-label="Close menu"
+                onClick={() => setOpen(false)}
+                className="icon-btn inline-flex items-center justify-center w-11 h-11 text-foreground"
+              >
+                <X size={24} weight="bold" />
+              </button>
+            </div>
             <div
               className="flex-1 flex flex-col justify-center"
               onClick={(e) => e.stopPropagation()}
