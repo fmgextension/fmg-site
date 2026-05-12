@@ -26,7 +26,7 @@ const NODES: ConstellationNode[] = [
   { key: "seo", label: "SEO", icon: Search, angle: 110, dist: 215 },
   { key: "email", label: "EMAIL", icon: Mail, angle: 175, dist: 225 },
   { key: "website", label: "WEBSITE", icon: Globe, angle: 245, dist: 205 },
-  { key: "ai", label: "AI RECEPTIONIST", icon: PhoneCall, angle: 295, dist: 210 },
+  { key: "ai", label: "RECEPTIONIST", icon: PhoneCall, angle: 295, dist: 210 },
 ];
 
 const PILL_BY_KEY: Record<NodeKey, { label: string; stat: string }> = {
