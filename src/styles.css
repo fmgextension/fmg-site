@@ -233,7 +233,7 @@
   /* Services carousel */
   .services-carousel-track {
     display: flex;
-    gap: 16px;
+    gap: 20px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
@@ -254,7 +254,7 @@
     flex: 0 0 auto;
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    width: calc(100vw - 64px);
+    width: calc(100vw - 96px);
     min-height: 480px;
     background-color: hsl(var(--card));
     border: 1px solid hsl(var(--border));
