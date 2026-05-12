@@ -76,7 +76,7 @@ export function ServicesCarousel({ items }: Props) {
               className={`services-carousel-card ${isActive ? "is-active" : ""}`}
             >
               <div
-                className="text-primary uppercase mb-8"
+                className="text-primary uppercase mb-6"
                 style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.1em" }}
               >
                 {counter}
@@ -91,12 +91,12 @@ export function ServicesCarousel({ items }: Props) {
                 {s.title}
               </h3>
               <p
-                className="text-muted-foreground mb-6"
+                className="text-muted-foreground mb-5"
                 style={{ fontSize: 15, lineHeight: 1.5 }}
               >
                 {s.desc}
               </p>
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-2.5">
                 {s.items.map((it) => (
                   <li
                     key={it}
