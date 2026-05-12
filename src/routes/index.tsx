@@ -8,7 +8,7 @@ import { StaggerGroup } from "@/components/StaggerGroup";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ServicesCarousel } from "@/components/ServicesCarousel";
-import { RevenueConstellation } from "@/components/RevenueConstellation";
+import { RevenueConstellation, type NodeKey } from "@/components/RevenueConstellation";
 import {
   ArrowRight,
   Play,
@@ -218,17 +218,17 @@ function Index() {
               </div>
             </Reveal>
 
-            <div className="flex flex-col gap-8 lg:gap-16">
-              {[
-                { n: "01", title: "Lightning Fast Setup", desc: "Get up and running in minutes, not weeks. Our AI learns your business instantly.", mapped: "WEBSITE" },
-                { n: "02", title: "Enterprise Security", desc: "Bank-level encryption and compliance. Your data is always safe with us.", mapped: "EMAIL" },
-                { n: "03", title: "Proven ROI", desc: "Average 300% increase in captured leads. Real results, measured in dollars.", mapped: "PAID MEDIA" },
-                { n: "04", title: "24/7 Availability", desc: "Never miss a call again. AI that works while you sleep.", mapped: "AI RECEPTIONIST" },
-                { n: "05", title: "Human Handoff", desc: "Seamless transfer to your team when needed. AI + human, perfectly balanced.", mapped: "SOCIAL" },
-                { n: "06", title: "Real-Time Analytics", desc: "Track every call, review, and conversion. Data-driven decisions made easy.", mapped: "SEO" },
-              ].map((f, i) => (
-                <Reveal key={f.n} delay={0.3 + i * 0.04}>
-                  <div className="feature-block">
+            <FeatureList />
+          </div>
+        </div>
+      </section>
+
+      {/* Features section ends — duplicate closer below removed */}
+      {false && (
+        <div className="hidden">
+          {/* placeholder to satisfy patch shape */}
+        </div>
+      )}
                     <div
                       style={{
                         fontSize: 14,
