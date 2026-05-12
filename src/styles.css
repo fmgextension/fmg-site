@@ -381,33 +381,10 @@
     }
   }
 
-  /* Revenue Constellation feature list spacing */
-  .feature-block { --feature-gap: 32px; }
+  /* Revenue Constellation scroll-pinned outer container */
+  .rc-outer { height: 480vh; }
   @media (min-width: 1024px) {
-    .feature-block { --feature-gap: 64px; }
-  }
-
-  /* Revenue Constellation sticky pinning */
-  .rc-sticky-wrap {
-    position: sticky;
-    top: 0;
-    z-index: 5;
-    background-color: hsl(var(--background));
-    padding-top: 8px;
-    padding-bottom: 16px;
-    /* fade at bottom edge */
-    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 16px), transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 calc(100% - 16px), transparent 100%);
-  }
-  @media (min-width: 1024px) {
-    .rc-sticky-wrap {
-      top: 80px;
-      background-color: transparent;
-      padding-top: 0;
-      padding-bottom: 0;
-      -webkit-mask-image: none;
-      mask-image: none;
-    }
+    .rc-outer { height: 600vh; }
   }
 
   /* Mobile tap states (touch devices only) */
