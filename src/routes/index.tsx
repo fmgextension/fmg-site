@@ -417,6 +417,10 @@ function RevenueConstellationLayout() {
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
+    const isMobile = window.matchMedia("(max-width: 1023px)").matches;
+    const rootMargin = isMobile
+      ? "-75% 0px -10% 0px"
+      : "-50% 0px -50% 0px";
     blockRefs.current.forEach((el, i) => {
       if (!el) return;
       const obs = new IntersectionObserver(
@@ -425,7 +429,7 @@ function RevenueConstellationLayout() {
             setActiveKey(FEATURE_BLOCKS[i].key);
           }
         },
-        { rootMargin: "-50% 0px -50% 0px", threshold: 0 },
+        { rootMargin, threshold: 0 },
       );
       obs.observe(el);
       observers.push(obs);
@@ -436,9 +440,9 @@ function RevenueConstellationLayout() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16">
       <Reveal delay={0.25}>
-        <div className="lg:sticky" style={{ top: 80 }}>
+        <div className="rc-sticky-wrap">
           <div className="mx-auto" style={{ maxWidth: 600 }}>
-            <div className="lg:hidden mx-auto" style={{ maxWidth: 320 }}>
+            <div className="lg:hidden mx-auto" style={{ maxWidth: 280 }}>
               <RevenueConstellation activeKey={activeKey} />
             </div>
             <div className="hidden lg:block">
