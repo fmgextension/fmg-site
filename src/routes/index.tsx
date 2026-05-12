@@ -440,14 +440,12 @@ function RevenueConstellationLayout() {
   return (
     <div className="block lg:grid lg:grid-cols-[3fr_2fr] lg:gap-16">
       <Reveal delay={0.25}>
-        <div className="rc-sticky-wrap">
-          <div className="mx-auto" style={{ maxWidth: 600 }}>
-            <div className="lg:hidden mx-auto" style={{ maxWidth: 280 }}>
-              <RevenueConstellation activeKey={activeKey} />
-            </div>
-            <div className="hidden lg:block">
-              <RevenueConstellation activeKey={activeKey} />
-            </div>
+        <div className="mx-auto" style={{ maxWidth: 600 }}>
+          <div className="lg:hidden mx-auto" style={{ maxWidth: 280 }}>
+            <RevenueConstellation activeKey={activeKey} />
+          </div>
+          <div className="hidden lg:block">
+            <RevenueConstellation activeKey={activeKey} />
           </div>
         </div>
       </Reveal>
