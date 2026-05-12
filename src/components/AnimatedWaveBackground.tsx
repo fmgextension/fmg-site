@@ -1,4 +1,5 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
+import { motion, useMotionValue, useScroll, useSpring, useTransform, useReducedMotion } from "framer-motion";
 
 // Two layers of organic curves with unique smooth cubic Bezier paths.
 const SLOW_PATHS: string[] = [
@@ -34,6 +35,27 @@ const FAST_PATHS: string[] = [
 ];
 
 function AnimatedWaveBackgroundBase() {
+  const prefersReducedMotion = useReducedMotion();
+  const { scrollY } = useScroll();
+
+  const layer1Y = useTransform(scrollY, [0, 3000], [0, prefersReducedMotion ? 0 : -100]);
+  const layer2Y = useTransform(scrollY, [0, 3000], [0, prefersReducedMotion ? 0 : -300]);
+
+  const mouseX = useMotionValue(0);
+  const layer1MouseX = useSpring(useTransform(mouseX, (x) => x * 20), { stiffness: 50, damping: 20 });
+  const layer2MouseX = useSpring(useTransform(mouseX, (x) => x * 40), { stiffness: 50, damping: 20 });
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    if (typeof window === "undefined") return;
+    if (window.innerWidth < 1024) return;
+    const onMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX / window.innerWidth - 0.5);
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [mouseX, prefersReducedMotion]);
+
   return (
     <div
       aria-hidden="true"
@@ -46,6 +68,7 @@ function AnimatedWaveBackgroundBase() {
         background: "transparent",
       }}
     >
+      <motion.div style={{ position: "absolute", inset: 0, y: layer1Y, x: layer1MouseX }}>
       <div className="awb-layer awb-slow">
         <svg
           width="100%"
@@ -63,7 +86,9 @@ function AnimatedWaveBackgroundBase() {
           </g>
         </svg>
       </div>
+      </motion.div>
 
+      <motion.div style={{ position: "absolute", inset: 0, y: layer2Y, x: layer2MouseX }}>
       <div className="awb-layer awb-fast">
         <svg
           width="100%"
@@ -81,6 +106,7 @@ function AnimatedWaveBackgroundBase() {
           </g>
         </svg>
       </div>
+      </motion.div>
     </div>
   );
 }
