@@ -440,9 +440,9 @@ function RevenueConstellationLayout() {
       <div className="sticky top-0 h-screen w-full flex flex-col">
         {/* Mobile: 55vh diagram / 37vh feature / 8vh progress.
             Desktop: single grid row fills remaining space. */}
-        <div className="flex flex-col lg:flex-row lg:flex-1 lg:min-h-0 lg:py-10 lg:gap-12 lg:items-center w-full">
+        <div className="flex flex-col flex-1 min-h-0 lg:flex-row lg:py-10 lg:gap-12 lg:items-center w-full">
           {/* Diagram region */}
-          <div className="flex items-start justify-center w-full h-[55vh] pt-6 pb-0 lg:items-center lg:pt-0 lg:h-full lg:flex-[3] lg:min-h-0">
+          <div className="flex items-center justify-center w-full h-auto shrink-0 pt-6 pb-4 lg:pt-0 lg:pb-0 lg:h-full lg:flex-[3] lg:min-h-0 lg:shrink">
             <div className="w-full lg:hidden mx-auto px-4" style={{ maxWidth: 320 }}>
               <RevenueConstellation activeKey={activeKey} />
             </div>
@@ -452,7 +452,7 @@ function RevenueConstellationLayout() {
           </div>
 
           {/* Feature display region — single visible feature, cross-fade */}
-          <div className="relative w-full flex items-center justify-center h-[37vh] px-6 lg:h-full lg:flex-[2] lg:px-0">
+          <div className="relative w-full flex-1 min-h-0 flex items-center justify-center px-6 lg:h-full lg:flex-[2] lg:px-0">
             {FEATURE_BLOCKS.map((f, i) => {
               const isActive = i === activeIndex;
               return (
