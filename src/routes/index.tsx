@@ -69,9 +69,7 @@ function Index() {
             <Reveal delay={0.2}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
                 5-Star Google Reviews on{" "}
-                <span className="bg-clip-text text-transparent" style={{ backgroundImage: "var(--gradient-text)" }}>
-                  Autopilot
-                </span>
+                <span className="text-primary">Autopilot</span>
               </h1>
             </Reveal>
             <Reveal delay={0.35}>
@@ -107,7 +105,7 @@ function Index() {
             </StaggerGroup>
           </div>
           <Reveal variant="scaleIn" delay={0.3} className="relative">
-            <div className="absolute -inset-4 rounded-3xl blur-3xl opacity-40" style={{ background: "var(--gradient-text)" }} />
+            <div className="absolute -inset-4 rounded-3xl blur-3xl opacity-30 bg-primary" />
             <motion.div
               className="relative rounded-3xl overflow-hidden border border-border"
               style={{ boxShadow: "var(--shadow-glow)" }}
@@ -121,7 +119,7 @@ function Index() {
                   animate={cardFloat}
                   transition={{ duration: 4.5, ease: EASE_IN_OUT, repeat: Infinity, delay: 2 }}
                 >
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-primary-foreground" style={{ background: "var(--gradient-text)" }}>AI</div>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-primary-foreground bg-primary">AI</div>
                   <div>
                     <div className="font-semibold text-sm">AI Receptionist Active</div>
                     <div className="text-xs text-muted-foreground">Handling 47 calls right now</div>
@@ -159,9 +157,9 @@ function Index() {
             ].map((s) => (
               <Reveal key={s.title}>
                 <InteractiveCard className="rounded-2xl">
-                  <div className="p-8" style={{ background: "var(--gradient-card)", boxShadow: "var(--shadow-card)" }}>
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: "var(--gradient-text)" }}>
-                      <s.icon className="w-6 h-6 text-primary-foreground" />
+                  <div className="p-8 bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-primary/10">
+                      <s.icon className="w-6 h-6 text-primary" />
                     </div>
                     <h3 className="text-2xl font-bold mb-2">{s.title}</h3>
                     <p className="text-muted-foreground mb-5">{s.desc}</p>
@@ -198,7 +196,7 @@ function Index() {
               <StaggerGroup tight className="grid grid-cols-2 gap-4">
                 <Reveal delay={0.3}>
                   <InteractiveCard showArrow={false} className="rounded-xl">
-                    <div className="p-4" style={{ background: "var(--gradient-card)" }}>
+                    <div className="p-4 bg-card">
                       <div className="text-3xl font-bold text-primary">99.9%</div>
                       <div className="text-sm text-muted-foreground">Uptime Guarantee</div>
                     </div>
@@ -206,7 +204,7 @@ function Index() {
                 </Reveal>
                 <Reveal delay={0.36}>
                   <InteractiveCard showArrow={false} className="rounded-xl">
-                    <div className="p-4" style={{ background: "var(--gradient-card)" }}>
+                    <div className="p-4 bg-card">
                       <div className="text-3xl font-bold text-primary">&lt;2s</div>
                       <div className="text-sm text-muted-foreground">Response Time</div>
                     </div>
@@ -226,8 +224,10 @@ function Index() {
             ].map((f) => (
               <Reveal key={f.title}>
                 <InteractiveCard className="rounded-2xl">
-                  <div className="p-6 h-full" style={{ background: "var(--gradient-card)" }}>
-                    <f.icon className="w-8 h-8 text-primary mb-4" />
+                  <div className="p-6 h-full bg-card">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-primary/10">
+                      <f.icon className="w-6 h-6 text-primary" />
+                    </div>
                     <h3 className="text-xl font-bold mb-2">{f.title}</h3>
                     <p className="text-sm text-muted-foreground">{f.desc}</p>
                   </div>
@@ -258,7 +258,7 @@ function Index() {
             ].map((t) => (
               <Reveal key={t.name} className="h-full">
                 <InteractiveCard showArrow={false} className="rounded-2xl">
-                  <div className="p-8 flex flex-col h-full" style={{ background: "var(--gradient-card)" }}>
+                  <div className="p-8 flex flex-col h-full bg-card">
                     <div className="flex gap-1 mb-4">
                       {Array.from({ length: 5 }).map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-primary text-primary" />
@@ -266,7 +266,7 @@ function Index() {
                     </div>
                     <p className="text-foreground/90 mb-6 flex-1">"{t.quote}"</p>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-primary-foreground" style={{ background: "var(--gradient-text)" }}>
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-primary bg-secondary">
                         {t.initials}
                       </div>
                       <div>
