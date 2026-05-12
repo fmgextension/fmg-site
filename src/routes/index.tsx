@@ -66,37 +66,25 @@ function Index() {
                   animate={dotPulse}
                   transition={{ duration: 2, ease: EASE_IN_OUT, repeat: Infinity }}
                 />
-                <span className="uppercase" style={{ letterSpacing: "0.1em" }}>LIVE AI RECEPTIONIST</span>
+                <span>Powered by Advanced AI</span>
               </div>
             </Reveal>
             <Reveal delay={0.2}>
-              {/* Alternate A:
-                 "The AI receptionist that books
-                  your calls while you sleep."
-                 (Second line in primary color)
-              */}
-              {/* Alternate B:
-                 "Stop missing calls.
-                  Start booking revenue."
-                 (Second line in primary color)
-              */}
               <h1 className="font-semibold leading-tight mb-6" style={{ fontSize: "clamp(32px, 8vw, 72px)", letterSpacing: "-0.02em" }}>
-                Your 24/7 AI Receptionist.
+                24/7 AI Receptionist
                 <br />
-                <span style={{ color: "hsl(var(--primary))" }}>Never miss a call again.</span>
+                <span style={{ color: "hsl(var(--primary))" }}>on Standby</span>
               </h1>
             </Reveal>
             <Reveal delay={0.35}>
               <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl">
-                An AI that answers every call, books every appointment, and qualifies every lead — in your voice, around the clock.
-                <br />
-                Try it yourself. Right now.
+                Built to answer the calls you're missing right now. FMG.
               </p>
             </Reveal>
             <StaggerGroup tight className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mb-10 md:mb-12">
               <Reveal delay={0.5}>
-                <a href="tel:+17866347595" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium" style={{ gap: 8 }}>
-                  <Phone className="w-4 h-4" /> Call Our AI Now <ArrowRight className="w-4 h-4 btn-arrow" />
+                <a href="tel:+17866347595" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center gap-2 px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
+                  Test Drive Our AI <ArrowRight className="w-4 h-4 btn-arrow" />
                 </a>
               </Reveal>
               <Reveal delay={0.55}>
@@ -107,9 +95,9 @@ function Index() {
             </StaggerGroup>
             <StaggerGroup tight className="grid grid-cols-3 gap-4 md:gap-6 max-w-md">
               {[
-                { n: "10,000+", l: "Calls Handled Daily" },
-                { n: "0", l: "Missed Leads" },
-                { n: "<2s", l: "Average Pickup" },
+                { n: "500+", l: "Businesses Served" },
+                { n: "10k+", l: "Calls Handled Daily" },
+                { n: "4.9★", l: "Average Review Score" },
               ].map((s, i) => (
                 <Reveal key={s.l} delay={0.7 + i * 0.06}>
                   <div>
@@ -138,8 +126,8 @@ function Index() {
                   >
                     <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold" style={{ background: "hsl(var(--primary) / 0.15)", color: "hsl(var(--primary))" }}>AI</div>
                     <div>
-                      <div className="font-semibold text-sm">AI Receptionist — LIVE</div>
-                      <div className="text-xs text-muted-foreground">Handling calls right now</div>
+                      <div className="font-semibold text-sm">AI Receptionist Active</div>
+                      <div className="text-xs text-muted-foreground">Handling 47 calls right now</div>
                     </div>
                     <motion.span
                       className="ml-auto w-2 h-2 rounded-full bg-primary"
@@ -155,8 +143,8 @@ function Index() {
               <div className="flex items-center gap-3 p-4 rounded-2xl bg-card/80 backdrop-blur-md border border-border">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0" style={{ background: "hsl(var(--primary) / 0.15)", color: "hsl(var(--primary))" }}>AI</div>
                 <div className="min-w-0">
-                  <div className="font-semibold text-sm">AI Receptionist — LIVE</div>
-                  <div className="text-[13px] text-muted-foreground">Handling calls right now</div>
+                  <div className="font-semibold text-sm">AI Receptionist Active</div>
+                  <div className="text-[13px] text-muted-foreground">Handling 47 calls right now</div>
                 </div>
                 <motion.span
                   className="ml-auto w-2 h-2 rounded-full bg-primary shrink-0"
