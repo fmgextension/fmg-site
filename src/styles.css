@@ -230,6 +230,129 @@
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+  /* Services carousel */
+  .services-carousel-track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scroll-padding-left: 24px;
+    padding: 8px 24px;
+    -webkit-overflow-scrolling: touch;
+    padding-left: max(24px, env(safe-area-inset-left));
+    padding-right: max(24px, env(safe-area-inset-right));
+  }
+  @media (min-width: 1024px) {
+    .services-carousel-track {
+      gap: 24px;
+      padding: 8px 80px;
+      scroll-padding-left: 80px;
+    }
+  }
+  .services-carousel-card {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    width: calc(100vw - 64px);
+    min-height: 480px;
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 20px;
+    padding: 32px;
+    overflow: hidden;
+    opacity: 0.6;
+    transform: scale(0.98);
+    transition: opacity 300ms ease-out, transform 300ms ease-out;
+  }
+  .services-carousel-card.is-active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  @media (min-width: 640px) {
+    .services-carousel-card { width: calc(50vw - 32px); padding: 36px; }
+  }
+  @media (min-width: 1024px) {
+    .services-carousel-card { width: calc(33.333vw - 32px); padding: 40px; }
+  }
+  @media (min-width: 1440px) {
+    .services-carousel-card { width: 420px; max-width: 420px; }
+  }
+
+  .services-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .carousel-arrow {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground));
+    cursor: pointer;
+    transition: border-color 200ms ease-out, color 200ms ease-out, opacity 200ms ease-out;
+  }
+  @media (min-width: 768px) {
+    .carousel-arrow { display: inline-flex; }
+  }
+  .carousel-arrow:hover:not(:disabled) {
+    border-color: hsl(var(--primary));
+    color: hsl(var(--primary));
+  }
+  .carousel-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  .carousel-dots {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .carousel-dot-hit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+  .carousel-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: hsl(var(--muted-foreground) / 0.3);
+    transition: background-color 200ms ease-out, transform 200ms ease-out;
+  }
+  .carousel-dot-hit.is-active .carousel-dot {
+    background-color: hsl(var(--primary));
+    transform: scale(1.33);
+  }
+  .services-carousel-track:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 4px;
+    border-radius: 12px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .services-carousel-card {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .carousel-dot { transition: none; }
+    .services-carousel-track { scroll-behavior: auto; }
+  }
+
   /* Safe area helpers for notch / home indicator */
   .safe-top { padding-top: env(safe-area-inset-top); }
   .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
