@@ -127,4 +127,125 @@
   .text-gradient-primary {
     color: hsl(var(--primary));
   }
+
+  .btn-primary {
+    cursor: pointer;
+    transition: filter 200ms ease-out, box-shadow 300ms ease-out, transform 150ms ease-out, background-color 200ms ease-out;
+  }
+  .btn-primary:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 24px hsl(var(--primary) / 0.35);
+  }
+  .btn-primary:active {
+    filter: brightness(1);
+    transform: scale(0.98);
+  }
+  .btn-arrow {
+    transition: transform 300ms ease-out;
+  }
+  .btn-primary:hover .btn-arrow {
+    transform: translateX(4px);
+  }
+
+  .btn-secondary {
+    cursor: pointer;
+    transition: background-color 200ms ease-out, border-color 200ms ease-out, color 200ms ease-out, transform 150ms ease-out;
+  }
+  .btn-secondary:hover {
+    border-color: hsl(var(--primary));
+    background-color: hsl(var(--primary) / 0.08);
+  }
+  .btn-secondary:active {
+    background-color: hsl(var(--primary) / 0.12);
+    transform: scale(0.98);
+  }
+  .btn-icon {
+    transition: color 200ms ease-out;
+  }
+  .btn-secondary:hover .btn-icon {
+    color: hsl(var(--primary));
+  }
+
+  .nav-link {
+    position: relative;
+    cursor: pointer;
+    color: hsl(var(--muted-foreground));
+    transition: color 200ms ease-out;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background-color: hsl(var(--primary));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 300ms ease-out;
+  }
+  .nav-link:hover {
+    color: hsl(var(--foreground));
+  }
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .text-link {
+    cursor: pointer;
+    color: hsl(var(--primary));
+    text-decoration: underline;
+    text-decoration-color: hsl(var(--primary) / 0.4);
+    text-underline-offset: 2px;
+    transition: text-decoration-color 200ms ease-out;
+  }
+  .text-link:hover {
+    text-decoration-color: hsl(var(--primary));
+  }
+
+  .icon-btn {
+    cursor: pointer;
+    color: hsl(var(--muted-foreground));
+    transition: color 200ms ease-out, transform 300ms ease-out;
+  }
+  .icon-btn:hover {
+    color: hsl(var(--primary));
+    transform: scale(1.1);
+  }
+
+  .trust-link {
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 200ms ease-out;
+  }
+  .trust-link:hover {
+    opacity: 1;
+  }
+
+  .btn-primary:focus-visible,
+  .btn-secondary:focus-visible,
+  .nav-link:focus-visible,
+  .text-link:focus-visible,
+  .icon-btn:focus-visible,
+  .trust-link:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary:hover .btn-arrow,
+  .btn-primary:active,
+  .btn-secondary:active,
+  .icon-btn:hover {
+    transform: none;
+  }
+  .nav-link::after {
+    transform: scaleX(1);
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+  }
+  .nav-link:hover::after {
+    opacity: 1;
+  }
 }
