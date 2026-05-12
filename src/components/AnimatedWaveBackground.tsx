@@ -70,11 +70,11 @@ function AnimatedWaveBackgroundBase() {
         .awb-fast {
           animation: awb-drift-medium 45s linear infinite;
         }
-        .awb-slow svg { stroke-opacity: 0.05; }
-        .awb-fast svg { stroke-opacity: 0.07; }
+        .awb-slow svg { stroke-opacity: 0.10; }
+        .awb-fast svg { stroke-opacity: 0.12; }
         @media (max-width: 767px) {
-          .awb-slow svg { stroke-opacity: 0.035; }
-          .awb-fast svg { stroke-opacity: 0.049; }
+          .awb-slow svg { stroke-opacity: 0.07; }
+          .awb-fast svg { stroke-opacity: 0.084; }
         }
         @media (prefers-reduced-motion: reduce) {
           .awb-layer { animation: none !important; }
