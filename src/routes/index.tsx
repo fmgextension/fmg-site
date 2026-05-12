@@ -263,18 +263,18 @@ function Index() {
       </section>
 
       {/* Testimonials */}
-      <section id="reviews" className="py-24 px-6 border-t border-border">
+      <section id="reviews" className="py-16 md:py-24 md:px-6 border-t border-border">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 md:mb-16 px-6 md:px-0">
             <Reveal><div className="text-sm text-primary font-medium mb-3">Testimonials</div></Reveal>
-            <Reveal delay={0.1}><h2 className="text-4xl md:text-5xl font-bold mb-4">Loved by 500+ Businesses</h2></Reveal>
+            <Reveal delay={0.1}><h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>Loved by 500+ Businesses</h2></Reveal>
             <Reveal delay={0.2}>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-base text-muted-foreground max-w-2xl mx-auto">
                 Don't just take our word for it. Here's what our clients say about working with FMG.
               </p>
             </Reveal>
           </div>
-          <StaggerGroup className="grid md:grid-cols-3 gap-6">
+          <StaggerGroup className="hidden md:grid md:grid-cols-3 gap-6 px-6 md:px-0">
             {[
               { quote: "FMG's AI receptionist has been a game-changer. We went from missing 30% of calls to capturing every single lead. Our reviews jumped from 3.8 to 4.9 stars in just 3 months.", initials: "SM", name: "Sarah Mitchell", role: "Owner, Mitchell Dental" },
               { quote: "The ROI speaks for itself. We've seen a 400% increase in booked appointments and our Google ranking has skyrocketed thanks to the review system.", initials: "DC", name: "David Chen", role: "CEO, Premier Auto Group" },
@@ -303,11 +303,12 @@ function Index() {
               </Reveal>
             ))}
           </StaggerGroup>
-          <div className="mt-16 text-center">
+          <TestimonialsCarousel />
+          <div className="mt-12 md:mt-16 text-center px-6 md:px-0">
             <Reveal><p className="text-sm text-muted-foreground mb-6">Trusted by leading businesses across industries</p></Reveal>
-            <StaggerGroup tight className="flex flex-wrap justify-center gap-8 opacity-60">
+            <StaggerGroup tight className="flex flex-wrap justify-center gap-4 md:gap-8 opacity-60">
               {["Google Partner", "Meta Certified", "HubSpot", "Salesforce", "Stripe"].map((b) => (
-                <Reveal key={b}><div className="text-lg font-semibold">{b}</div></Reveal>
+                <Reveal key={b}><div className="text-base md:text-lg font-semibold">{b}</div></Reveal>
               ))}
             </StaggerGroup>
           </div>
@@ -315,25 +316,25 @@ function Index() {
       </section>
 
       {/* CTA */}
-      <section id="contact" className="py-24 px-6 border-t border-border">
-        <div className="max-w-4xl mx-auto text-center p-12 rounded-3xl border border-border" style={{ background: "var(--gradient-hero)", boxShadow: "var(--shadow-glow)" }}>
-          <Reveal><h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to Transform Your Business?</h2></Reveal>
+      <section id="contact" className="py-16 md:py-24 px-6 border-t border-border">
+        <div className="max-w-4xl mx-auto text-center p-8 md:p-12 rounded-3xl border border-border" style={{ background: "var(--gradient-hero)", boxShadow: "var(--shadow-glow)" }}>
+          <Reveal><h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 7vw, 48px)" }}>Ready to Transform Your Business?</h2></Reveal>
           <Reveal delay={0.1}>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-base text-muted-foreground mb-8 max-w-2xl mx-auto">
               Join 500+ businesses already using FMG to capture more leads, earn more reviews, and grow faster. Let's talk about your goals.
             </p>
           </Reveal>
           <Reveal delay={0.2}>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4">
+              <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium w-full sm:w-auto">
                 Book a Free Demo <ArrowRight className="w-4 h-4 btn-arrow" />
               </a>
-              <a href="tel:+17866347595" className="btn-secondary inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-transparent text-foreground font-medium">
+              <a href="tel:+17866347595" className="btn-secondary inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium w-full sm:w-auto">
                 Schedule a Call
               </a>
             </div>
           </Reveal>
-          <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm">
+          <div className="mt-8 flex flex-wrap justify-center gap-4 md:gap-6 text-sm">
             <a href="tel:+17866347595" className="text-link">786-634-7595</a>
             <a href="mailto:fmg.protocol@gmail.com" className="text-link">fmg.protocol@gmail.com</a>
           </div>
