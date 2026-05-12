@@ -6,6 +6,7 @@ import heroImage from "@/assets/hero-abstract.jpg";
 import { Reveal } from "@/components/Reveal";
 import { StaggerGroup } from "@/components/StaggerGroup";
 import { InteractiveCard } from "@/components/InteractiveCard";
+import { MobileMenu } from "@/components/MobileMenu";
 import {
   ArrowRight,
   Play,
@@ -29,6 +30,12 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [videoOpen, setVideoOpen] = useState(false);
   const reduced = useReducedMotion();
+  const navItems = [
+    { href: "#services", label: "Services" },
+    { href: "#features", label: "Features" },
+    { href: "#reviews", label: "Reviews" },
+    { href: "#contact", label: "Contact" },
+  ];
   const heroFloat = reduced
     ? {}
     : { y: [0, -8, 0], rotate: [0, 0.5, 0] };
@@ -37,25 +44,25 @@ function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* Nav */}
-      <Reveal variant="fadeIn" as="header" className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/40 border-b border-border">
+      <Reveal variant="fadeIn" as="header" className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/40 border-b border-border safe-top">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="text-xl font-bold">FMG</div>
           <nav className="hidden md:flex items-center gap-8 text-sm">
-            <a href="#services" className="nav-link">Services</a>
-            <a href="#features" className="nav-link">Features</a>
-            <a href="#reviews" className="nav-link">Reviews</a>
-            <a href="#contact" className="nav-link">Contact</a>
+            {navItems.map((it) => (
+              <a key={it.href} href={it.href} className="nav-link">{it.label}</a>
+            ))}
           </nav>
-          <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="btn-primary px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium">
+          <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="btn-primary hidden md:inline-flex px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium">
             Book a Demo
           </a>
+          <MobileMenu items={navItems} ctaHref="https://bit.ly/bookingfmg" ctaLabel="Book a Demo" />
         </div>
       </Reveal>
 
       {/* Hero */}
-      <section className="relative pt-32 pb-20 px-6" style={{ background: "var(--gradient-hero)" }}>
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-          <div>
+      <section className="relative pt-28 md:pt-32 pb-16 md:pb-20 px-6" style={{ background: "var(--gradient-hero)" }}>
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+          <div className="order-1">
             <Reveal delay={0.1}>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/40 text-sm mb-6">
                 <motion.span
@@ -67,29 +74,29 @@ function Index() {
               </div>
             </Reveal>
             <Reveal delay={0.2}>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+              <h1 className="font-bold leading-tight mb-6" style={{ fontSize: "clamp(32px, 8vw, 72px)" }}>
                 5-Star Google Reviews on{" "}
                 <span className="text-primary">Autopilot</span>
               </h1>
             </Reveal>
             <Reveal delay={0.35}>
-              <p className="text-lg text-muted-foreground mb-8 max-w-xl">
+              <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl">
                 AI Receptionists that never sleep. High-end web design that converts. We're FMG.
               </p>
             </Reveal>
-            <StaggerGroup tight className="flex flex-wrap gap-4 mb-12">
+            <StaggerGroup tight className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mb-10 md:mb-12">
               <Reveal delay={0.5}>
-                <a href="tel:+17866347595" className="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium">
+                <a href="tel:+17866347595" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center gap-2 px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
                   Test Drive Our AI <ArrowRight className="w-4 h-4 btn-arrow" />
                 </a>
               </Reveal>
               <Reveal delay={0.55}>
-                <button type="button" onClick={() => setVideoOpen(true)} className="btn-secondary relative z-10 inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-transparent text-foreground font-medium touch-manipulation">
+                <button type="button" onClick={() => setVideoOpen(true)} className="btn-secondary relative z-10 inline-flex w-full sm:w-auto items-center justify-center gap-2 px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium touch-manipulation">
                   <Play className="w-4 h-4 btn-icon" /> Watch Demo
                 </button>
               </Reveal>
             </StaggerGroup>
-            <StaggerGroup tight className="grid grid-cols-3 gap-6 max-w-md">
+            <StaggerGroup tight className="grid grid-cols-3 gap-4 md:gap-6 max-w-md">
               {[
                 { n: "500+", l: "Businesses Served" },
                 { n: "10k+", l: "Calls Handled Daily" },
@@ -97,58 +104,75 @@ function Index() {
               ].map((s, i) => (
                 <Reveal key={s.l} delay={0.7 + i * 0.06}>
                   <div>
-                    <div className="text-3xl font-bold">{s.n}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
+                    <div className="text-2xl md:text-3xl font-bold">{s.n}</div>
+                    <div className="text-[13px] md:text-xs text-muted-foreground mt-1">{s.l}</div>
                   </div>
                 </Reveal>
               ))}
             </StaggerGroup>
           </div>
-          <Reveal variant="scaleIn" delay={0.3} className="relative">
-            <div className="absolute -inset-4 rounded-3xl blur-3xl opacity-30 bg-primary" />
-            <motion.div
-              className="relative rounded-3xl overflow-hidden border border-border"
-              style={{ boxShadow: "var(--shadow-glow)" }}
-              animate={heroFloat}
-              transition={{ duration: 6, ease: EASE_IN_OUT, repeat: Infinity, repeatType: "loop", delay: 1.5 }}
-            >
-              <img src={heroImage} alt="AI Technology" width={1280} height={960} className="w-full h-auto" />
-              <Reveal variant="fadeUp" delay={0.9} className="absolute bottom-4 left-4 right-4">
-                <motion.div
-                  className="flex items-center gap-3 p-4 rounded-2xl bg-background/80 backdrop-blur-md border border-border"
-                  animate={cardFloat}
-                  transition={{ duration: 4.5, ease: EASE_IN_OUT, repeat: Infinity, delay: 2 }}
-                >
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-primary-foreground bg-primary">AI</div>
-                  <div>
-                    <div className="font-semibold text-sm">AI Receptionist Active</div>
-                    <div className="text-xs text-muted-foreground">Handling 47 calls right now</div>
-                  </div>
-                  <motion.span
-                    className="ml-auto w-2 h-2 rounded-full bg-primary"
-                    animate={dotPulse}
-                    transition={{ duration: 2, ease: EASE_IN_OUT, repeat: Infinity }}
-                  />
-                </motion.div>
-              </Reveal>
-            </motion.div>
-          </Reveal>
+          <div className="order-2 flex flex-col gap-4">
+            <Reveal variant="scaleIn" delay={0.3} className="relative">
+              <div className="absolute -inset-4 rounded-3xl blur-3xl opacity-30 bg-primary" />
+              <motion.div
+                className="relative rounded-3xl overflow-hidden border border-border max-h-[60vh] lg:max-h-none"
+                style={{ boxShadow: "var(--shadow-glow)" }}
+                animate={heroFloat}
+                transition={{ duration: 6, ease: EASE_IN_OUT, repeat: Infinity, repeatType: "loop", delay: 1.5 }}
+              >
+                <img src={heroImage} alt="AI Technology" width={1280} height={960} loading="eager" className="w-full h-auto object-cover" />
+                <Reveal variant="fadeUp" delay={0.9} className="hidden lg:block absolute bottom-4 left-4 right-4">
+                  <motion.div
+                    className="flex items-center gap-3 p-4 rounded-2xl bg-background/80 backdrop-blur-md border border-border"
+                    animate={cardFloat}
+                    transition={{ duration: 4.5, ease: EASE_IN_OUT, repeat: Infinity, delay: 2 }}
+                  >
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-primary-foreground bg-primary">AI</div>
+                    <div>
+                      <div className="font-semibold text-sm">AI Receptionist Active</div>
+                      <div className="text-xs text-muted-foreground">Handling 47 calls right now</div>
+                    </div>
+                    <motion.span
+                      className="ml-auto w-2 h-2 rounded-full bg-primary"
+                      animate={dotPulse}
+                      transition={{ duration: 2, ease: EASE_IN_OUT, repeat: Infinity }}
+                    />
+                  </motion.div>
+                </Reveal>
+              </motion.div>
+            </Reveal>
+            {/* Mobile-only inline notification card (promoted from overlay) */}
+            <Reveal variant="fadeUp" delay={0.5} className="lg:hidden">
+              <div className="flex items-center gap-3 p-4 rounded-2xl bg-card/80 backdrop-blur-md border border-border">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-primary-foreground bg-primary shrink-0">AI</div>
+                <div className="min-w-0">
+                  <div className="font-semibold text-sm">AI Receptionist Active</div>
+                  <div className="text-[13px] text-muted-foreground">Handling 47 calls right now</div>
+                </div>
+                <motion.span
+                  className="ml-auto w-2 h-2 rounded-full bg-primary shrink-0"
+                  animate={dotPulse}
+                  transition={{ duration: 2, ease: EASE_IN_OUT, repeat: Infinity }}
+                />
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* Services */}
-      <section id="services" className="py-24 px-6">
+      <section id="services" className="py-16 md:py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 md:mb-16">
             <Reveal><div className="text-sm text-primary font-medium mb-3">Our Services</div></Reveal>
-            <Reveal delay={0.1}><h2 className="text-4xl md:text-5xl font-bold mb-4">Everything Your Business Needs to Grow</h2></Reveal>
+            <Reveal delay={0.1}><h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>Everything Your Business Needs to Grow</h2></Reveal>
             <Reveal delay={0.2}>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-base text-muted-foreground max-w-2xl mx-auto">
                 We combine cutting-edge AI technology with premium design to deliver solutions that actually move the needle.
               </p>
             </Reveal>
           </div>
-          <StaggerGroup className="grid md:grid-cols-2 gap-6">
+          <StaggerGroup className="grid sm:grid-cols-2 gap-4 md:gap-6">
             {[
               { icon: Phone, title: "AI Receptionists", desc: "24/7 AI-powered receptionists that answer calls, book appointments, and never miss a lead.", items: ["24/7 Availability", "Natural Conversations", "Appointment Booking", "Lead Capture"] },
               { icon: Star, title: "5-Star Review Generation", desc: "Automatically collect and boost your Google reviews. Turn happy customers into your best marketing.", items: ["Automated Follow-ups", "Review Monitoring", "Response Templates", "Analytics Dashboard"] },
@@ -157,12 +181,12 @@ function Index() {
             ].map((s) => (
               <Reveal key={s.title}>
                 <InteractiveCard className="rounded-2xl">
-                  <div className="p-8 bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
+                  <div className="p-6 md:p-8 bg-card" style={{ boxShadow: "var(--shadow-card)" }}>
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-primary/10">
                       <s.icon className="w-6 h-6 text-primary" />
                     </div>
-                    <h3 className="text-2xl font-bold mb-2">{s.title}</h3>
-                    <p className="text-muted-foreground mb-5">{s.desc}</p>
+                    <h3 className="text-xl md:text-2xl font-bold mb-2">{s.title}</h3>
+                    <p className="text-[15px] md:text-base text-muted-foreground mb-5">{s.desc}</p>
                     <ul className="grid grid-cols-2 gap-2 text-sm">
                       {s.items.map((i) => (
                         <li key={i} className="flex items-center gap-2">
@@ -180,24 +204,24 @@ function Index() {
       </section>
 
       {/* Features */}
-      <section id="features" className="py-24 px-6 border-t border-border">
+      <section id="features" className="py-16 md:py-24 px-6 border-t border-border">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 mb-16">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-12 md:mb-16">
             <div>
               <Reveal><div className="text-sm text-primary font-medium mb-3">Why Choose Us</div></Reveal>
-              <Reveal delay={0.1}><h2 className="text-4xl md:text-5xl font-bold">Built for Businesses That Demand Excellence</h2></Reveal>
+              <Reveal delay={0.1}><h2 className="font-bold" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>Built for Businesses That Demand Excellence</h2></Reveal>
             </div>
             <div className="flex flex-col justify-center">
               <Reveal delay={0.2}>
-                <p className="text-muted-foreground mb-6">
+                <p className="text-base text-muted-foreground mb-6">
                   We don't just build tools—we build growth engines. Every feature is designed to help your business capture more leads, build trust, and scale without limits.
                 </p>
               </Reveal>
-              <StaggerGroup tight className="grid grid-cols-2 gap-4">
+              <StaggerGroup tight className="grid grid-cols-2 gap-3 md:gap-4">
                 <Reveal delay={0.3}>
                   <InteractiveCard showArrow={false} className="rounded-xl">
                     <div className="p-4 bg-card">
-                      <div className="text-3xl font-bold text-primary">99.9%</div>
+                      <div className="text-2xl md:text-3xl font-bold text-primary">99.9%</div>
                       <div className="text-sm text-muted-foreground">Uptime Guarantee</div>
                     </div>
                   </InteractiveCard>
@@ -205,7 +229,7 @@ function Index() {
                 <Reveal delay={0.36}>
                   <InteractiveCard showArrow={false} className="rounded-xl">
                     <div className="p-4 bg-card">
-                      <div className="text-3xl font-bold text-primary">&lt;2s</div>
+                      <div className="text-2xl md:text-3xl font-bold text-primary">&lt;2s</div>
                       <div className="text-sm text-muted-foreground">Response Time</div>
                     </div>
                   </InteractiveCard>
@@ -213,7 +237,7 @@ function Index() {
               </StaggerGroup>
             </div>
           </div>
-          <StaggerGroup className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <StaggerGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {[
               { icon: Zap, title: "Lightning Fast Setup", desc: "Get up and running in minutes, not weeks. Our AI learns your business instantly." },
               { icon: Shield, title: "Enterprise Security", desc: "Bank-level encryption and compliance. Your data is always safe with us." },
@@ -228,8 +252,8 @@ function Index() {
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-primary/10">
                       <f.icon className="w-6 h-6 text-primary" />
                     </div>
-                    <h3 className="text-xl font-bold mb-2">{f.title}</h3>
-                    <p className="text-sm text-muted-foreground">{f.desc}</p>
+                    <h3 className="text-lg md:text-xl font-bold mb-2">{f.title}</h3>
+                    <p className="text-[15px] md:text-sm text-muted-foreground">{f.desc}</p>
                   </div>
                 </InteractiveCard>
               </Reveal>
