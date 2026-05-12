@@ -412,103 +412,141 @@ const FEATURE_BLOCKS: { n: string; title: string; desc: string; mapped: string; 
 ];
 
 function RevenueConstellationLayout() {
-  const [activeKey, setActiveKey] = useState<NodeKey>("ai");
-  const blockRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const reduced = useReducedMotion();
+  const outerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const { scrollYProgress } = useScroll({
+    target: outerRef,
+    offset: ["start start", "end end"],
+  });
 
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    const isMobile = window.matchMedia("(max-width: 1023px)").matches;
-    const rootMargin = isMobile
-      ? "-75% 0px -10% 0px"
-      : "-50% 0px -50% 0px";
-    blockRefs.current.forEach((el, i) => {
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveKey(FEATURE_BLOCKS[i].key);
-          }
-        },
-        { rootMargin, threshold: 0 },
+    const update = (v: number) => {
+      const idx = Math.min(
+        FEATURE_BLOCKS.length - 1,
+        Math.max(0, Math.floor(v * FEATURE_BLOCKS.length)),
       );
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return () => observers.forEach((o) => o.disconnect());
-  }, []);
+      setActiveIndex(idx);
+    };
+    update(scrollYProgress.get());
+    return scrollYProgress.on("change", update);
+  }, [scrollYProgress]);
+
+  const activeKey: NodeKey = FEATURE_BLOCKS[activeIndex].key;
+  const fadeDur = reduced ? 0 : 0.2;
 
   return (
-    <div className="block lg:grid lg:grid-cols-[3fr_2fr] lg:gap-16">
-      <Reveal delay={0.25} className="rc-sticky-wrap">
-        <div className="mx-auto" style={{ maxWidth: 600 }}>
-          <div className="lg:hidden mx-auto" style={{ maxWidth: 280 }}>
-            <RevenueConstellation activeKey={activeKey} />
+    <div ref={outerRef} className="rc-outer relative">
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-between py-6 lg:py-10">
+        <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-6 lg:gap-12 items-center">
+          {/* Diagram column */}
+          <div className="flex items-center justify-center w-full h-full min-h-0">
+            <div className="w-full lg:hidden mx-auto" style={{ maxWidth: 280 }}>
+              <RevenueConstellation activeKey={activeKey} />
+            </div>
+            <div className="hidden lg:block w-full mx-auto" style={{ maxWidth: 600 }}>
+              <RevenueConstellation activeKey={activeKey} />
+            </div>
           </div>
-          <div className="hidden lg:block">
-            <RevenueConstellation activeKey={activeKey} />
+
+          {/* Feature display column — single visible feature, cross-fade */}
+          <div className="relative w-full" style={{ minHeight: 220 }}>
+            {FEATURE_BLOCKS.map((f, i) => {
+              const isActive = i === activeIndex;
+              return (
+                <motion.div
+                  key={f.n}
+                  initial={false}
+                  animate={{ opacity: isActive ? 1 : 0 }}
+                  transition={{ duration: fadeDur, ease: "easeOut" }}
+                  className="absolute inset-0 flex flex-col justify-center mx-auto px-2 lg:px-0"
+                  style={{
+                    maxWidth: 480,
+                    pointerEvents: isActive ? "auto" : "none",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 700,
+                      color: "hsl(var(--primary))",
+                      letterSpacing: "0.15em",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {f.n}
+                  </div>
+                  <h3
+                    style={{
+                      marginTop: 16,
+                      fontSize: "clamp(22px, 4vw, 32px)",
+                      fontWeight: 600,
+                      color: "hsl(var(--foreground))",
+                      lineHeight: 1.15,
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    {f.title}
+                  </h3>
+                  <p
+                    style={{
+                      marginTop: 16,
+                      fontSize: "clamp(15px, 2.4vw, 16px)",
+                      fontWeight: 400,
+                      color: "hsl(var(--muted-foreground))",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    {f.desc}
+                  </p>
+                  <div
+                    style={{
+                      marginTop: 24,
+                      fontSize: 11,
+                      fontWeight: 600,
+                      color: "hsl(var(--muted-foreground))",
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    Mapped to — {f.mapped}
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
-      </Reveal>
 
-      <div className="flex flex-col gap-12 lg:gap-16">
-        {FEATURE_BLOCKS.map((f, i) => (
-          <Reveal key={f.n} delay={0.3 + i * 0.04}>
-            <div
-              ref={(el) => {
-                blockRefs.current[i] = el;
-              }}
-              className="feature-block"
-            >
-              <div
+        {/* Progress indicator */}
+        <div
+          className="flex justify-center items-center pt-4"
+          style={{ gap: 6 }}
+          aria-hidden="true"
+        >
+          {FEATURE_BLOCKS.map((_, i) => {
+            const isActive = i === activeIndex;
+            const isPast = i < activeIndex;
+            return (
+              <span
+                key={i}
                 style={{
-                  fontSize: 14,
-                  fontWeight: 700,
-                  color: "hsl(var(--primary))",
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
+                  display: "block",
+                  width: isActive ? 36 : 24,
+                  height: 2,
+                  borderRadius: 1,
+                  backgroundColor:
+                    isActive || isPast
+                      ? "hsl(var(--primary))"
+                      : "hsl(var(--muted-foreground))",
+                  opacity: isActive ? 1 : isPast ? 0.6 : 0.3,
+                  transition: reduced
+                    ? "none"
+                    : "width 300ms ease-out, opacity 300ms ease-out, background-color 300ms ease-out",
                 }}
-              >
-                {f.n}
-              </div>
-              <h3
-                style={{
-                  marginTop: 24,
-                  fontSize: "clamp(22px, 4vw, 32px)",
-                  fontWeight: 600,
-                  color: "hsl(var(--foreground))",
-                  lineHeight: 1.15,
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {f.title}
-              </h3>
-              <p
-                style={{
-                  marginTop: 16,
-                  fontSize: "clamp(15px, 2.4vw, 16px)",
-                  fontWeight: 400,
-                  color: "hsl(var(--muted-foreground))",
-                  lineHeight: 1.6,
-                  maxWidth: "90%",
-                }}
-              >
-                {f.desc}
-              </p>
-              <div
-                style={{
-                  marginTop: 24,
-                  fontSize: 11,
-                  fontWeight: 600,
-                  color: "hsl(var(--muted-foreground))",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                }}
-              >
-                Mapped to — {f.mapped}
-              </div>
-            </div>
-          </Reveal>
-        ))}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
