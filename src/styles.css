@@ -148,10 +148,10 @@
     will-change: transform;
   }
   .awb-slow {
-    animation: wave-drift-slow 50s linear infinite;
+    animation: wave-drift-slow 30s linear infinite;
   }
   .awb-fast {
-    animation: wave-drift-medium 35s linear infinite;
+    animation: wave-drift-medium 20s linear infinite;
   }
   .awb-slow svg { stroke-opacity: 0.14; }
   .awb-fast svg { stroke-opacity: 0.18; }
