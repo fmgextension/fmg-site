@@ -73,14 +73,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "FMG — 24/7 AI Receptionist" },
+      { name: "description", content: "Built to answer the calls you're missing right now. AI receptionists that book jobs, capture leads, and never sleep." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "FMG — 24/7 AI Receptionist" },
+      { property: "og:description", content: "Built to answer the calls you're missing right now. AI receptionists that book jobs, capture leads, and never sleep." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "FMG — 24/7 AI Receptionist" },
+      { name: "twitter:description", content: "Built to answer the calls you're missing right now. AI receptionists that book jobs, capture leads, and never sleep." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/0VGuwcnp1bQah15641no6eelpKa2/social-images/social-1778628896403-ChatGPT_Image_May_12,_2026,_07_34_40_PM.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/0VGuwcnp1bQah15641no6eelpKa2/social-images/social-1778628896403-ChatGPT_Image_May_12,_2026,_07_34_40_PM.webp" },
     ],
     links: [
       {
