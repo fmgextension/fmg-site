@@ -25,7 +25,7 @@ function Index() {
       {/* Nav */}
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/40 border-b border-border">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="text-xl font-bold">Your Agency</div>
+          <div className="text-xl font-bold">FMG</div>
           <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
             <a href="#services" className="hover:text-foreground transition">Services</a>
             <a href="#features" className="hover:text-foreground transition">Features</a>
@@ -53,7 +53,7 @@ function Index() {
               </span>
             </h1>
             <p className="text-lg text-muted-foreground mb-8 max-w-xl">
-              AI Receptionists that never sleep. High-end web design that converts. We're Your Agency.
+              AI Receptionists that never sleep. High-end web design that converts. We're FMG.
             </p>
             <div className="flex flex-wrap gap-4 mb-12">
               <a href="#contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition">
@@ -180,12 +180,12 @@ function Index() {
             <div className="text-sm text-primary font-medium mb-3">Testimonials</div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Loved by 500+ Businesses</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Don't just take our word for it. Here's what our clients say about working with Your Agency.
+              Don't just take our word for it. Here's what our clients say about working with FMG.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { quote: "Your Agency's AI receptionist has been a game-changer. We went from missing 30% of calls to capturing every single lead. Our reviews jumped from 3.8 to 4.9 stars in just 3 months.", initials: "SM", name: "Sarah Mitchell", role: "Owner, Mitchell Dental" },
+              { quote: "FMG's AI receptionist has been a game-changer. We went from missing 30% of calls to capturing every single lead. Our reviews jumped from 3.8 to 4.9 stars in just 3 months.", initials: "SM", name: "Sarah Mitchell", role: "Owner, Mitchell Dental" },
               { quote: "The ROI speaks for itself. We've seen a 400% increase in booked appointments and our Google ranking has skyrocketed thanks to the review system.", initials: "DC", name: "David Chen", role: "CEO, Premier Auto Group" },
               { quote: "Not only did they build us a stunning website, but the AI handles our after-hours inquiries perfectly. It's like having a 24/7 sales team.", initials: "JW", name: "Jessica Williams", role: "Director, Luxe Real Estate" },
             ].map((t) => (
@@ -224,7 +224,7 @@ function Index() {
         <div className="max-w-4xl mx-auto text-center p-12 rounded-3xl border border-border" style={{ background: "var(--gradient-hero)", boxShadow: "var(--shadow-glow)" }}>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to Transform Your Business?</h2>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join 500+ businesses already using Your Agency to capture more leads, earn more reviews, and grow faster. Let's talk about your goals.
+            Join 500+ businesses already using FMG to capture more leads, earn more reviews, and grow faster. Let's talk about your goals.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a href="#" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition">
@@ -238,7 +238,7 @@ function Index() {
       </section>
 
       <footer className="py-8 px-6 border-t border-border text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Your Agency. All rights reserved.
+        © {new Date().getFullYear()} FMG. All rights reserved.
       </footer>
     </div>
   );
