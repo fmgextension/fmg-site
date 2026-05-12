@@ -3,6 +3,7 @@ import { useState } from "react";
 import heroImage from "@/assets/hero-abstract.jpg";
 import { Reveal } from "@/components/Reveal";
 import { StaggerGroup } from "@/components/StaggerGroup";
+import { InteractiveCard } from "@/components/InteractiveCard";
 import {
   ArrowRight,
   Play,
@@ -132,21 +133,23 @@ function Index() {
               { icon: TrendingUp, title: "Increase Lead Flow", desc: "Supercharge your pipeline with AI-driven lead generation. More appointments, more revenue.", items: ["Book More Appts", "Schedule Consultations", "Lead Nurturing", "Pipeline Automation"] },
             ].map((s) => (
               <Reveal key={s.title}>
-                <div className="p-8 rounded-2xl border border-border hover:border-primary/40 transition group h-full" style={{ background: "var(--gradient-card)", boxShadow: "var(--shadow-card)" }}>
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: "var(--gradient-text)" }}>
-                    <s.icon className="w-6 h-6 text-primary-foreground" />
+                <InteractiveCard className="rounded-2xl">
+                  <div className="p-8" style={{ background: "var(--gradient-card)", boxShadow: "var(--shadow-card)" }}>
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: "var(--gradient-text)" }}>
+                      <s.icon className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2">{s.title}</h3>
+                    <p className="text-muted-foreground mb-5">{s.desc}</p>
+                    <ul className="grid grid-cols-2 gap-2 text-sm">
+                      {s.items.map((i) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                          {i}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <h3 className="text-2xl font-bold mb-2">{s.title}</h3>
-                  <p className="text-muted-foreground mb-5">{s.desc}</p>
-                  <ul className="grid grid-cols-2 gap-2 text-sm">
-                    {s.items.map((i) => (
-                      <li key={i} className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        {i}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                </InteractiveCard>
               </Reveal>
             ))}
           </StaggerGroup>
@@ -169,16 +172,20 @@ function Index() {
               </Reveal>
               <StaggerGroup tight className="grid grid-cols-2 gap-4">
                 <Reveal delay={0.3}>
-                  <div className="p-4 rounded-xl border border-border" style={{ background: "var(--gradient-card)" }}>
-                    <div className="text-3xl font-bold text-primary">99.9%</div>
-                    <div className="text-sm text-muted-foreground">Uptime Guarantee</div>
-                  </div>
+                  <InteractiveCard showArrow={false} className="rounded-xl">
+                    <div className="p-4" style={{ background: "var(--gradient-card)" }}>
+                      <div className="text-3xl font-bold text-primary">99.9%</div>
+                      <div className="text-sm text-muted-foreground">Uptime Guarantee</div>
+                    </div>
+                  </InteractiveCard>
                 </Reveal>
                 <Reveal delay={0.36}>
-                  <div className="p-4 rounded-xl border border-border" style={{ background: "var(--gradient-card)" }}>
-                    <div className="text-3xl font-bold text-primary">&lt;2s</div>
-                    <div className="text-sm text-muted-foreground">Response Time</div>
-                  </div>
+                  <InteractiveCard showArrow={false} className="rounded-xl">
+                    <div className="p-4" style={{ background: "var(--gradient-card)" }}>
+                      <div className="text-3xl font-bold text-primary">&lt;2s</div>
+                      <div className="text-sm text-muted-foreground">Response Time</div>
+                    </div>
+                  </InteractiveCard>
                 </Reveal>
               </StaggerGroup>
             </div>
@@ -193,11 +200,13 @@ function Index() {
               { icon: BarChart3, title: "Real-Time Analytics", desc: "Track every call, review, and conversion. Data-driven decisions made easy." },
             ].map((f) => (
               <Reveal key={f.title}>
-                <div className="p-6 rounded-2xl border border-border h-full" style={{ background: "var(--gradient-card)" }}>
-                  <f.icon className="w-8 h-8 text-primary mb-4" />
-                  <h3 className="text-xl font-bold mb-2">{f.title}</h3>
-                  <p className="text-sm text-muted-foreground">{f.desc}</p>
-                </div>
+                <InteractiveCard className="rounded-2xl">
+                  <div className="p-6 h-full" style={{ background: "var(--gradient-card)" }}>
+                    <f.icon className="w-8 h-8 text-primary mb-4" />
+                    <h3 className="text-xl font-bold mb-2">{f.title}</h3>
+                    <p className="text-sm text-muted-foreground">{f.desc}</p>
+                  </div>
+                </InteractiveCard>
               </Reveal>
             ))}
           </StaggerGroup>
@@ -223,23 +232,25 @@ function Index() {
               { quote: "Not only did they build us a stunning website, but the AI handles our after-hours inquiries perfectly. It's like having a 24/7 sales team.", initials: "JW", name: "Jessica Williams", role: "Director, Luxe Real Estate" },
             ].map((t) => (
               <Reveal key={t.name} className="h-full">
-                <div className="p-8 rounded-2xl border border-border flex flex-col h-full" style={{ background: "var(--gradient-card)" }}>
-                  <div className="flex gap-1 mb-4">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                    ))}
-                  </div>
-                  <p className="text-foreground/90 mb-6 flex-1">"{t.quote}"</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-primary-foreground" style={{ background: "var(--gradient-text)" }}>
-                      {t.initials}
+                <InteractiveCard showArrow={false} className="rounded-2xl">
+                  <div className="p-8 flex flex-col h-full" style={{ background: "var(--gradient-card)" }}>
+                    <div className="flex gap-1 mb-4">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                      ))}
                     </div>
-                    <div>
-                      <div className="font-semibold text-sm">{t.name}</div>
-                      <div className="text-xs text-muted-foreground">{t.role}</div>
+                    <p className="text-foreground/90 mb-6 flex-1">"{t.quote}"</p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-primary-foreground" style={{ background: "var(--gradient-text)" }}>
+                        {t.initials}
+                      </div>
+                      <div>
+                        <div className="font-semibold text-sm">{t.name}</div>
+                        <div className="text-xs text-muted-foreground">{t.role}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </InteractiveCard>
               </Reveal>
             ))}
           </StaggerGroup>
