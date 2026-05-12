@@ -1,6 +1,6 @@
 import * as React from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { List, X } from "@phosphor-icons/react";
 
 type Item = { href: string; label: string };
 
@@ -23,7 +23,7 @@ export function MobileMenu({ items, ctaHref, ctaLabel }: { items: Item[]; ctaHre
         onClick={() => setOpen((v) => !v)}
         className="icon-btn md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 text-foreground"
       >
-        {open ? <X size={24} /> : <Menu size={24} />}
+        {open ? <X size={24} weight="bold" /> : <List size={24} weight="bold" />}
       </button>
 
       <AnimatePresence>

@@ -12,12 +12,15 @@ import { HeroPhoneMockup } from "@/components/HeroPhoneMockup";
 import {
   ArrowRight,
   Play,
-  Phone,
-  Star,
-  Globe,
-  TrendingUp,
-  X,
 } from "lucide-react";
+import {
+  ArrowRight as PArrowRight,
+  Star as PStar,
+  Globe as PGlobe,
+  PhoneCall as PPhoneCall,
+  Lightning as PLightning,
+  X as PX,
+} from "@phosphor-icons/react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -172,10 +175,10 @@ function Index() {
         <Reveal delay={0.3}>
           <ServicesCarousel
             items={[
-              { icon: Phone, title: "AI Receptionists", desc: "24/7 AI-powered receptionists that answer calls, book appointments, and never miss a lead.", items: ["24/7 Availability", "Natural Conversations", "Appointment Booking", "Lead Capture"] },
-              { icon: Star, title: "5-Star Review Generation", desc: "Automatically collect and boost your Google reviews. Turn happy customers into your best marketing.", items: ["Automated Follow-ups", "Review Monitoring", "Response Templates", "Analytics Dashboard"] },
-              { icon: Globe, title: "High-End Web Design", desc: "Premium websites that convert visitors into customers. Stunning designs backed by conversion science.", items: ["Custom Design", "Mobile Optimized", "SEO Ready", "Fast Loading"] },
-              { icon: TrendingUp, title: "Increase Lead Flow", desc: "Supercharge your pipeline with AI-driven lead generation. More appointments, more revenue.", items: ["Book More Appts", "Schedule Consultations", "Lead Nurturing", "Pipeline Automation"] },
+              { icon: PPhoneCall, title: "AI Receptionists", desc: "24/7 AI-powered receptionists that answer calls, book appointments, and never miss a lead.", items: ["24/7 Availability", "Natural Conversations", "Appointment Booking", "Lead Capture"] },
+              { icon: PStar, title: "5-Star Review Generation", desc: "Automatically collect and boost your Google reviews. Turn happy customers into your best marketing.", items: ["Automated Follow-ups", "Review Monitoring", "Response Templates", "Analytics Dashboard"] },
+              { icon: PGlobe, title: "High-End Web Design", desc: "Premium websites that convert visitors into customers. Stunning designs backed by conversion science.", items: ["Custom Design", "Mobile Optimized", "SEO Ready", "Fast Loading"] },
+              { icon: PLightning, title: "Increase Lead Flow", desc: "Supercharge your pipeline with AI-driven lead generation. More appointments, more revenue.", items: ["Book More Appts", "Schedule Consultations", "Lead Nurturing", "Pipeline Automation"] },
             ]}
           />
         </Reveal>
@@ -230,7 +233,7 @@ function Index() {
                   <div className="p-8 flex flex-col h-full bg-card">
                     <div className="flex gap-1 mb-4">
                       {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                        <PStar key={i} size={16} weight="fill" className="text-primary" />
                       ))}
                     </div>
                     <p className="text-foreground/90 mb-6 flex-1">"{t.quote}"</p>
@@ -272,7 +275,7 @@ function Index() {
           <Reveal delay={0.2}>
             <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4">
               <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium w-full sm:w-auto">
-                Book a Free Demo <ArrowRight className="w-4 h-4 btn-arrow" />
+                Book a Free Demo <PArrowRight className="btn-arrow" size={16} weight="bold" />
               </a>
               <a href="tel:+17866347595" className="btn-secondary inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium w-full sm:w-auto">
                 Schedule a Call
@@ -305,7 +308,7 @@ function Index() {
               className="icon-btn absolute top-3 right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center bg-background/80 border border-border"
               aria-label="Close"
             >
-              <X className="w-4 h-4" />
+              <PX size={16} weight="bold" />
             </button>
             <iframe
               src="https://www.loom.com/embed/59b4eb299cfa4d43bc619ce332cc3f4a?autoplay=1"
@@ -367,7 +370,7 @@ function TestimonialsCarousel() {
               <div className="p-6 flex flex-col h-full bg-card">
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                    <PStar key={i} size={16} weight="fill" className="text-primary" />
                   ))}
                 </div>
                 <p className="text-base text-foreground/90 mb-6 flex-1">"{t.quote}"</p>

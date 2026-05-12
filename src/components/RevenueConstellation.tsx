@@ -2,29 +2,29 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   Target,
-  MessageSquare,
-  Search,
-  Mail,
+  ChatCircle,
+  MagnifyingGlass,
+  EnvelopeSimple,
   Globe,
   PhoneCall,
-  type LucideIcon,
-} from "lucide-react";
+  type Icon as PhosphorIcon,
+} from "@phosphor-icons/react";
 
 export type NodeKey = "paid" | "social" | "seo" | "email" | "website" | "ai";
 
 type ConstellationNode = {
   key: NodeKey;
   label: string;
-  icon: LucideIcon;
+  icon: PhosphorIcon;
   angle: number;
   dist: number;
 };
 
 const NODES: ConstellationNode[] = [
   { key: "paid", label: "PAID MEDIA", icon: Target, angle: 350, dist: 220 },
-  { key: "social", label: "SOCIAL", icon: MessageSquare, angle: 55, dist: 200 },
-  { key: "seo", label: "SEO", icon: Search, angle: 110, dist: 215 },
-  { key: "email", label: "EMAIL", icon: Mail, angle: 175, dist: 225 },
+  { key: "social", label: "SOCIAL", icon: ChatCircle, angle: 55, dist: 200 },
+  { key: "seo", label: "SEO", icon: MagnifyingGlass, angle: 110, dist: 215 },
+  { key: "email", label: "EMAIL", icon: EnvelopeSimple, angle: 175, dist: 225 },
   { key: "website", label: "WEBSITE", icon: Globe, angle: 245, dist: 205 },
   { key: "ai", label: "RECEPTIONIST", icon: PhoneCall, angle: 295, dist: 210 },
 ];
@@ -308,7 +308,7 @@ export function RevenueConstellation({ activeKey = "ai", compact = false }: Cons
               overflow: "visible",
             }}
           >
-            <Icon size={24} style={{ color: "hsl(var(--primary))" }} />
+            <Icon size={24} weight="bold" style={{ color: "hsl(var(--primary))" }} />
             <div
               style={{
                 marginTop: 6,
