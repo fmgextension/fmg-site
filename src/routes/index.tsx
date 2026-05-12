@@ -234,7 +234,7 @@ function Index() {
                   <div className="p-8 flex flex-col h-full bg-card">
                     <div className="flex gap-1 mb-4">
                       {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                        <PStar key={i} size={16} weight="fill" className="text-primary" />
                       ))}
                     </div>
                     <p className="text-foreground/90 mb-6 flex-1">"{t.quote}"</p>
@@ -371,7 +371,7 @@ function TestimonialsCarousel() {
               <div className="p-6 flex flex-col h-full bg-card">
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                    <PStar key={i} size={16} weight="fill" className="text-primary" />
                   ))}
                 </div>
                 <p className="text-base text-foreground/90 mb-6 flex-1">"{t.quote}"</p>
