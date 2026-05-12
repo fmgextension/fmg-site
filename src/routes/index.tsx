@@ -442,7 +442,7 @@ function RevenueConstellationLayout() {
             Desktop: single grid row fills remaining space. */}
         <div className="flex flex-col lg:flex-row lg:flex-1 lg:min-h-0 lg:py-10 lg:gap-12 lg:items-center w-full">
           {/* Diagram region */}
-          <div className="flex items-center justify-center w-full h-[55vh] pt-6 pb-4 lg:pt-0 lg:pb-0 lg:h-full lg:flex-[3] lg:min-h-0">
+          <div className="flex items-start justify-center w-full h-[55vh] pt-6 pb-0 lg:items-center lg:pt-0 lg:h-full lg:flex-[3] lg:min-h-0">
             <div className="w-full lg:hidden mx-auto px-4" style={{ maxWidth: 320 }}>
               <RevenueConstellation activeKey={activeKey} />
             </div>
