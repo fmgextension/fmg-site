@@ -355,6 +355,12 @@
   .safe-top { padding-top: env(safe-area-inset-top); }
   .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 
+  /* Revenue Constellation feature list spacing */
+  .feature-block { --feature-gap: 32px; }
+  @media (min-width: 1024px) {
+    .feature-block { --feature-gap: 64px; }
+  }
+
   /* Mobile tap states (touch devices only) */
   @media (hover: none) {
     .btn-primary:active { transform: scale(0.97); filter: brightness(0.95); transition: transform 100ms ease-out, filter 100ms ease-out; }
