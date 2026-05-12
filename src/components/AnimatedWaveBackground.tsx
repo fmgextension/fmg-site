@@ -46,41 +46,6 @@ function AnimatedWaveBackgroundBase() {
         background: "transparent",
       }}
     >
-      <style>{`
-        @keyframes awb-drift-slow {
-          from { transform: translateX(0%) scaleY(1); }
-          50%  { transform: translateX(-12.5%) scaleY(1.02); }
-          to   { transform: translateX(-25%) scaleY(1); }
-        }
-        @keyframes awb-drift-medium {
-          from { transform: translateX(0%) scaleY(1); }
-          50%  { transform: translateX(-16.5%) scaleY(1.02); }
-          to   { transform: translateX(-33%) scaleY(1); }
-        }
-        .awb-layer {
-          position: absolute;
-          top: 0; left: 0;
-          width: 200%;
-          height: 100%;
-          will-change: transform;
-        }
-        .awb-slow {
-          animation: awb-drift-slow 60s linear infinite;
-        }
-        .awb-fast {
-          animation: awb-drift-medium 45s linear infinite;
-        }
-        .awb-slow svg { stroke-opacity: 0.10; }
-        .awb-fast svg { stroke-opacity: 0.12; }
-        @media (max-width: 767px) {
-          .awb-slow svg { stroke-opacity: 0.07; }
-          .awb-fast svg { stroke-opacity: 0.084; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .awb-layer { animation: none !important; }
-        }
-      `}</style>
-
       <div className="awb-layer awb-slow">
         <svg
           width="100%"
@@ -91,7 +56,7 @@ function AnimatedWaveBackgroundBase() {
           xmlns="http://www.w3.org/2000/svg"
           style={{ display: "block" }}
         >
-          <g stroke="hsl(var(--primary))" strokeWidth={1} fill="none">
+          <g stroke="hsl(var(--primary))" strokeWidth={1.5} fill="none">
             {SLOW_PATHS.map((d, i) => (
               <path key={i} d={d} />
             ))}
@@ -109,7 +74,7 @@ function AnimatedWaveBackgroundBase() {
           xmlns="http://www.w3.org/2000/svg"
           style={{ display: "block" }}
         >
-          <g stroke="hsl(var(--primary))" strokeWidth={1} fill="none">
+          <g stroke="hsl(var(--primary))" strokeWidth={1.5} fill="none">
             {FAST_PATHS.map((d, i) => (
               <path key={i} d={d} />
             ))}
