@@ -238,7 +238,7 @@
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scroll-padding-inline: 0;
-    padding: 8px calc((100vw - (100vw - 96px)) / 2);
+    padding: 8px 70px;
     -webkit-overflow-scrolling: touch;
   }
   @media (min-width: 1024px) {
@@ -252,7 +252,7 @@
     flex: 0 0 auto;
     scroll-snap-align: center;
     scroll-snap-stop: always;
-    width: calc(100vw - 96px);
+    width: calc(100vw - 140px);
     min-height: 400px;
     background-color: hsl(var(--card));
     border: 1px solid hsl(var(--border));
