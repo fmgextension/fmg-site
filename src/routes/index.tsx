@@ -535,10 +535,11 @@ function RevenueConstellationLayout() {
 
   return (
     <div ref={outerRef} className="rc-outer relative">
-      {/* Mobile sticky wrapper: simple top-down block stack, fixed gaps */}
+      {/* Mobile sticky wrapper: simple top-down block stack, fixed gaps.
+          top offset = navbar height so diagram isn't clipped behind fixed nav. */}
       <div
-        className="sticky top-0 lg:hidden block w-full overflow-hidden"
-        style={{ height: "100vh", paddingTop: 16, paddingBottom: 16 }}
+        className="sticky lg:hidden block w-full overflow-hidden"
+        style={{ top: 64, height: "calc(100vh - 64px)", paddingTop: 16, paddingBottom: 16 }}
       >
         <div className="mx-auto" style={{ maxWidth: 280 }}>
           <RevenueConstellation activeKey={activeKey} compact />
