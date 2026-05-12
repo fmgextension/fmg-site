@@ -182,61 +182,105 @@ function Index() {
       </section>
 
       {/* Features */}
-      <section id="features" className="py-16 md:py-24 px-6 border-t border-border">
+      <section
+        id="features"
+        className="px-6 border-t border-border"
+        style={{ paddingTop: "clamp(80px, 12vw, 120px)", paddingBottom: "clamp(80px, 12vw, 120px)" }}
+      >
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-12 md:mb-16">
-            <div>
-              <Reveal><div className="text-sm text-primary font-medium mb-3">Why Choose Us</div></Reveal>
-              <Reveal delay={0.1}><h2 className="font-bold" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>Built for Businesses That Demand Excellence</h2></Reveal>
-            </div>
-            <div className="flex flex-col justify-center">
-              <Reveal delay={0.2}>
-                <p className="text-base text-muted-foreground mb-6">
-                  We don't just build tools—we build growth engines. Every feature is designed to help your business capture more leads, build trust, and scale without limits.
-                </p>
-              </Reveal>
-              <StaggerGroup tight className="grid grid-cols-2 gap-3 md:gap-4">
-                <Reveal delay={0.3}>
-                  <InteractiveCard showArrow={false} className="rounded-xl">
-                    <div className="p-4 bg-card">
-                      <div className="text-2xl md:text-3xl font-bold text-primary">99.9%</div>
-                      <div className="text-sm text-muted-foreground">Uptime Guarantee</div>
+          {/* Header */}
+          <div className="text-center mx-auto" style={{ maxWidth: 640, marginBottom: 80 }}>
+            <Reveal><div className="text-sm text-primary font-medium mb-3">Why Choose Us</div></Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>
+                Built for Businesses That <span style={{ color: "hsl(var(--primary))" }}>Demand Excellence</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="text-base text-muted-foreground">
+                Six channels. One revenue engine. Built to compound.
+              </p>
+            </Reveal>
+          </div>
+
+          {/* Two-column: diagram + feature list */}
+          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16">
+            <Reveal delay={0.25}>
+              <div className="lg:sticky" style={{ top: 80 }}>
+                <div className="mx-auto" style={{ maxWidth: 600 }}>
+                  <div className="lg:hidden mx-auto" style={{ maxWidth: 320 }}>
+                    <RevenueConstellation />
+                  </div>
+                  <div className="hidden lg:block">
+                    <RevenueConstellation />
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            <div className="flex flex-col" style={{ gap: "var(--feature-gap, 64px)" }}>
+              {[
+                { n: "01", title: "Lightning Fast Setup", desc: "Get up and running in minutes, not weeks. Our AI learns your business instantly.", mapped: "WEBSITE" },
+                { n: "02", title: "Enterprise Security", desc: "Bank-level encryption and compliance. Your data is always safe with us.", mapped: "EMAIL" },
+                { n: "03", title: "Proven ROI", desc: "Average 300% increase in captured leads. Real results, measured in dollars.", mapped: "PAID MEDIA" },
+                { n: "04", title: "24/7 Availability", desc: "Never miss a call again. AI that works while you sleep.", mapped: "AI RECEPTIONIST" },
+                { n: "05", title: "Human Handoff", desc: "Seamless transfer to your team when needed. AI + human, perfectly balanced.", mapped: "SOCIAL" },
+                { n: "06", title: "Real-Time Analytics", desc: "Track every call, review, and conversion. Data-driven decisions made easy.", mapped: "SEO" },
+              ].map((f, i) => (
+                <Reveal key={f.n} delay={0.3 + i * 0.04}>
+                  <div className="feature-block">
+                    <div
+                      style={{
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: "hsl(var(--primary))",
+                        letterSpacing: "0.15em",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {f.n}
                     </div>
-                  </InteractiveCard>
-                </Reveal>
-                <Reveal delay={0.36}>
-                  <InteractiveCard showArrow={false} className="rounded-xl">
-                    <div className="p-4 bg-card">
-                      <div className="text-2xl md:text-3xl font-bold text-primary">&lt;2s</div>
-                      <div className="text-sm text-muted-foreground">Response Time</div>
+                    <h3
+                      style={{
+                        marginTop: 24,
+                        fontSize: "clamp(22px, 4vw, 32px)",
+                        fontWeight: 600,
+                        color: "hsl(var(--foreground))",
+                        lineHeight: 1.15,
+                        letterSpacing: "-0.01em",
+                      }}
+                    >
+                      {f.title}
+                    </h3>
+                    <p
+                      style={{
+                        marginTop: 16,
+                        fontSize: "clamp(15px, 2.4vw, 16px)",
+                        fontWeight: 400,
+                        color: "hsl(var(--muted-foreground))",
+                        lineHeight: 1.6,
+                        maxWidth: "90%",
+                      }}
+                    >
+                      {f.desc}
+                    </p>
+                    <div
+                      style={{
+                        marginTop: 24,
+                        fontSize: 11,
+                        fontWeight: 600,
+                        color: "hsl(var(--muted-foreground))",
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      Mapped to — {f.mapped}
                     </div>
-                  </InteractiveCard>
+                  </div>
                 </Reveal>
-              </StaggerGroup>
+              ))}
             </div>
           </div>
-          <StaggerGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {[
-              { icon: Zap, title: "Lightning Fast Setup", desc: "Get up and running in minutes, not weeks. Our AI learns your business instantly." },
-              { icon: Shield, title: "Enterprise Security", desc: "Bank-level encryption and compliance. Your data is always safe with us." },
-              { icon: DollarSign, title: "Proven ROI", desc: "Average 300% increase in captured leads. Real results, measured in dollars." },
-              { icon: Clock, title: "24/7 Availability", desc: "Never miss a call again. AI that works while you sleep." },
-              { icon: Users, title: "Human Handoff", desc: "Seamless transfer to your team when needed. AI + human, perfectly balanced." },
-              { icon: BarChart3, title: "Real-Time Analytics", desc: "Track every call, review, and conversion. Data-driven decisions made easy." },
-            ].map((f) => (
-              <Reveal key={f.title}>
-                <InteractiveCard className="rounded-2xl">
-                  <div className="p-6 h-full bg-card">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-primary/10">
-                      <f.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <h3 className="text-lg md:text-xl font-bold mb-2">{f.title}</h3>
-                    <p className="text-[15px] md:text-sm text-muted-foreground">{f.desc}</p>
-                  </div>
-                </InteractiveCard>
-              </Reveal>
-            ))}
-          </StaggerGroup>
         </div>
       </section>
 
