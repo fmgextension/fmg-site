@@ -2,13 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { motion, useReducedMotion, useScroll } from "framer-motion";
 import { EASE_IN_OUT } from "@/lib/motion";
-import heroImage from "@/assets/hero-abstract.jpg";
 import { Reveal } from "@/components/Reveal";
 import { StaggerGroup } from "@/components/StaggerGroup";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ServicesCarousel } from "@/components/ServicesCarousel";
 import { RevenueConstellation, type NodeKey } from "@/components/RevenueConstellation";
+import { HeroPhoneMockup } from "@/components/HeroPhoneMockup";
 import {
   ArrowRight,
   Play,
@@ -112,13 +112,13 @@ function Index() {
             <Reveal variant="scaleIn" delay={0.3} className="relative">
               <div className="absolute -inset-4 rounded-3xl blur-3xl opacity-30 bg-primary" />
               <motion.div
-                className="relative rounded-3xl overflow-hidden border border-border max-h-[60vh] lg:max-h-none"
-                style={{ boxShadow: "var(--shadow-glow)" }}
+                className="relative"
+                style={{ ["--phone-max" as never]: "320px" }}
                 animate={heroFloat}
                 transition={{ duration: 6, ease: EASE_IN_OUT, repeat: Infinity, repeatType: "loop", delay: 1.5 }}
               >
-                <img src={heroImage} alt="AI Technology" width={1280} height={960} loading="eager" className="w-full h-auto object-cover" />
-                <Reveal variant="fadeUp" delay={0.9} className="hidden lg:block absolute bottom-4 left-4 right-4">
+                <HeroPhoneMockup />
+                <Reveal variant="fadeUp" delay={0.9} className="hidden lg:block absolute -bottom-4 left-1/2 -translate-x-1/2 w-[320px] max-w-[90%] z-10">
                   <motion.div
                     className="flex items-center gap-3 p-4 rounded-2xl bg-background/80 backdrop-blur-md border border-border"
                     animate={cardFloat}
