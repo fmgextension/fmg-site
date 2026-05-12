@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { EASE_IN_OUT } from "@/lib/motion";
 import heroImage from "@/assets/hero-abstract.jpg";
@@ -372,6 +372,87 @@ function Index() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+const TESTIMONIALS = [
+  { quote: "FMG's AI receptionist has been a game-changer. We went from missing 30% of calls to capturing every single lead. Our reviews jumped from 3.8 to 4.9 stars in just 3 months.", initials: "SM", name: "Sarah Mitchell", role: "Owner, Mitchell Dental" },
+  { quote: "The ROI speaks for itself. We've seen a 400% increase in booked appointments and our Google ranking has skyrocketed thanks to the review system.", initials: "DC", name: "David Chen", role: "CEO, Premier Auto Group" },
+  { quote: "Not only did they build us a stunning website, but the AI handles our after-hours inquiries perfectly. It's like having a 24/7 sales team.", initials: "JW", name: "Jessica Williams", role: "Director, Luxe Real Estate" },
+];
+
+function TestimonialsCarousel() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onScroll = () => {
+      const cards = el.querySelectorAll<HTMLElement>("[data-tcard]");
+      const center = el.scrollLeft + el.clientWidth / 2;
+      let best = 0;
+      let bestDist = Infinity;
+      cards.forEach((c, i) => {
+        const cCenter = c.offsetLeft + c.clientWidth / 2;
+        const d = Math.abs(cCenter - center);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      setActive(best);
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <div className="md:hidden">
+      <div
+        ref={ref}
+        className="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory px-6 -mx-0"
+        style={{ scrollSnapType: "x mandatory" }}
+      >
+        {TESTIMONIALS.map((t) => (
+          <div
+            key={t.name}
+            data-tcard
+            className="snap-center shrink-0 w-[85%]"
+          >
+            <InteractiveCard showArrow={false} className="rounded-2xl">
+              <div className="p-6 flex flex-col h-full bg-card">
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-base text-foreground/90 mb-6 flex-1">"{t.quote}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-primary bg-secondary">
+                    {t.initials}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-sm">{t.name}</div>
+                    <div className="text-[13px] text-muted-foreground">{t.role}</div>
+                  </div>
+                </div>
+              </div>
+            </InteractiveCard>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-center gap-2 mt-6">
+        {TESTIMONIALS.map((_, i) => (
+          <span
+            key={i}
+            className="h-2 w-2 rounded-full transition-colors duration-200"
+            style={{
+              backgroundColor: i === active
+                ? "hsl(var(--primary))"
+                : "hsl(var(--muted-foreground) / 0.3)",
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 }
