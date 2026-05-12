@@ -37,7 +37,7 @@ export function MobileMenu({ items, ctaHref, ctaLabel }: { items: Item[]; ctaHre
             onClick={() => setOpen(false)}
             className="fixed inset-0 z-40 md:hidden flex flex-col safe-top safe-bottom"
             style={{
-              backgroundColor: "hsl(var(--background) / 0.98)",
+              backgroundColor: "hsl(218 36% 4%)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
             }}
