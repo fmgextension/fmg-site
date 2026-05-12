@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll } from "framer-motion";
 import { EASE_IN_OUT } from "@/lib/motion";
 import heroImage from "@/assets/hero-abstract.jpg";
 import { Reveal } from "@/components/Reveal";
