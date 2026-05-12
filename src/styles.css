@@ -155,10 +155,6 @@
   }
   .awb-slow svg { stroke-opacity: 0.14; }
   .awb-fast svg { stroke-opacity: 0.18; }
-  @media (max-width: 767px) {
-    .awb-slow svg { stroke-opacity: 0.098; }
-    .awb-fast svg { stroke-opacity: 0.126; }
-  }
   @media (prefers-reduced-motion: reduce) {
     .awb-layer { animation: none !important; }
   }
