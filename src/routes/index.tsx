@@ -38,7 +38,7 @@ function Index() {
   const cardFloat = reduced ? {} : { y: [0, -4, 0] };
   const dotPulse = reduced ? {} : { scale: [1, 1.15, 1], opacity: [1, 0.7, 1] };
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Nav */}
       <Reveal variant="fadeIn" as="header" className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/40 border-b border-border safe-top">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
