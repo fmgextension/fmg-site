@@ -529,7 +529,7 @@ function RevenueConstellationLayout() {
 
         {/* Progress indicator */}
         <div
-          className="flex justify-center items-center w-full shrink-0 pb-4 lg:h-auto lg:pt-4 lg:pb-0"
+          className="flex justify-center items-center w-full shrink-0 mb-4 lg:h-auto lg:pt-4 lg:mb-0"
           style={{ gap: 6 }}
           aria-hidden="true"
         >
