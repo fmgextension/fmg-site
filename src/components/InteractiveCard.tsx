@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 
 type InteractiveCardProps = {
@@ -44,7 +44,7 @@ export function InteractiveCard({
           aria-hidden
           className="ic-arrow pointer-events-none absolute top-5 right-5 text-[hsl(var(--primary))] opacity-0 -translate-x-1 translate-y-1 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0"
         >
-          <ArrowUpRight size={16} />
+          <ArrowUpRight size={16} weight="bold" />
         </span>
       )}
 
