@@ -8,6 +8,7 @@ import { StaggerGroup } from "@/components/StaggerGroup";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ServicesCarousel } from "@/components/ServicesCarousel";
+import { RevenueConstellation } from "@/components/RevenueConstellation";
 import {
   ArrowRight,
   Play,
@@ -15,12 +16,6 @@ import {
   Star,
   Globe,
   TrendingUp,
-  Zap,
-  Shield,
-  DollarSign,
-  Clock,
-  Users,
-  BarChart3,
   X,
 } from "lucide-react";
 
