@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { AnimatedWaveBackground } from "@/components/AnimatedWaveBackground";
 
 function NotFoundComponent() {
   return (
@@ -113,7 +114,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <AnimatedWaveBackground />
+      <main style={{ position: "relative", zIndex: 1 }}>
+        <Outlet />
+      </main>
     </QueryClientProvider>
   );
 }
