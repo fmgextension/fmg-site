@@ -541,7 +541,7 @@ function RevenueConstellationLayout() {
         className="sticky lg:hidden flex flex-col justify-center w-full overflow-hidden"
         style={{ top: 64, height: "calc(100vh - 64px)", paddingTop: 16, paddingBottom: 16 }}
       >
-        <div className="mx-auto" style={{ maxWidth: 280 }}>
+        <div className="mx-auto" style={{ width: "min(280px, 90vw)", flexShrink: 0 }}>
           <RevenueConstellation activeKey={activeKey} compact />
         </div>
         <div className="grid w-full" style={{ marginTop: 24, paddingLeft: 24, paddingRight: 24 }}>
