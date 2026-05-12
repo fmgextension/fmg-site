@@ -23,12 +23,12 @@ function AnimatedWaveBackgroundBase() {
   const prefersReducedMotion = useReducedMotion();
   const { scrollY } = useScroll();
 
-  const layer1Y = useTransform(scrollY, [0, 3000], [0, prefersReducedMotion ? 0 : -100]);
-  const layer2Y = useTransform(scrollY, [0, 3000], [0, prefersReducedMotion ? 0 : -300]);
+  const layer1Y = useTransform(scrollY, (v) => (prefersReducedMotion ? 0 : v * -0.05));
+  const layer2Y = useTransform(scrollY, (v) => (prefersReducedMotion ? 0 : v * -0.15));
 
   const mouseX = useMotionValue(0);
-  const layer1MouseX = useSpring(useTransform(mouseX, (x) => x * 20), { stiffness: 50, damping: 20 });
-  const layer2MouseX = useSpring(useTransform(mouseX, (x) => x * 40), { stiffness: 50, damping: 20 });
+  const layer1MouseX = useSpring(useTransform(mouseX, (x) => x * 30), { stiffness: 50, damping: 20 });
+  const layer2MouseX = useSpring(useTransform(mouseX, (x) => x * 60), { stiffness: 50, damping: 20 });
 
   useEffect(() => {
     if (prefersReducedMotion) return;
