@@ -49,7 +49,7 @@ function Index() {
               <a key={it.href} href={it.href} className="nav-link">{it.label}</a>
             ))}
           </nav>
-          <a href="https://booking.fintechmarketinggroup.com" target="_blank" rel="noopener noreferrer" className="btn-primary hidden md:inline-flex px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium">
+          <a href="https://api.leadconnectorhq.com/widget/booking/GY7Wbc5EGo5NME2j6v9T" target="_blank" rel="noopener noreferrer" className="btn-primary hidden md:inline-flex px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium">
             Book a Free Meeting
           </a>
           <MobileMenu items={navItems} ctaHref="tel:+17755464533" ctaLabel="Test Drive Our AI" />
@@ -272,7 +272,7 @@ function Index() {
           </Reveal>
           <Reveal delay={0.2}>
             <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4">
-              <a href="https://booking.fintechmarketinggroup.com" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium w-full sm:w-auto">
+              <a href="https://api.leadconnectorhq.com/widget/booking/GY7Wbc5EGo5NME2j6v9T" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium w-full sm:w-auto">
                 Book a Free Meeting
               </a>
               <a href="tel:+17755464533" className="btn-secondary inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium w-full sm:w-auto">
