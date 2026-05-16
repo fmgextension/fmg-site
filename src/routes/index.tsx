@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { motion, useReducedMotion, useScroll } from "framer-motion";
 import { EASE_IN_OUT } from "@/lib/motion";
@@ -10,11 +10,9 @@ import { ServicesCarousel } from "@/components/ServicesCarousel";
 import { RevenueConstellation, type NodeKey } from "@/components/RevenueConstellation";
 import { HeroPhoneMockup } from "@/components/HeroPhoneMockup";
 import {
-  ArrowRight,
   Play,
 } from "lucide-react";
 import {
-  ArrowRight as PArrowRight,
   Star as PStar,
   Globe as PGlobe,
   PhoneCall as PPhoneCall,
@@ -51,10 +49,10 @@ function Index() {
               <a key={it.href} href={it.href} className="nav-link">{it.label}</a>
             ))}
           </nav>
-          <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="btn-primary hidden md:inline-flex px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium">
-            Book a Demo
+          <a href="https://booking.fintechmarketinggroup.com" target="_blank" rel="noopener noreferrer" className="btn-primary hidden md:inline-flex px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium">
+            Book a Free Meeting
           </a>
-          <MobileMenu items={navItems} ctaHref="tel:+17866347595" ctaLabel="Call Our AI Now" />
+          <MobileMenu items={navItems} ctaHref="tel:+17755464533" ctaLabel="Test Drive Our AI" />
         </div>
       </Reveal>
 
@@ -86,8 +84,8 @@ function Index() {
             </Reveal>
             <StaggerGroup tight className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mb-10 md:mb-12">
               <Reveal delay={0.5}>
-                <a href="tel:+17866347595" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center gap-2 px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
-                  Test Drive Our AI <ArrowRight className="w-4 h-4 btn-arrow" />
+                <a href="tel:+17755464533" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
+                  Test Drive Our AI
                 </a>
               </Reveal>
               <Reveal delay={0.55}>
@@ -98,8 +96,8 @@ function Index() {
             </StaggerGroup>
             <StaggerGroup tight className="grid grid-cols-3 gap-4 md:gap-6 max-w-md">
               {[
-                { n: "500+", l: "Businesses Served" },
-                { n: "10k+", l: "Calls Handled Daily" },
+                { n: "25+", l: "Businesses Served" },
+                { n: "500+", l: "Calls Handled Daily" },
                 { n: "4.9★", l: "Average Review Score" },
               ].map((s, i) => (
                 <Reveal key={s.l} delay={0.7 + i * 0.06}>
@@ -215,7 +213,7 @@ function Index() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 md:mb-16 px-6 md:px-0">
             <Reveal><div className="text-sm text-primary font-medium mb-3">Testimonials</div></Reveal>
-            <Reveal delay={0.1}><h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>Loved by 500+ Businesses</h2></Reveal>
+            <Reveal delay={0.1}><h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>Loved by 25+ Businesses</h2></Reveal>
             <Reveal delay={0.2}>
               <p className="text-base text-muted-foreground max-w-2xl mx-auto">
                 Don't just take our word for it. Here's what our clients say about working with FMG.
@@ -224,9 +222,9 @@ function Index() {
           </div>
           <StaggerGroup className="hidden md:grid md:grid-cols-3 gap-6 px-6 md:px-0">
             {[
-              { quote: "FMG's AI receptionist has been a game-changer. We went from missing 30% of calls to capturing every single lead. Our reviews jumped from 3.8 to 4.9 stars in just 3 months.", initials: "SM", name: "Sarah Mitchell", role: "Owner, Mitchell Dental" },
-              { quote: "The ROI speaks for itself. We've seen a 400% increase in booked appointments and our Google ranking has skyrocketed thanks to the review system.", initials: "DC", name: "David Chen", role: "CEO, Premier Auto Group" },
-              { quote: "Not only did they build us a stunning website, but the AI handles our after-hours inquiries perfectly. It's like having a 24/7 sales team.", initials: "JW", name: "Jessica Williams", role: "Director, Luxe Real Estate" },
+              { quote: "The AI receptionist captures every call, even after hours. We went from missing calls on weekends to booking jobs around the clock. Game changer for a service business.", initials: "RR", name: "Owner-Operator", role: "Roofing & Restoration, Florida" },
+              { quote: "The automated review system pulled our Google rating up fast. New leads find us at the top of the local pack now — and the inbound calls all get answered. The infrastructure speaks for itself.", initials: "CD", name: "Practice Manager", role: "Cosmetic Dental, Southeast US" },
+              { quote: "Combining the AI receptionist with their lead capture flow doubled our booked consultations in 60 days. The website they built actually converts — first one we've had that does.", initials: "MS", name: "Founder", role: "Med Spa Network, Multi-Location" },
             ].map((t) => (
               <Reveal key={t.name} className="h-full">
                 <InteractiveCard showArrow={false} className="rounded-2xl">
@@ -255,7 +253,7 @@ function Index() {
           <div className="mt-12 md:mt-16 text-center px-6 md:px-0">
             <Reveal><p className="text-sm text-muted-foreground mb-6">Trusted by leading businesses across industries</p></Reveal>
             <StaggerGroup tight className="flex flex-wrap justify-center gap-4 md:gap-8 opacity-60">
-              {["Google Partner", "Meta Certified", "HubSpot", "Salesforce", "Stripe"].map((b) => (
+              {["Google Partner", "Meta Certified", "HubSpot", "Salesforce"].map((b) => (
                 <Reveal key={b}><div className="text-base md:text-lg font-semibold">{b}</div></Reveal>
               ))}
             </StaggerGroup>
@@ -269,28 +267,39 @@ function Index() {
           <Reveal><h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 7vw, 48px)" }}>Ready to Transform Your Business?</h2></Reveal>
           <Reveal delay={0.1}>
             <p className="text-base text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Join 500+ businesses already using FMG to capture more leads, earn more reviews, and grow faster. Let's talk about your goals.
+              Join 25+ businesses already using FMG to capture more leads, earn more reviews, and grow faster. Let's talk about your goals.
             </p>
           </Reveal>
           <Reveal delay={0.2}>
             <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4">
-              <a href="https://bit.ly/bookingfmg" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium w-full sm:w-auto">
-                Book a Free Demo <PArrowRight className="btn-arrow" size={16} weight="bold" />
+              <a href="https://booking.fintechmarketinggroup.com" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium w-full sm:w-auto">
+                Book a Free Meeting
               </a>
-              <a href="tel:+17866347595" className="btn-secondary inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium w-full sm:w-auto">
-                Schedule a Call
+              <a href="tel:+17755464533" className="btn-secondary inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium w-full sm:w-auto">
+                Test Drive Our AI
               </a>
             </div>
           </Reveal>
           <div className="mt-8 flex flex-wrap justify-center gap-4 md:gap-6 text-sm">
-            <a href="tel:+17866347595" className="text-link">786-634-7595</a>
-            <a href="mailto:fmg.protocol@gmail.com" className="text-link">fmg.protocol@gmail.com</a>
+            <a href="tel:+17755464533" className="text-link">775-546-4533</a>
+            <a href="mailto:fmg.extension@gmail.com" className="text-link">fmg.extension@gmail.com</a>
           </div>
         </div>
       </section>
 
-      <footer className="py-8 px-6 border-t border-border text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} FMG. All rights reserved.
+      <footer className="py-10 px-6 border-t border-border text-center text-sm text-muted-foreground">
+        <div className="max-w-3xl mx-auto space-y-4">
+          <p>© {new Date().getFullYear()} FMG. All rights reserved.</p>
+          <p>FMG is a brand of Liantaud Holdings LLC, a Florida limited liability company.</p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            <Link to="/privacy" className="hover:text-foreground transition-colors underline-offset-2 hover:underline">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-foreground transition-colors underline-offset-2 hover:underline">Terms of Service</Link>
+          </div>
+          <p className="text-xs leading-relaxed opacity-70 max-w-2xl mx-auto">
+            By providing your phone number on this site or to FMG representatives, you consent to receive SMS messages from FMG regarding appointments, follow-ups, and service updates. Message and data rates may apply. Reply STOP to opt out at any time. Reply HELP for help. Message frequency varies. See our{" "}
+            <Link to="/privacy" className="underline">Privacy Policy</Link> for details.
+          </p>
+        </div>
       </footer>
 
       {videoOpen && (
@@ -325,9 +334,9 @@ function Index() {
 }
 
 const TESTIMONIALS = [
-  { quote: "FMG's AI receptionist has been a game-changer. We went from missing 30% of calls to capturing every single lead. Our reviews jumped from 3.8 to 4.9 stars in just 3 months.", initials: "SM", name: "Sarah Mitchell", role: "Owner, Mitchell Dental" },
-  { quote: "The ROI speaks for itself. We've seen a 400% increase in booked appointments and our Google ranking has skyrocketed thanks to the review system.", initials: "DC", name: "David Chen", role: "CEO, Premier Auto Group" },
-  { quote: "Not only did they build us a stunning website, but the AI handles our after-hours inquiries perfectly. It's like having a 24/7 sales team.", initials: "JW", name: "Jessica Williams", role: "Director, Luxe Real Estate" },
+  { quote: "The AI receptionist captures every call, even after hours. We went from missing calls on weekends to booking jobs around the clock. Game changer for a service business.", initials: "RR", name: "Owner-Operator", role: "Roofing & Restoration, Florida" },
+  { quote: "The automated review system pulled our Google rating up fast. New leads find us at the top of the local pack now — and the inbound calls all get answered. The infrastructure speaks for itself.", initials: "CD", name: "Practice Manager", role: "Cosmetic Dental, Southeast US" },
+  { quote: "Combining the AI receptionist with their lead capture flow doubled our booked consultations in 60 days. The website they built actually converts — first one we've had that does.", initials: "MS", name: "Founder", role: "Med Spa Network, Multi-Location" },
 ];
 
 function TestimonialsCarousel() {

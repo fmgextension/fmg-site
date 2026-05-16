@@ -121,7 +121,7 @@ export function RevenueConstellation({ activeKey = "ai", compact = false }: Cons
   }, [inView, reduced]);
 
   // Live counter
-  const [value, setValue] = useState(2419072);
+  const [value, setValue] = useState(250000);
   const [flash, setFlash] = useState(false);
   useEffect(() => {
     if (reduced || !inView) return;
