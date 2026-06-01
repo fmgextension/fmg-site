@@ -79,7 +79,7 @@ export function MobileMenu({ items, ctaHref, ctaLabel }: { items: Item[]; ctaHre
                 onClick={() => setOpen(false)}
                 className="btn-primary flex items-center justify-center w-full h-12 rounded-full bg-primary text-primary-foreground font-medium"
               >
-                {ctaLabel}
+                <span className="btn-label">{ctaLabel}</span>
               </a>
             </div>
           </motion.div>

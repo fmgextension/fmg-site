@@ -10,6 +10,9 @@ import {
 
 import appCss from "../styles.css?url";
 import { AnimatedWaveBackground } from "@/components/AnimatedWaveBackground";
+import { ButtonEffects } from "@/components/ButtonEffects";
+import { SmoothScroll } from "@/components/SmoothScroll";
+import { SpotlightCursor } from "@/components/SpotlightCursor";
 
 function NotFoundComponent() {
   return (
@@ -87,6 +90,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/0VGuwcnp1bQah15641no6eelpKa2/social-images/social-1778628896403-ChatGPT_Image_May_12,_2026,_07_34_40_PM.webp" },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,
@@ -118,6 +127,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <SmoothScroll />
+      <ButtonEffects />
+      <SpotlightCursor />
       <AnimatedWaveBackground />
       <main style={{ position: "relative", zIndex: 1 }}>
         <Outlet />

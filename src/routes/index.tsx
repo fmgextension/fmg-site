@@ -2,6 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { motion, useReducedMotion, useScroll } from "framer-motion";
 import { EASE_IN_OUT } from "@/lib/motion";
+import { CascadeText } from "@/components/CascadeText";
+import { HeroScrollSection } from "@/components/HeroScrollSection";
+import { VIDEO_CLIPS, VideoBand } from "@/components/VideoBand";
+import { CtaSection } from "@/components/CtaSection";
+import { HeroStatsRow } from "@/components/HeroStatsRow";
 import { Reveal } from "@/components/Reveal";
 import { StaggerGroup } from "@/components/StaggerGroup";
 import { InteractiveCard } from "@/components/InteractiveCard";
@@ -9,6 +14,7 @@ import { MobileMenu } from "@/components/MobileMenu";
 import { ServicesCarousel } from "@/components/ServicesCarousel";
 import { RevenueConstellation, type NodeKey } from "@/components/RevenueConstellation";
 import { HeroPhoneMockup } from "@/components/HeroPhoneMockup";
+import { MagneticButton } from "@/components/MagneticButton";
 import {
   Play,
 } from "lucide-react";
@@ -38,6 +44,7 @@ function Index() {
     : { y: [0, -8, 0], rotate: [0, 0.5, 0] };
   const cardFloat = reduced ? {} : { y: [0, -4, 0] };
   const dotPulse = reduced ? {} : { scale: [1, 1.15, 1], opacity: [1, 0.7, 1] };
+  const heroScroll = !reduced;
   return (
     <div className="min-h-screen text-foreground">
       {/* Nav */}
@@ -50,17 +57,17 @@ function Index() {
             ))}
           </nav>
           <a href="https://api.leadconnectorhq.com/widget/booking/GY7Wbc5EGo5NME2j6v9T" target="_blank" rel="noopener noreferrer" className="btn-primary hidden md:inline-flex px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium">
-            Book a Free Meeting
+            <span className="btn-label">Book a Free Meeting</span>
           </a>
           <MobileMenu items={navItems} ctaHref="tel:+17755464533" ctaLabel="Test Drive Our AI" />
         </div>
       </Reveal>
 
       {/* Hero */}
-      <section className="relative pt-28 md:pt-32 pb-16 md:pb-20 px-6" style={{ background: "var(--gradient-hero)" }}>
+      <HeroScrollSection active={heroScroll}>
         <div className="relative z-[1] max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           <div className="order-1">
-            <Reveal delay={0.1}>
+            <Reveal immediate={heroScroll} delay={0.1}>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/40 text-sm mb-6">
                 <motion.span
                   className="w-2 h-2 rounded-full bg-primary"
@@ -70,47 +77,39 @@ function Index() {
                 <span>Powered by Advanced AI</span>
               </div>
             </Reveal>
-            <Reveal delay={0.2}>
+            <Reveal immediate={heroScroll} delay={0.2}>
               <h1 className="font-semibold leading-tight mb-6" style={{ fontSize: "clamp(32px, 8vw, 72px)", letterSpacing: "-0.02em" }}>
                 24/7 AI Receptionist
                 <br />
                 <span style={{ color: "hsl(var(--primary))" }}>on Standby</span>
               </h1>
             </Reveal>
-            <Reveal delay={0.35}>
+            <Reveal immediate={heroScroll} delay={0.35}>
               <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl">
                 Built to answer the calls you're missing right now. FMG.
               </p>
             </Reveal>
-            <StaggerGroup tight className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mb-10 md:mb-12">
-              <Reveal delay={0.5}>
-                <a href="tel:+17755464533" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
-                  Test Drive Our AI
-                </a>
+            <StaggerGroup immediate={heroScroll} tight className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mb-10 md:mb-12">
+              <Reveal immediate={heroScroll} delay={0.5}>
+                <MagneticButton href="tel:+17755464533" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
+                  <span className="btn-label">Test Drive Our AI</span>
+                </MagneticButton>
               </Reveal>
-              <Reveal delay={0.55}>
-                <button type="button" onClick={() => setVideoOpen(true)} className="btn-secondary relative z-10 inline-flex w-full sm:w-auto items-center justify-center gap-2 px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium touch-manipulation">
-                  <Play className="w-4 h-4 btn-icon" /> Watch Demo
+              <Reveal immediate={heroScroll} delay={0.55}>
+                <button type="button" onClick={() => setVideoOpen(true)} className="btn-secondary relative z-10 inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium touch-manipulation">
+                  <span className="btn-label inline-flex items-center justify-center gap-2">
+                    <Play className="w-4 h-4 btn-icon" />
+                    Watch Demo
+                  </span>
                 </button>
               </Reveal>
             </StaggerGroup>
-            <StaggerGroup tight className="grid grid-cols-3 gap-4 md:gap-6 max-w-md">
-              {[
-                { n: "25+", l: "Businesses Served" },
-                { n: "500+", l: "Calls Handled Daily" },
-                { n: "4.9★", l: "Average Review Score" },
-              ].map((s, i) => (
-                <Reveal key={s.l} delay={0.7 + i * 0.06}>
-                  <div>
-                    <div className="text-2xl md:text-3xl font-bold">{s.n}</div>
-                    <div className="text-[13px] md:text-xs text-muted-foreground mt-1 uppercase" style={{ fontWeight: 500, letterSpacing: "0.05em" }}>{s.l}</div>
-                  </div>
-                </Reveal>
-              ))}
-            </StaggerGroup>
+            <Reveal immediate={heroScroll} delay={0.7}>
+              <HeroStatsRow scrollControlled={heroScroll} />
+            </Reveal>
           </div>
           <div className="order-2 flex flex-col gap-4">
-            <Reveal variant="scaleIn" delay={0.3} className="relative">
+            <Reveal immediate={heroScroll} variant="scaleIn" delay={0.3} className="relative">
               <div className="absolute -inset-4 rounded-3xl blur-3xl opacity-30 bg-primary" />
               <motion.div
                 className="relative [--phone-max:240px] lg:[--phone-max:320px]"
@@ -118,7 +117,7 @@ function Index() {
                 transition={{ duration: 6, ease: EASE_IN_OUT, repeat: Infinity, repeatType: "loop", delay: 1.5 }}
               >
                 <HeroPhoneMockup />
-                <Reveal variant="fadeUp" delay={0.9} className="hidden lg:block absolute -bottom-4 left-1/2 -translate-x-1/2 w-[320px] max-w-[90%] z-10">
+                <Reveal immediate={heroScroll} variant="fadeUp" delay={0.9} className="hidden lg:block absolute -bottom-4 left-1/2 -translate-x-1/2 w-[320px] max-w-[90%] z-10">
                   <motion.div
                     className="flex items-center gap-3 p-4 rounded-2xl bg-background/80 backdrop-blur-md border border-border"
                     animate={cardFloat}
@@ -139,7 +138,7 @@ function Index() {
               </motion.div>
             </Reveal>
             {/* Mobile-only inline notification card (promoted from overlay) */}
-            <Reveal variant="fadeUp" delay={0.5} className="lg:hidden">
+            <Reveal immediate={heroScroll} variant="fadeUp" delay={0.5} className="lg:hidden">
               <div className="flex items-center gap-3 p-4 rounded-2xl bg-card/80 backdrop-blur-md border border-border">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0" style={{ background: "hsl(var(--primary) / 0.15)", color: "hsl(var(--primary))" }}>AI</div>
                 <div className="min-w-0">
@@ -155,14 +154,21 @@ function Index() {
             </Reveal>
           </div>
         </div>
-      </section>
+      </HeroScrollSection>
 
       {/* Services */}
-      <section id="services" className="relative overflow-hidden py-16 md:py-24">
+      <section id="services" className="relative overflow-x-hidden overflow-y-visible py-16 md:py-24">
         <div className="relative z-[1] max-w-7xl mx-auto px-6">
           <div className="text-center mb-12 md:mb-16">
             <Reveal><div className="text-sm text-primary font-medium mb-3">Our Services</div></Reveal>
-            <Reveal delay={0.1}><h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>Everything Your Business Needs to Grow</h2></Reveal>
+            <CascadeText
+              as="h2"
+              delay={0.1}
+              className="font-bold mb-4"
+              style={{ fontSize: "clamp(28px, 6vw, 48px)" }}
+            >
+              Everything Your Business Needs to Grow
+            </CascadeText>
             <Reveal delay={0.2}>
               <p className="text-base text-muted-foreground max-w-2xl mx-auto">
                 We combine cutting-edge AI technology with premium design to deliver solutions that actually move the needle.
@@ -182,6 +188,12 @@ function Index() {
         </Reveal>
       </section>
 
+      <VideoBand
+        clip={VIDEO_CLIPS.dataLayer}
+        headline="Everything, tracked."
+        sub="Every call, lead, and metric — captured automatically."
+      />
+
       {/* Features */}
       <section
         id="features"
@@ -192,11 +204,16 @@ function Index() {
           {/* Header */}
           <div className="text-center mx-auto mb-8 lg:mb-12" style={{ maxWidth: 640 }}>
             <Reveal><div className="text-sm text-primary font-medium mb-3">Why Choose Us</div></Reveal>
-            <Reveal delay={0.1}>
-              <h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 5vw, 48px)", lineHeight: 1.15 }}>
-                Built for Businesses That <span style={{ color: "hsl(var(--primary))" }}>Demand Excellence</span>
-              </h2>
-            </Reveal>
+            <CascadeText
+              as="h2"
+              delay={0.1}
+              className="font-bold mb-4"
+              style={{ fontSize: "clamp(28px, 5vw, 48px)", lineHeight: 1.15 }}
+              segments={[
+                { text: "Built for Businesses That" },
+                { text: "Demand Excellence", style: { color: "hsl(var(--primary))" } },
+              ]}
+            />
             <Reveal delay={0.2}>
               <p className="text-base text-muted-foreground">
                 Six channels. One revenue engine. Built to compound.
@@ -208,27 +225,41 @@ function Index() {
         </div>
       </section>
 
+      <VideoBand
+        clip={VIDEO_CLIPS.modernBrands}
+        headline="Built for modern brands."
+        sub="Premium presence for companies that compete at the top."
+        graded
+      />
+
       {/* Testimonials */}
-      <section id="reviews" className="py-16 md:py-24 md:px-6 border-t border-border">
+      <section id="reviews" className="py-16 md:py-24 md:px-6 border-t border-border overflow-visible">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 md:mb-16 px-6 md:px-0">
             <Reveal><div className="text-sm text-primary font-medium mb-3">Testimonials</div></Reveal>
-            <Reveal delay={0.1}><h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 6vw, 48px)" }}>Loved by 25+ Businesses</h2></Reveal>
+            <CascadeText
+              as="h2"
+              delay={0.1}
+              className="font-bold mb-4"
+              style={{ fontSize: "clamp(28px, 6vw, 48px)" }}
+            >
+              Loved by 25+ Businesses
+            </CascadeText>
             <Reveal delay={0.2}>
               <p className="text-base text-muted-foreground max-w-2xl mx-auto">
                 Don't just take our word for it. Here's what our clients say about working with FMG.
               </p>
             </Reveal>
           </div>
-          <StaggerGroup className="hidden md:grid md:grid-cols-3 gap-6 px-6 md:px-0">
+          <StaggerGroup className="testimonials-grid hidden md:grid md:grid-cols-3 gap-6 px-6 md:px-0 items-stretch">
             {[
               { quote: "The AI receptionist captures every call, even after hours. We went from missing calls on weekends to booking jobs around the clock. Game changer for a service business.", initials: "RR", name: "Owner-Operator", role: "Roofing & Restoration, Florida" },
               { quote: "The automated review system pulled our Google rating up fast. New leads find us at the top of the local pack now — and the inbound calls all get answered. The infrastructure speaks for itself.", initials: "CD", name: "Practice Manager", role: "Cosmetic Dental, Southeast US" },
               { quote: "Combining the AI receptionist with their lead capture flow doubled our booked consultations in 60 days. The website they built actually converts — first one we've had that does.", initials: "MS", name: "Founder", role: "Med Spa Network, Multi-Location" },
             ].map((t) => (
-              <Reveal key={t.name} className="h-full">
-                <InteractiveCard showArrow={false} className="rounded-2xl">
-                  <div className="p-8 flex flex-col h-full bg-card">
+              <Reveal key={t.name} className="h-full min-h-0 flex flex-col">
+                <InteractiveCard showArrow={false} className="rounded-2xl h-full min-h-[320px] flex flex-col">
+                  <div className="p-8 flex flex-col flex-1 min-h-0 bg-card rounded-2xl">
                     <div className="flex gap-1 mb-4">
                       {Array.from({ length: 5 }).map((_, i) => (
                         <PStar key={i} size={16} weight="fill" className="text-primary" />
@@ -261,31 +292,14 @@ function Index() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section id="contact" className="relative overflow-hidden py-16 md:py-24 px-6 border-t border-border">
-        <div className="relative z-[1] max-w-4xl mx-auto text-center p-8 md:p-12 rounded-3xl border border-border" style={{ background: "var(--gradient-hero)", boxShadow: "var(--shadow-glow)" }}>
-          <Reveal><h2 className="font-bold mb-4" style={{ fontSize: "clamp(28px, 7vw, 48px)" }}>Ready to Transform Your Business?</h2></Reveal>
-          <Reveal delay={0.1}>
-            <p className="text-base text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Join 25+ businesses already using FMG to capture more leads, earn more reviews, and grow faster. Let's talk about your goals.
-            </p>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4">
-              <a href="https://api.leadconnectorhq.com/widget/booking/GY7Wbc5EGo5NME2j6v9T" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium w-full sm:w-auto">
-                Book a Free Meeting
-              </a>
-              <a href="tel:+17755464533" className="btn-secondary inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium w-full sm:w-auto">
-                Test Drive Our AI
-              </a>
-            </div>
-          </Reveal>
-          <div className="mt-8 flex flex-wrap justify-center gap-4 md:gap-6 text-sm">
-            <a href="tel:+17755464533" className="text-link">775-546-4533</a>
-            <a href="mailto:fmg.extension@gmail.com" className="text-link">fmg.extension@gmail.com</a>
-          </div>
-        </div>
-      </section>
+      <VideoBand
+        clip={VIDEO_CLIPS.alwaysAnswering}
+        headline="Always answering."
+        sub="Your AI receptionist never clocks out."
+        lightOverlay
+      />
+
+      <CtaSection />
 
       <footer className="py-10 px-6 border-t border-border text-center text-sm text-muted-foreground">
         <div className="max-w-3xl mx-auto space-y-4">
