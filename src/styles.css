@@ -608,9 +608,9 @@
   z-index: 1;
   background: linear-gradient(
     180deg,
-    hsl(var(--background) / 0.5) 0%,
-    hsl(var(--background) / 0.68) 55%,
-    hsl(var(--background) / 0.82) 100%
+    hsl(var(--background) / 0.32) 0%,
+    hsl(var(--background) / 0.46) 55%,
+    hsl(var(--background) / 0.6) 100%
   );
 }
 
@@ -626,7 +626,7 @@
 }
 
 .hero-scroll-mask {
-  width: min(86.4vw, 624px);
+  width: min(92vw, 1180px);
   aspect-ratio: 3 / 1;
   position: relative;
   -webkit-mask-size: contain;
@@ -831,15 +831,15 @@
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    hsl(var(--background) / 0.52) 0%,
-    hsl(var(--background) / 0.36) 45%,
-    hsl(var(--background) / 0.4) 72%,
-    hsl(var(--background) / 0.54) 100%
+    hsl(0 0% 4% / 0.5) 0%,
+    hsl(0 0% 4% / 0.34) 45%,
+    hsl(0 0% 4% / 0.38) 72%,
+    hsl(0 0% 4% / 0.52) 100%
   );
 }
 
 .cta-section-panel {
-  background-color: hsl(var(--background) / 0.2);
+  background-color: hsl(0 0% 6% / 0.2);
   border: 1px solid hsl(var(--foreground) / 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -854,13 +854,13 @@
   .cta-section-overlay {
     background: linear-gradient(
       180deg,
-      hsl(var(--background) / 0.5) 0%,
-      hsl(var(--background) / 0.34) 50%,
-      hsl(var(--background) / 0.5) 100%
+      hsl(0 0% 4% / 0.48) 0%,
+      hsl(0 0% 4% / 0.32) 50%,
+      hsl(0 0% 4% / 0.48) 100%
     );
   }
 
   .cta-section-panel {
-    background-color: hsl(var(--background) / 0.22);
+    background-color: hsl(0 0% 6% / 0.22);
   }
 }

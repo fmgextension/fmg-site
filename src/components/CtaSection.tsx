@@ -54,6 +54,7 @@ export function CtaSection() {
       ref={sectionRef}
       className="cta-section relative overflow-hidden py-16 md:py-24 px-6 border-t border-border"
       data-video
+      data-crossfade
     >
       <div className="cta-section-media" aria-hidden="true">
         <video

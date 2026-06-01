@@ -108,6 +108,7 @@ export function VideoBand({
       ref={sectionRef}
       className="video-band relative w-full min-h-[88vh] flex items-center justify-center overflow-hidden border-y border-border"
       data-video
+      data-crossfade
     >
       <div className="video-band-media" aria-hidden="true">
         <div ref={enableParallax ? parallaxRef : undefined} className="video-band-parallax">

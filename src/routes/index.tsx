@@ -1,18 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { motion, useReducedMotion, useScroll } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { EASE_IN_OUT } from "@/lib/motion";
 import { CascadeText } from "@/components/CascadeText";
 import { HeroScrollSection } from "@/components/HeroScrollSection";
 import { VIDEO_CLIPS, VideoBand } from "@/components/VideoBand";
 import { CtaSection } from "@/components/CtaSection";
 import { HeroStatsRow } from "@/components/HeroStatsRow";
+import { SectionTransitions } from "@/components/SectionTransitions";
 import { Reveal } from "@/components/Reveal";
 import { StaggerGroup } from "@/components/StaggerGroup";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ServicesCarousel } from "@/components/ServicesCarousel";
-import { RevenueConstellation, type NodeKey } from "@/components/RevenueConstellation";
+import { RevenueBars } from "@/components/RevenueBars";
 import { HeroPhoneMockup } from "@/components/HeroPhoneMockup";
 import { MagneticButton } from "@/components/MagneticButton";
 import {
@@ -47,6 +48,7 @@ function Index() {
   const heroScroll = !reduced;
   return (
     <div className="min-h-screen text-foreground">
+      <SectionTransitions />
       {/* Nav */}
       <Reveal variant="fadeIn" as="header" className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/40 border-b border-border safe-top">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -156,8 +158,14 @@ function Index() {
         </div>
       </HeroScrollSection>
 
+      <VideoBand
+        clip={VIDEO_CLIPS.dataLayer}
+        headline="Everything, tracked."
+        sub="Every call, lead, and metric — captured automatically."
+      />
+
       {/* Services */}
-      <section id="services" className="relative overflow-x-hidden overflow-y-visible py-16 md:py-24">
+      <section id="services" data-crossfade className="relative overflow-x-hidden overflow-y-visible py-16 md:py-24">
         <div className="relative z-[1] max-w-7xl mx-auto px-6">
           <div className="text-center mb-12 md:mb-16">
             <Reveal><div className="text-sm text-primary font-medium mb-3">Our Services</div></Reveal>
@@ -189,14 +197,16 @@ function Index() {
       </section>
 
       <VideoBand
-        clip={VIDEO_CLIPS.dataLayer}
-        headline="Everything, tracked."
-        sub="Every call, lead, and metric — captured automatically."
+        clip={VIDEO_CLIPS.modernBrands}
+        headline="Built for modern brands."
+        sub="Premium presence for companies that compete at the top."
+        graded
       />
 
       {/* Features */}
       <section
         id="features"
+        data-crossfade
         className="px-6 border-t border-border"
         style={{ paddingTop: "clamp(80px, 12vw, 120px)", paddingBottom: "clamp(80px, 12vw, 120px)" }}
       >
@@ -221,19 +231,19 @@ function Index() {
             </Reveal>
           </div>
 
-          <RevenueConstellationLayout />
+          <RevenueBars />
         </div>
       </section>
 
       <VideoBand
-        clip={VIDEO_CLIPS.modernBrands}
-        headline="Built for modern brands."
-        sub="Premium presence for companies that compete at the top."
-        graded
+        clip={VIDEO_CLIPS.alwaysAnswering}
+        headline="Always answering."
+        sub="Your AI receptionist never clocks out."
+        lightOverlay
       />
 
       {/* Testimonials */}
-      <section id="reviews" className="py-16 md:py-24 md:px-6 border-t border-border overflow-visible">
+      <section id="reviews" data-crossfade className="py-16 md:py-24 md:px-6 border-t border-border overflow-visible">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 md:mb-16 px-6 md:px-0">
             <Reveal><div className="text-sm text-primary font-medium mb-3">Testimonials</div></Reveal>
@@ -291,13 +301,6 @@ function Index() {
           </div>
         </div>
       </section>
-
-      <VideoBand
-        clip={VIDEO_CLIPS.alwaysAnswering}
-        headline="Always answering."
-        sub="Your AI receptionist never clocks out."
-        lightOverlay
-      />
 
       <CtaSection />
 
@@ -428,180 +431,3 @@ function TestimonialsCarousel() {
   );
 }
 
-const FEATURE_BLOCKS: { n: string; title: string; desc: string; mapped: string; key: NodeKey }[] = [
-  { n: "01", title: "Lightning Fast Setup", desc: "Get up and running in minutes, not weeks. Our AI learns your business instantly.", mapped: "WEBSITE", key: "website" },
-  { n: "02", title: "Enterprise Security", desc: "Bank-level encryption and compliance. Your data is always safe with us.", mapped: "EMAIL", key: "email" },
-  { n: "03", title: "Proven ROI", desc: "Average 300% increase in captured leads. Real results, measured in dollars.", mapped: "PAID MEDIA", key: "paid" },
-  { n: "04", title: "24/7 Availability", desc: "Never miss a call again. AI that works while you sleep.", mapped: "RECEPTIONIST", key: "ai" },
-  { n: "05", title: "Human Handoff", desc: "Seamless transfer to your team when needed. AI + human, perfectly balanced.", mapped: "SOCIAL", key: "social" },
-  { n: "06", title: "Real-Time Analytics", desc: "Track every call, review, and conversion. Data-driven decisions made easy.", mapped: "SEO", key: "seo" },
-];
-
-function RevenueConstellationLayout() {
-  const reduced = useReducedMotion();
-  const outerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const { scrollYProgress } = useScroll({
-    target: outerRef,
-    offset: ["start start", "end end"],
-  });
-
-  useEffect(() => {
-    const update = (v: number) => {
-      const idx = Math.min(
-        FEATURE_BLOCKS.length - 1,
-        Math.max(0, Math.floor(v * FEATURE_BLOCKS.length)),
-      );
-      setActiveIndex(idx);
-    };
-    update(scrollYProgress.get());
-    return scrollYProgress.on("change", update);
-  }, [scrollYProgress]);
-
-  const activeKey: NodeKey = FEATURE_BLOCKS[activeIndex].key;
-  const fadeDur = reduced ? 0 : 0.2;
-
-  const featureBlocks = (
-    <>
-      {FEATURE_BLOCKS.map((f, i) => {
-        const isActive = i === activeIndex;
-        return (
-          <motion.div
-            key={f.n}
-            initial={false}
-            animate={{ opacity: isActive ? 1 : 0 }}
-            transition={{ duration: fadeDur, ease: "easeOut" }}
-            className="flex flex-col mx-auto w-full"
-            style={{
-              gridColumn: 1,
-              gridRow: 1,
-              maxWidth: 480,
-              pointerEvents: isActive ? "auto" : "none",
-            }}
-          >
-            <div
-              style={{
-                fontSize: 14,
-                fontWeight: 700,
-                color: "hsl(var(--primary))",
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-              }}
-            >
-              {f.n}
-            </div>
-            <h3
-              style={{
-                marginTop: 16,
-                fontSize: "clamp(22px, 4vw, 32px)",
-                fontWeight: 600,
-                color: "hsl(var(--foreground))",
-                lineHeight: 1.15,
-                letterSpacing: "-0.01em",
-              }}
-            >
-              {f.title}
-            </h3>
-            <p
-              style={{
-                marginTop: 16,
-                fontSize: "clamp(15px, 2.4vw, 16px)",
-                fontWeight: 400,
-                color: "hsl(var(--muted-foreground))",
-                lineHeight: 1.6,
-              }}
-            >
-              {f.desc}
-            </p>
-            <div
-              style={{
-                marginTop: 24,
-                fontSize: 11,
-                fontWeight: 600,
-                color: "hsl(var(--muted-foreground))",
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-              }}
-            >
-              Mapped to — {f.mapped}
-            </div>
-          </motion.div>
-        );
-      })}
-    </>
-  );
-
-  const dots = (
-    <>
-      {FEATURE_BLOCKS.map((_, i) => {
-        const isActive = i === activeIndex;
-        const isPast = i < activeIndex;
-        return (
-          <span
-            key={i}
-            style={{
-              display: "block",
-              width: isActive ? 36 : 24,
-              height: 2,
-              borderRadius: 1,
-              backgroundColor:
-                isActive || isPast
-                  ? "hsl(var(--primary))"
-                  : "hsl(var(--muted-foreground))",
-              opacity: isActive ? 1 : isPast ? 0.6 : 0.3,
-              transition: reduced
-                ? "none"
-                : "width 300ms ease-out, opacity 300ms ease-out, background-color 300ms ease-out",
-            }}
-          />
-        );
-      })}
-    </>
-  );
-
-  return (
-    <div ref={outerRef} className="rc-outer relative">
-      {/* Mobile sticky wrapper: simple top-down block stack, fixed gaps.
-          top offset = navbar height so diagram isn't clipped behind fixed nav. */}
-      <div
-        className="sticky lg:hidden flex flex-col justify-center w-full overflow-hidden"
-        style={{ top: 64, height: "calc(100vh - 64px)", paddingTop: 16, paddingBottom: 16 }}
-      >
-        <div className="mx-auto" style={{ width: "min(280px, 90vw)", flexShrink: 0 }}>
-          <RevenueConstellation activeKey={activeKey} compact />
-        </div>
-        <div className="grid w-full" style={{ marginTop: 24, paddingLeft: 24, paddingRight: 24 }}>
-          {featureBlocks}
-        </div>
-        <div
-          className="flex justify-center items-center w-full"
-          style={{ marginTop: 32, gap: 6 }}
-          aria-hidden="true"
-        >
-          {dots}
-        </div>
-      </div>
-
-      {/* Desktop sticky wrapper: original two-column layout */}
-      <div className="sticky top-0 h-screen w-full hidden lg:flex lg:flex-col lg:justify-start">
-        <div className="flex flex-1 min-h-0 flex-row py-10 gap-12 items-center w-full">
-          <div className="flex items-center justify-center w-full h-full flex-[3] min-h-0 shrink">
-            <div className="block w-full mx-auto" style={{ maxWidth: 600 }}>
-              <RevenueConstellation activeKey={activeKey} />
-            </div>
-          </div>
-          <div className="grid w-full shrink-0 flex-[2] h-full items-center justify-items-center shrink">
-            {featureBlocks}
-          </div>
-        </div>
-        <div
-          className="flex justify-center items-center w-full shrink-0 h-auto pt-4"
-          style={{ gap: 6 }}
-          aria-hidden="true"
-        >
-          {dots}
-        </div>
-      </div>
-    </div>
-  );
-}
