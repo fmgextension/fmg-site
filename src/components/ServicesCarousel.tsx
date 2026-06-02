@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CaretLeft, CaretRight, type Icon as PhosphorIcon } from "@phosphor-icons/react";
+import { type Icon as PhosphorIcon } from "@phosphor-icons/react";
 import { ServiceCarouselCard } from "@/components/ServiceCarouselCard";
 
 export type ServiceItem = {
@@ -17,31 +17,62 @@ export function ServicesCarousel({ items }: Props) {
   const [active, setActive] = React.useState(0);
   const [flipped, setFlipped] = React.useState<Record<number, boolean>>({});
 
+  // Derive the active card purely from the live scroll position of the track:
+  // whichever card's center is nearest the track viewport center is active.
+  // Reading from the scroll container (not a manually tracked index) keeps the
+  // mobile dots from ever desyncing from the card actually in view.
   React.useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        let best: { idx: number; ratio: number } | null = null;
-        for (const e of entries) {
-          const idx = Number((e.target as HTMLElement).dataset.idx);
-          if (!best || e.intersectionRatio > best.ratio) {
-            best = { idx, ratio: e.intersectionRatio };
-          }
+
+    let raf = 0;
+    const compute = () => {
+      raf = 0;
+      const trackRect = track.getBoundingClientRect();
+      const center = trackRect.left + trackRect.width / 2;
+      let best = 0;
+      let bestDist = Infinity;
+      cardRefs.current.forEach((card, i) => {
+        if (!card) return;
+        const r = card.getBoundingClientRect();
+        const dist = Math.abs(r.left + r.width / 2 - center);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
         }
-        if (best && best.ratio > 0) setActive(best.idx);
-      },
-      { root: track, threshold: [0.5, 0.75, 1] },
-    );
-    cardRefs.current.forEach((c) => c && obs.observe(c));
-    return () => obs.disconnect();
+      });
+      setActive(best);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(compute);
+    };
+
+    compute();
+    track.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      track.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, [items.length]);
 
   const scrollToIdx = (idx: number) => {
     const card = cardRefs.current[idx];
     const track = trackRef.current;
     if (!card || !track) return;
-    track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: "smooth" });
+    // Cards snap to center (scroll-snap-align: center), so the target scroll
+    // position must center the card in the track viewport — not left-align it.
+    const target =
+      card.offsetLeft - track.offsetLeft - (track.clientWidth - card.clientWidth) / 2;
+    const max = track.scrollWidth - track.clientWidth;
+    const reduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    track.scrollTo({
+      left: Math.max(0, Math.min(max, target)),
+      behavior: reduced ? "auto" : "smooth",
+    });
   };
 
   const onKey = (e: React.KeyboardEvent) => {
@@ -58,9 +89,6 @@ export function ServicesCarousel({ items }: Props) {
   const toggleFlip = (idx: number) => {
     setFlipped((prev) => ({ ...prev, [idx]: !prev[idx] }));
   };
-
-  const atStart = active === 0;
-  const atEnd = active === items.length - 1;
 
   return (
     <div className="w-full">
@@ -93,15 +121,6 @@ export function ServicesCarousel({ items }: Props) {
       </div>
 
       <div className="services-carousel-controls">
-        <button
-          type="button"
-          className="carousel-arrow"
-          aria-label="Previous service"
-          disabled={atStart}
-          onClick={() => scrollToIdx(active - 1)}
-        >
-          <CaretLeft size={20} weight="bold" />
-        </button>
         <div className="carousel-dots" role="tablist">
           {items.map((s, i) => (
             <button
@@ -116,15 +135,6 @@ export function ServicesCarousel({ items }: Props) {
             </button>
           ))}
         </div>
-        <button
-          type="button"
-          className="carousel-arrow"
-          aria-label="Next service"
-          disabled={atEnd}
-          onClick={() => scrollToIdx(active + 1)}
-        >
-          <CaretRight size={20} weight="bold" />
-        </button>
       </div>
     </div>
   );

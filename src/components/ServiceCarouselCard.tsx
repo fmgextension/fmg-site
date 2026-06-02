@@ -23,6 +23,11 @@ export function ServiceCarouselCard({
   cardRef,
 }: ServiceCarouselCardProps) {
   const Icon = service.icon;
+  // Tilt + shine are enabled for every card independently. The hook still
+  // gates internally on hover-capable pointers ((hover: hover)) and reduced
+  // motion, so each card responds purely to its own pointer enter/move/leave —
+  // not to whether it's the scroll-centered card. `isActive` only drives the
+  // mobile dots and centered-card emphasis styling, never the tilt gate.
   const {
     ref: tiltRef,
     onPointerEnter,
@@ -31,7 +36,7 @@ export function ServiceCarouselCard({
     cardStyle,
     shineVars,
     reduced,
-  } = useCardTilt({ maxTilt: 17, liftPx: 7, enabled: isActive });
+  } = useCardTilt({ maxTilt: 17, liftPx: 7, enabled: true });
 
   return (
     <div ref={cardRef} data-idx={index} className="services-carousel-perspective">
@@ -78,38 +83,51 @@ export function ServiceCarouselCard({
                 {service.desc}
               </p>
               <p
-                className="text-xs text-muted-foreground mt-6 uppercase tracking-wider"
-                style={{ fontWeight: 500 }}
+                className="card-flip-hint text-primary uppercase mt-6"
+                style={{ fontSize: 12, fontWeight: 600, letterSpacing: "0.1em" }}
               >
-                {flipped ? "Tap to return" : "Tap for details"}
+                <span className="card-flip-hint-hover">Click for details</span>
+                <span className="card-flip-hint-touch">Tap for details</span>
               </p>
             </div>
 
             <div className="card-flip-face card-flip-face-back card-surface">
-              <div
-                className="text-primary uppercase mb-4"
-                style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.1em" }}
-              >
-                How it works
+              {/* eyebrow + title + bullets as one block, vertically centered
+                  in the space above the pinned return hint so leftover space
+                  splits evenly top/bottom. Bullets keep natural tight spacing. */}
+              <div className="flex flex-1 flex-col justify-center">
+                <div
+                  className="text-primary uppercase mb-4"
+                  style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.1em" }}
+                >
+                  How it works
+                </div>
+                <h3
+                  className="font-semibold text-foreground mb-5"
+                  style={{ fontSize: 20, lineHeight: 1.15 }}
+                >
+                  {service.title}
+                </h3>
+                <ul className="flex flex-col gap-2.5">
+                  {service.items.map((it) => (
+                    <li
+                      key={it}
+                      className="flex items-center gap-3 text-foreground"
+                      style={{ fontSize: 14, fontWeight: 500 }}
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                      {it}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <h3
-                className="font-semibold text-foreground mb-5"
-                style={{ fontSize: 20, lineHeight: 1.15 }}
+              <p
+                className="card-flip-hint text-primary uppercase mt-6"
+                style={{ fontSize: 12, fontWeight: 600, letterSpacing: "0.1em" }}
               >
-                {service.title}
-              </h3>
-              <ul className="flex flex-col gap-2.5 flex-1">
-                {service.items.map((it) => (
-                  <li
-                    key={it}
-                    className="flex items-center gap-3 text-foreground"
-                    style={{ fontSize: 14, fontWeight: 500 }}
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                    {it}
-                  </li>
-                ))}
-              </ul>
+                <span className="card-flip-hint-hover">Click to return</span>
+                <span className="card-flip-hint-touch">Tap to return</span>
+              </p>
             </div>
           </div>
         </div>

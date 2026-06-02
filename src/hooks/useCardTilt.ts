@@ -17,6 +17,7 @@ export function useCardTilt({
 }: UseCardTiltOptions = {}) {
   const reduced = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
   const [canTilt, setCanTilt] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [tilt, setTilt] = useState<TiltState>({ rx: 0, ry: 0 });
@@ -34,6 +35,11 @@ export function useCardTilt({
 
   const onPointerEnter = useCallback(() => {
     if (!interactive) return;
+    // Capture the rect while the card is still in its untransformed resting
+    // state (no tilt/lift/scale applied yet). All subsequent pointer math maps
+    // against this stable layout box instead of the live, 3D-transformed rect.
+    const el = ref.current;
+    if (el) rectRef.current = el.getBoundingClientRect();
     setIsHovering(true);
   }, [interactive]);
 
@@ -44,7 +50,9 @@ export function useCardTilt({
       const el = ref.current;
       if (!el) return;
 
-      const rect = el.getBoundingClientRect();
+      // Use the cached untransformed rect; fall back to a fresh measure only if
+      // it is missing (e.g. move without a preceding enter).
+      const rect = rectRef.current ?? el.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width;
       const y = (event.clientY - rect.top) / rect.height;
 
@@ -58,6 +66,7 @@ export function useCardTilt({
   );
 
   const onPointerLeave = useCallback(() => {
+    rectRef.current = null;
     setIsHovering(false);
     setTilt({ rx: 0, ry: 0 });
     setShine((s) => ({ ...s, opacity: 0 }));

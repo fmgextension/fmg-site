@@ -381,6 +381,17 @@
     opacity: 1;
     transform: scale(1);
   }
+  /* Hover-capable (desktop): no centered-card emphasis. Every card rests at
+     full neutral brightness; the only lit + raised card is the one under the
+     cursor (handled per-card by the tilt host). The scroll-derived is-active
+     state no longer drives any desktop visual — it only feeds the mobile dots. */
+  @media (hover: hover) {
+    .services-carousel-perspective,
+    .services-carousel-perspective:has(.services-carousel-card.is-active) {
+      opacity: 1;
+      transform: none;
+    }
+  }
   @media (min-width: 640px) {
     .services-carousel-perspective { width: calc(50vw - 32px); }
   }
@@ -394,6 +405,7 @@
   .services-carousel-card {
     position: relative;
     width: 100%;
+    height: 100%;
     overflow: visible;
     cursor: pointer;
     border: none;
@@ -420,29 +432,11 @@
     gap: 24px;
     margin-top: 24px;
   }
-  .carousel-arrow {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background-color: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
-    color: hsl(var(--foreground));
-    cursor: pointer;
-    transition: border-color 200ms ease-out, color 200ms ease-out, opacity 200ms ease-out;
-  }
+  /* Mobile-only nav: one card per view, dots reflect the snapped card. On
+     desktop the carousel shows ~3 cards + a peek, so scroll affordance is
+     visible and the dots/arrows are removed entirely. */
   @media (min-width: 768px) {
-    .carousel-arrow { display: inline-flex; }
-  }
-  .carousel-arrow:hover:not(:disabled) {
-    border-color: hsl(var(--primary));
-    color: hsl(var(--primary));
-  }
-  .carousel-arrow:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
+    .services-carousel-controls { display: none; }
   }
   .carousel-dots {
     display: flex;
@@ -758,7 +752,7 @@
 .card-tilt-host {
   position: relative;
   width: 100%;
-  min-height: 400px;
+  height: 100%;
   transform-style: preserve-3d;
 }
 
@@ -769,6 +763,9 @@
   border-radius: 20px;
   pointer-events: none;
   z-index: 5;
+  /* Lifted off the face planes in the shared preserve-3d space so it always
+     overlays the visible face (front sits at +1px, back at -1px). */
+  transform: translateZ(2px);
   opacity: var(--shine-o, 0);
   background: radial-gradient(
     circle at var(--shine-x, 50%) var(--shine-y, 50%),
@@ -781,7 +778,10 @@
 .card-flip-inner {
   position: relative;
   width: 100%;
-  min-height: 400px;
+  height: 100%;
+  /* Stack both faces in one grid cell so the container sizes to the taller
+     face's content (equalized front/back) instead of a fixed min-height. */
+  display: grid;
   transform-style: preserve-3d;
   transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -795,20 +795,37 @@
 }
 
 .card-flip-face {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
   width: 100%;
-  height: 100%;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
+/* Push the two faces onto distinct parallel planes so they are never coplanar
+   at the pivot. Coplanar faces z-fight along the rotateY axis and render as a
+   1px vertical seam down the middle on flip — the Z separation removes it. */
 .card-flip-face-front {
-  transform: rotateY(0deg);
+  transform: rotateY(0deg) translateZ(1px);
 }
 
 .card-flip-face-back {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+/* Persistent, subtle front-face cue that the card flips on click/tap. */
+.card-flip-hint {
+  opacity: 0.6;
+}
+.card-flip-hint-touch {
+  display: none;
+}
+@media (hover: none) {
+  .card-flip-hint-hover {
+    display: none;
+  }
+  .card-flip-hint-touch {
+    display: inline;
+  }
 }
 
 .card-surface {
