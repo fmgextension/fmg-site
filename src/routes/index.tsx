@@ -14,6 +14,7 @@ import { InteractiveCard } from "@/components/InteractiveCard";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ServicesCarousel } from "@/components/ServicesCarousel";
 import { RevenueBars } from "@/components/RevenueBars";
+import { ResultsScatter } from "@/components/ResultsScatter";
 import { HeroPhoneMockup } from "@/components/HeroPhoneMockup";
 import { MagneticButton } from "@/components/MagneticButton";
 import {
@@ -158,11 +159,7 @@ function Index() {
         </div>
       </HeroScrollSection>
 
-      <VideoBand
-        clip={VIDEO_CLIPS.dataLayer}
-        headline="Everything, tracked."
-        sub="Every call, lead, and metric — captured automatically."
-      />
+      <ResultsScatter />
 
       {/* Services */}
       <section id="services" data-crossfade className="relative overflow-x-hidden overflow-y-visible py-16 md:py-24">
@@ -197,10 +194,9 @@ function Index() {
       </section>
 
       <VideoBand
-        clip={VIDEO_CLIPS.modernBrands}
-        headline="Built for modern brands."
-        sub="Premium presence for companies that compete at the top."
-        graded
+        clip={VIDEO_CLIPS.dataLayer}
+        headline="Everything, tracked."
+        sub="Every call, lead, and metric — captured automatically."
       />
 
       {/* Features */}
@@ -236,10 +232,10 @@ function Index() {
       </section>
 
       <VideoBand
-        clip={VIDEO_CLIPS.alwaysAnswering}
-        headline="Always answering."
-        sub="Your AI receptionist never clocks out."
-        lightOverlay
+        clip={VIDEO_CLIPS.modernBrands}
+        headline="Built for modern brands."
+        sub="Premium presence for companies that compete at the top."
+        graded
       />
 
       {/* Testimonials */}
@@ -301,6 +297,13 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <VideoBand
+        clip={VIDEO_CLIPS.alwaysAnswering}
+        headline="Always answering."
+        sub="Your AI receptionist never clocks out."
+        lightOverlay
+      />
 
       <CtaSection />
 
