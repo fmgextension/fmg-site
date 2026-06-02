@@ -9,7 +9,6 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { AnimatedWaveBackground } from "@/components/AnimatedWaveBackground";
 import { ButtonEffects } from "@/components/ButtonEffects";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { SpotlightCursor } from "@/components/SpotlightCursor";
@@ -130,7 +129,6 @@ function RootComponent() {
       <SmoothScroll />
       <ButtonEffects />
       <SpotlightCursor />
-      <AnimatedWaveBackground />
       <main style={{ position: "relative", zIndex: 1 }}>
         <Outlet />
       </main>

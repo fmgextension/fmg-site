@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as ResultsPreviewRouteImport } from './routes/results-preview'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResultsPreviewRoute = ResultsPreviewRouteImport.update({
+  id: '/results-preview',
+  path: '/results-preview',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -32,30 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/results-preview': typeof ResultsPreviewRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/results-preview': typeof ResultsPreviewRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/results-preview': typeof ResultsPreviewRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/privacy' | '/terms'
+  fullPaths: '/' | '/privacy' | '/results-preview' | '/terms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/privacy' | '/terms'
-  id: '__root__' | '/' | '/privacy' | '/terms'
+  to: '/' | '/privacy' | '/results-preview' | '/terms'
+  id: '__root__' | '/' | '/privacy' | '/results-preview' | '/terms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PrivacyRoute: typeof PrivacyRoute
+  ResultsPreviewRoute: typeof ResultsPreviewRoute
   TermsRoute: typeof TermsRoute
 }
 
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/results-preview': {
+      id: '/results-preview'
+      path: '/results-preview'
+      fullPath: '/results-preview'
+      preLoaderRoute: typeof ResultsPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PrivacyRoute: PrivacyRoute,
+  ResultsPreviewRoute: ResultsPreviewRoute,
   TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport

@@ -31,7 +31,7 @@ function overlayStyle(graded: boolean, lightOverlay: boolean): CSSProperties | u
     };
   }
   if (lightOverlay) {
-    return { backgroundColor: "hsl(var(--background) / 0.4)" };
+    return { backgroundColor: "hsl(var(--background) / 0.25)" };
   }
   return undefined;
 }
@@ -106,7 +106,7 @@ export function VideoBand({
   return (
     <section
       ref={sectionRef}
-      className="video-band relative w-full min-h-[88vh] flex items-center justify-center overflow-hidden border-y border-border"
+      className={`video-band relative w-full min-h-[88vh] flex items-center justify-center overflow-hidden border-y border-border${graded ? " video-band--graded" : ""}${lightOverlay ? " video-band--light" : ""}`}
       data-video
       data-crossfade
     >

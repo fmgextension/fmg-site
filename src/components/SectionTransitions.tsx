@@ -5,15 +5,25 @@ import { scheduleScrollRefresh } from "@/lib/lenis-scroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const MIN_OPACITY = 0.4;
-const DRIFT = 48;
+const DRIFT = 64;
 
 /**
- * Scroll-scrubbed cross-dissolve between adjacent major sections.
- * Each tagged section ([data-crossfade]) fades in from slightly below as it
- * enters and fades out drifting up as it leaves. Adjacent sections overlap
- * their enter/exit ranges, producing a gentle hand-off. Tied to the existing
- * Lenis + ScrollTrigger setup (SmoothScroll.tsx) — no second smooth-scroll.
+ * Scroll-scrubbed cross-dissolve at the 6 video <-> content seams.
+ *
+ * Each tagged section ([data-crossfade]) owns its own opacity through two
+ * independent, non-overlapping scrubbed triggers — an entrance (0 -> 1) near
+ * its top and an exit (1 -> 0) near its bottom. Because adjacent sections
+ * share a seam, the outgoing section's exit window and the incoming section's
+ * entrance window overlap across the boundary, so they fully melt through each
+ * other (outgoing all the way to 0, incoming up from 0) instead of hard-cutting.
+ *
+ * The hero -> first-band seam is intentionally skipped (the hero black-beat owns
+ * it): the first tagged section gets no entrance fade. The final CTA gets no exit
+ * fade since nothing meaningful follows before the footer.
+ *
+ * Tied to the existing Lenis + ScrollTrigger setup (SmoothScroll.tsx) — no second
+ * smooth-scroll. GPU-friendly (opacity/transform + will-change). Disabled under
+ * prefers-reduced-motion (sections render at full opacity).
  */
 export function SectionTransitions() {
   useEffect(() => {
@@ -23,48 +33,63 @@ export function SectionTransitions() {
     const sections = Array.from(
       document.querySelectorAll<HTMLElement>("[data-crossfade]"),
     );
-    if (!sections.length) return;
+    if (sections.length < 2) return;
+
+    const lastIndex = sections.length - 1;
 
     const ctx = gsap.context(() => {
-      sections.forEach((section) => {
-        // Incoming: fade up from slightly below as the section enters view.
-        gsap.fromTo(
-          section,
-          { autoAlpha: MIN_OPACITY, y: DRIFT },
-          {
-            autoAlpha: 1,
-            y: 0,
-            ease: "none",
-            immediateRender: false,
-            scrollTrigger: {
-              trigger: section,
-              start: "top bottom",
-              end: "top 40%",
-              scrub: true,
-              invalidateOnRefresh: true,
-            },
-          },
-        );
+      sections.forEach((section, index) => {
+        const hasEntrance = index > 0; // skip hero -> first-band seam
+        const hasExit = index < lastIndex; // skip cta -> footer seam
 
-        // Outgoing: fade down drifting up as the section leaves view. The
-        // range overlaps the next section's enter range for the cross-dissolve.
-        gsap.fromTo(
-          section,
-          { autoAlpha: 1, y: 0 },
-          {
-            autoAlpha: MIN_OPACITY,
-            y: -DRIFT,
-            ease: "none",
-            immediateRender: false,
-            scrollTrigger: {
-              trigger: section,
-              start: "bottom 70%",
-              end: "bottom top",
-              scrub: true,
-              invalidateOnRefresh: true,
+        // Incoming: rise + fade up from 0 over a generous window as the
+        // section's top travels into view. immediateRender keeps it hidden
+        // until scrolled to, so nothing below the fold pre-animates.
+        if (hasEntrance) {
+          gsap.fromTo(
+            section,
+            { opacity: 0, y: DRIFT },
+            {
+              opacity: 1,
+              y: 0,
+              ease: "none",
+              force3D: false,
+              immediateRender: true,
+              overwrite: false,
+              scrollTrigger: {
+                trigger: section,
+                start: "top bottom",
+                end: "top 30%",
+                scrub: true,
+                invalidateOnRefresh: true,
+              },
             },
-          },
-        );
+          );
+        }
+
+        // Outgoing: fade fully to 0 + drift up as the section's bottom leaves.
+        // This window overlaps the next section's entrance for the melt.
+        if (hasExit) {
+          gsap.fromTo(
+            section,
+            { opacity: 1, y: 0 },
+            {
+              opacity: 0,
+              y: -DRIFT,
+              ease: "none",
+              force3D: false,
+              immediateRender: false,
+              overwrite: false,
+              scrollTrigger: {
+                trigger: section,
+                start: "bottom 70%",
+                end: "bottom top",
+                scrub: true,
+                invalidateOnRefresh: true,
+              },
+            },
+          );
+        }
       });
     });
 

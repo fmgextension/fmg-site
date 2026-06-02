@@ -665,6 +665,39 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+}
+
+/* Skyscraper "modern brands" band: stronger edge feather so the graded
+   footage fades further into the background and shows no hard top/bottom line. */
+.video-band--graded .video-band-media {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 19%,
+    #000 81%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 19%,
+    #000 81%,
+    transparent 100%
+  );
 }
 
 .video-band-parallax {
@@ -810,6 +843,20 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 10%,
+    #000 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 10%,
+    #000 90%,
+    transparent 100%
+  );
 }
 
 .cta-section-media video {

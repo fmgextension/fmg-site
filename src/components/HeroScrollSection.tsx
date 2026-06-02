@@ -42,6 +42,14 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
       gsap.set(maskWrap, { scale: 1, opacity: 1, transformOrigin: "center center" });
       if (bgVideo) gsap.set(bgVideo, { scale: 1.2, transformOrigin: "center center" });
 
+      // One-time gentle load fade-in of the hero splash (wordmark + content),
+      // independent of the scrubbed scroll timeline below.
+      gsap.fromTo(
+        pin,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.9, ease: "power2.out", delay: 0.05 },
+      );
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: outer,
