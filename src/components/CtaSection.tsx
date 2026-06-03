@@ -78,7 +78,7 @@ export function CtaSection() {
         </Reveal>
         <Reveal delay={0.1}>
           <p className="text-base text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join 25+ businesses already using FMG to capture more leads, earn more reviews, and grow
+            Join 50+ businesses already using FMG to capture more leads, earn more reviews, and grow
             faster. Let&apos;s talk about your goals.
           </p>
         </Reveal>

@@ -185,7 +185,7 @@ function Index() {
               className="font-bold mb-4"
               style={{ fontSize: "clamp(28px, 6vw, 48px)" }}
             >
-              Loved by 25+ Businesses
+              Loved by 50+ Businesses
             </CascadeText>
             <Reveal delay={0.2}>
               <p className="text-base text-muted-foreground max-w-2xl mx-auto">
