@@ -51,7 +51,7 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
         scrollTrigger: {
           trigger: outer,
           start: "top top",
-          end: "+=140%",
+          end: "+=90%",
           pin,
           scrub: true,
           anticipatePin: 1,
