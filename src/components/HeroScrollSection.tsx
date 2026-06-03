@@ -17,7 +17,6 @@ type HeroScrollSectionProps = {
 export function HeroScrollSection({ active, children }: HeroScrollSectionProps) {
   const outerRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
-  const bgVideoRef = useRef<HTMLVideoElement>(null);
   const maskVideoRef = useRef<HTMLVideoElement>(null);
   const maskWrapRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -32,7 +31,6 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
     const maskWrap = maskWrapRef.current;
     const content = contentRef.current;
     const black = blackRef.current;
-    const bgVideo = bgVideoRef.current;
 
     if (!outer || !pin || !maskWrap || !content || !black) return;
 
@@ -40,7 +38,6 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
       gsap.set(content, { opacity: 0, y: 48 });
       gsap.set(black, { opacity: 0 });
       gsap.set(maskWrap, { scale: 1, opacity: 1, transformOrigin: "center center" });
-      if (bgVideo) gsap.set(bgVideo, { scale: 1.2, transformOrigin: "center center" });
 
       // One-time gentle load fade-in of the hero splash (wordmark + content),
       // independent of the scrubbed scroll timeline below.
@@ -67,9 +64,6 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
         { scale: 6, opacity: 0, ease: "power2.out", duration: 0.4 },
         0,
       );
-      if (bgVideo) {
-        tl.to(bgVideo, { scale: 1.32, ease: "power2.out", duration: 0.4 }, 0);
-      }
       tl.to(content, { opacity: 1, y: 0, ease: "power2.out", duration: 0.25 }, 0.25);
     }, outer);
 
@@ -83,20 +77,18 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
   useEffect(() => {
     if (!active) return;
 
-    const videos = [bgVideoRef.current, maskVideoRef.current].filter(Boolean) as HTMLVideoElement[];
-    if (!videos.length) return;
+    const mask = maskVideoRef.current;
+    if (!mask) return;
 
     const section = pinRef.current;
     if (!section) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        for (const video of videos) {
-          if (entry.isIntersecting) {
-            void video.play().catch(() => {});
-          } else {
-            video.pause();
-          }
+        if (entry.isIntersecting) {
+          void mask.play().catch(() => {});
+        } else {
+          mask.pause();
         }
       },
       { threshold: 0.12 },
@@ -124,18 +116,8 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
         className="hero-scroll-pin"
         data-video
       >
-        <div className="hero-scroll-video-bg" aria-hidden="true">
-          <video
-            ref={bgVideoRef}
-            src={HERO_VIDEO_SRC}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-          />
-          <div className="hero-scroll-video-grade" />
-        </div>
+        {/* Grade overlay only — fiber video now comes from the shared <FiberZone> wrapper in the page. */}
+        <div className="hero-scroll-video-grade" aria-hidden="true" />
 
         <div ref={maskWrapRef} className="hero-scroll-mask-wrap" aria-hidden="true">
           <div

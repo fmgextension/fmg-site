@@ -59,12 +59,40 @@ function Index() {
         </div>
       </Reveal>
 
-      {/* Hero — FMG video splash, no overlay content (receptionist block moved to Always Answering band) */}
-      <HeroScrollSection active={heroScroll}>
-        <></>
-      </HeroScrollSection>
-
-      <ProcessFlow />
+      {/* Hero + ProcessFlow share one fiber-optic video backdrop. The sticky+negative-margin
+          pattern locks one <video> to the viewport for the entire region, then lets it scroll
+          out exactly as ProcessFlow ends — one decode for two sections, and no seam between them. */}
+      <style>{`
+        .fiber-zone { position: relative; isolation: isolate; }
+        .fiber-shared {
+          position: sticky; top: 0;
+          height: 100vh; width: 100%;
+          margin-bottom: -100vh;
+          z-index: 0; pointer-events: none;
+          background: #070A0F; overflow: hidden;
+        }
+        .fiber-shared video {
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+          object-fit: cover;
+        }
+      `}</style>
+      <div className="fiber-zone">
+        <div className="fiber-shared" aria-hidden="true">
+          <video
+            src="/blue%20fiber%20optic%20cables.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          />
+        </div>
+        <HeroScrollSection active={heroScroll}>
+          <></>
+        </HeroScrollSection>
+        <ProcessFlow />
+      </div>
 
       <ResultsScatter />
 
