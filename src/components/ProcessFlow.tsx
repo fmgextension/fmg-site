@@ -169,7 +169,7 @@ export function ProcessFlow() {
         .pf{height:540vh;position:relative}
         .pf-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
         .pf-fiber{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-        .pf-fiber-grade{position:absolute;inset:0;background:rgba(7,10,15,.45)}
+        .pf-fiber-grade{position:absolute;inset:0}
         .pf-flowhead{position:absolute;top:6vh;left:0;right:0;text-align:center;z-index:6;opacity:0;will-change:opacity,transform}
         .pf-flowhead .pf-eye{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#2F80FF;font-weight:600}
         .pf-flowhead h2{font-size:clamp(26px,4vw,44px);font-weight:800;letter-spacing:-.02em;margin-top:10px;color:#fff}

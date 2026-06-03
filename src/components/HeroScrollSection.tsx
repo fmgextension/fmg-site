@@ -136,6 +136,10 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
               playsInline
               preload="metadata"
             />
+            <div
+              className="hero-mask-glow"
+              style={{ position: "absolute", inset: 0, background: "rgba(47,128,255,0.22)", mixBlendMode: "screen", pointerEvents: "none" }}
+            />
           </div>
         </div>
 

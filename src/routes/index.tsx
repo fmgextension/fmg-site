@@ -76,6 +76,13 @@ function Index() {
           width: 100%; height: 100%;
           object-fit: cover;
         }
+        .fiber-grade {
+          position: sticky; top: 0;
+          height: 100vh; width: 100%;
+          margin-bottom: -100vh;
+          z-index: 0; background: rgba(7,10,15,var(--fiber-grade-alpha,.15));
+          pointer-events: none;
+        }
       `}</style>
       <div className="fiber-zone">
         <div className="fiber-shared" aria-hidden="true">
@@ -88,6 +95,7 @@ function Index() {
             preload="metadata"
           />
         </div>
+        <div className="fiber-grade" aria-hidden="true" />
         <HeroScrollSection active={heroScroll}>
           <></>
         </HeroScrollSection>

@@ -586,7 +586,6 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: rgba(7,10,15,.45);
 }
 
 .hero-scroll-mask-wrap {
@@ -601,9 +600,7 @@
   /* Filter applies to the already-masked child, so the shadow follows the
      exact FMG letter shapes: a crisp dark edge plus a soft dark plate behind
      the letters, lifting them off the matching fiber background. */
-  filter:
-    drop-shadow(0 1px 2px hsl(var(--background) / 0.95))
-    drop-shadow(0 0 16px hsl(var(--background) / 0.85));
+  filter: drop-shadow(0 1px 2px hsl(var(--background) / 0.95)) drop-shadow(0 0 16px hsl(var(--background) / 0.85));
 }
 
 .hero-scroll-mask {
