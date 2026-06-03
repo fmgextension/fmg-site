@@ -6,6 +6,7 @@ import { HeroScrollSection } from "@/components/HeroScrollSection";
 import { VIDEO_CLIPS, VideoBand } from "@/components/VideoBand";
 import { CtaSection } from "@/components/CtaSection";
 import { SectionTransitions } from "@/components/SectionTransitions";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { Reveal } from "@/components/Reveal";
 import { StaggerGroup } from "@/components/StaggerGroup";
 import { InteractiveCard } from "@/components/InteractiveCard";
@@ -43,6 +44,7 @@ function Index() {
   return (
     <div className="min-h-screen text-foreground">
       <SectionTransitions />
+      <ScrollProgress />
       {/* Nav */}
       <Reveal variant="fadeIn" as="header" className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/40 border-b border-border safe-top">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -173,7 +175,7 @@ function Index() {
           look broken and can disturb the sticky pin. */}
       <section
         id="features"
-        className="px-6 border-t border-border"
+        className="px-6"
         style={{ paddingTop: "clamp(80px, 12vw, 120px)", paddingBottom: "clamp(80px, 12vw, 120px)" }}
       >
         <div className="max-w-7xl mx-auto">
@@ -182,7 +184,7 @@ function Index() {
       </section>
 
       {/* Testimonials */}
-      <section id="reviews" data-crossfade className="py-16 md:py-24 md:px-6 border-t border-border overflow-visible">
+      <section id="reviews" data-crossfade className="py-16 md:py-24 md:px-6 overflow-visible">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 md:mb-16 px-6 md:px-0">
             <Reveal><div className="text-sm text-primary font-medium mb-3">Testimonials</div></Reveal>

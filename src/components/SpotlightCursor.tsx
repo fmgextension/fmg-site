@@ -50,10 +50,11 @@ export function SpotlightCursor() {
       targetX = e.clientX;
       targetY = e.clientY;
 
-      // Intensify over the video-bearing sections (hero / bands / cta), the
-      // same "hot" zones the preview brightens over.
+      // Intensify only over the interactive cards (service + testimonial cards
+      // both carry .card-tilt-host); stay at the dim default everywhere else,
+      // including the video bands.
       const el = document.elementFromPoint(e.clientX, e.clientY);
-      const hot = !!el?.closest("[data-video]");
+      const hot = !!el?.closest(".card-tilt-host");
 
       targetSize = hot ? HOT_SIZE : BASE_SIZE;
       targetOpacity = hot ? HOT_OPACITY : BASE_OPACITY;

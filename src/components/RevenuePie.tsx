@@ -129,7 +129,11 @@ export function RevenuePie() {
       g.appendChild(rW);
       g.appendChild(top);
 
-      const [lx, ly] = pt(am, R + 72);
+      // "Email" sits at ~9 o'clock (slice mid-angle ≈ horizontal-left), level with
+      // the center count-up; push only its label further out so it clears the big
+      // number at every reveal phase (incl. small/relatively-large-number sizes).
+      const labelR = d.nm === "Email" ? R + 72 + 70 : R + 72;
+      const [lx, ly] = pt(am, labelR);
       const t = document.createElementNS(NS, "text");
       t.setAttribute("x", lx.toFixed(1));
       t.setAttribute("y", ly.toFixed(1));
@@ -303,7 +307,6 @@ export function RevenuePie() {
             </svg>
             <div ref={centerRef} className="rp-center">
               <div className="rp-v" ref={totalRef}>$0</div>
-              <div className="rp-l">Tracked revenue<br />all channels</div>
             </div>
           </div>
           <div className="rp-legend" ref={legendRef} />

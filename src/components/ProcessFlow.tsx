@@ -164,7 +164,7 @@ export function ProcessFlow() {
   }, []);
 
   return (
-    <section className="pf" ref={pinRef}>
+    <section className="pf" ref={pinRef} data-crossfade>
       <style>{`
         .pf{height:540vh;position:relative}
         .pf-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
