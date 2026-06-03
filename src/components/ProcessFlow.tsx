@@ -169,14 +169,8 @@ export function ProcessFlow() {
         .pf{height:540vh;position:relative}
         .pf-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
         .pf-fiber{position:absolute;inset:0;overflow:hidden;background:#070A0F}
-        .pf-fiber::before{content:"";position:absolute;inset:-10%;
-          background:radial-gradient(ellipse 55% 60% at 50% 30%, rgba(47,128,255,.20), transparent 70%),
-            radial-gradient(circle at 20% 80%, rgba(47,128,255,.10), transparent 55%);}
-        .pf-fiber::after{content:"";position:absolute;inset:0;
-          background-image:radial-gradient(rgba(150,190,255,.55) 1px, transparent 1.5px);
-          background-size:24px 30px;opacity:.4;
-          -webkit-mask-image:linear-gradient(to bottom, transparent, #000 18%, #000 70%, transparent);
-          mask-image:linear-gradient(to bottom, transparent, #000 18%, #000 70%, transparent)}
+        .pf-fiber video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+        .pf-fiber-grade{position:absolute;inset:0;background:linear-gradient(180deg, rgba(7,10,15,.6), rgba(7,10,15,.45) 45%, rgba(7,10,15,.7))}
         .pf-flowhead{position:absolute;top:6vh;left:0;right:0;text-align:center;z-index:6;opacity:0;will-change:opacity,transform}
         .pf-flowhead .pf-eye{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#2F80FF;font-weight:600}
         .pf-flowhead h2{font-size:clamp(26px,4vw,44px);font-weight:800;letter-spacing:-.02em;margin-top:10px;color:#fff}
@@ -204,7 +198,10 @@ export function ProcessFlow() {
       `}</style>
 
       <div className="pf-sticky">
-        <div className="pf-fiber" />
+        <div className="pf-fiber" aria-hidden="true">
+          <video src="/blue%20fiber%20optic%20cables.mp4" autoPlay muted loop playsInline preload="metadata" />
+          <div className="pf-fiber-grade" />
+        </div>
         <div className="pf-flowhead" ref={flowheadRef}>
           <div className="pf-eye">HOW WE WORK</div>
           <h2>One <span className="b">system</span>, end to end.</h2>

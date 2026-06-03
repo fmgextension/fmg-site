@@ -1,12 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { EASE_IN_OUT } from "@/lib/motion";
+import { useReducedMotion } from "framer-motion";
 import { CascadeText } from "@/components/CascadeText";
 import { HeroScrollSection } from "@/components/HeroScrollSection";
 import { VIDEO_CLIPS, VideoBand } from "@/components/VideoBand";
 import { CtaSection } from "@/components/CtaSection";
-import { HeroStatsRow } from "@/components/HeroStatsRow";
 import { SectionTransitions } from "@/components/SectionTransitions";
 import { Reveal } from "@/components/Reveal";
 import { StaggerGroup } from "@/components/StaggerGroup";
@@ -15,7 +13,7 @@ import { MobileMenu } from "@/components/MobileMenu";
 import { ServicesCarousel } from "@/components/ServicesCarousel";
 import { RevenueBars } from "@/components/RevenueBars";
 import { ResultsScatter } from "@/components/ResultsScatter";
-import { HeroPhoneMockup } from "@/components/HeroPhoneMockup";
+import { ProcessFlow } from "@/components/ProcessFlow";
 import { MagneticButton } from "@/components/MagneticButton";
 import {
   Play,
@@ -41,11 +39,6 @@ function Index() {
     { href: "#reviews", label: "Reviews" },
     { href: "#contact", label: "Contact" },
   ];
-  const heroFloat = reduced
-    ? {}
-    : { y: [0, -8, 0], rotate: [0, 0.5, 0] };
-  const cardFloat = reduced ? {} : { y: [0, -4, 0] };
-  const dotPulse = reduced ? {} : { scale: [1, 1.15, 1], opacity: [1, 0.7, 1] };
   const heroScroll = !reduced;
   return (
     <div className="min-h-screen text-foreground">
@@ -66,98 +59,12 @@ function Index() {
         </div>
       </Reveal>
 
-      {/* Hero */}
+      {/* Hero — FMG video splash, no overlay content (receptionist block moved to Always Answering band) */}
       <HeroScrollSection active={heroScroll}>
-        <div className="relative z-[1] max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-          <div className="order-1">
-            <Reveal immediate={heroScroll} delay={0.1}>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/40 text-sm mb-6">
-                <motion.span
-                  className="w-2 h-2 rounded-full bg-primary"
-                  animate={dotPulse}
-                  transition={{ duration: 2, ease: EASE_IN_OUT, repeat: Infinity }}
-                />
-                <span>Powered by Advanced AI</span>
-              </div>
-            </Reveal>
-            <Reveal immediate={heroScroll} delay={0.2}>
-              <h1 className="font-semibold leading-tight mb-6" style={{ fontSize: "clamp(32px, 8vw, 72px)", letterSpacing: "-0.02em" }}>
-                24/7 AI Receptionist
-                <br />
-                <span style={{ color: "hsl(var(--primary))" }}>on Standby</span>
-              </h1>
-            </Reveal>
-            <Reveal immediate={heroScroll} delay={0.35}>
-              <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl">
-                Built to answer the calls you're missing right now. FMG.
-              </p>
-            </Reveal>
-            <StaggerGroup immediate={heroScroll} tight className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mb-10 md:mb-12">
-              <Reveal immediate={heroScroll} delay={0.5}>
-                <MagneticButton href="tel:+17755464533" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
-                  <span className="btn-label">Test Drive Our AI</span>
-                </MagneticButton>
-              </Reveal>
-              <Reveal immediate={heroScroll} delay={0.55}>
-                <button type="button" onClick={() => setVideoOpen(true)} className="btn-secondary relative z-10 inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium touch-manipulation">
-                  <span className="btn-label inline-flex items-center justify-center gap-2">
-                    <Play className="w-4 h-4 btn-icon" />
-                    Watch Demo
-                  </span>
-                </button>
-              </Reveal>
-            </StaggerGroup>
-            <Reveal immediate={heroScroll} delay={0.7}>
-              <HeroStatsRow scrollControlled={heroScroll} />
-            </Reveal>
-          </div>
-          <div className="order-2 flex flex-col gap-4">
-            <Reveal immediate={heroScroll} variant="scaleIn" delay={0.3} className="relative">
-              <div className="absolute -inset-4 rounded-3xl blur-3xl opacity-30 bg-primary" />
-              <motion.div
-                className="relative [--phone-max:240px] lg:[--phone-max:320px]"
-                animate={heroFloat}
-                transition={{ duration: 6, ease: EASE_IN_OUT, repeat: Infinity, repeatType: "loop", delay: 1.5 }}
-              >
-                <HeroPhoneMockup />
-                <Reveal immediate={heroScroll} variant="fadeUp" delay={0.9} className="hidden lg:block absolute -bottom-4 left-1/2 -translate-x-1/2 w-[320px] max-w-[90%] z-10">
-                  <motion.div
-                    className="flex items-center gap-3 p-4 rounded-2xl bg-background/80 backdrop-blur-md border border-border"
-                    animate={cardFloat}
-                    transition={{ duration: 4.5, ease: EASE_IN_OUT, repeat: Infinity, delay: 2 }}
-                  >
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold" style={{ background: "hsl(var(--primary) / 0.15)", color: "hsl(var(--primary))" }}>AI</div>
-                    <div>
-                      <div className="font-semibold text-sm">AI Receptionist Active</div>
-                      <div className="text-xs text-muted-foreground">Handling 47 calls right now</div>
-                    </div>
-                    <motion.span
-                      className="ml-auto w-2 h-2 rounded-full bg-primary"
-                      animate={dotPulse}
-                      transition={{ duration: 2, ease: EASE_IN_OUT, repeat: Infinity }}
-                    />
-                  </motion.div>
-                </Reveal>
-              </motion.div>
-            </Reveal>
-            {/* Mobile-only inline notification card (promoted from overlay) */}
-            <Reveal immediate={heroScroll} variant="fadeUp" delay={0.5} className="lg:hidden">
-              <div className="flex items-center gap-3 p-4 rounded-2xl bg-card/80 backdrop-blur-md border border-border">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0" style={{ background: "hsl(var(--primary) / 0.15)", color: "hsl(var(--primary))" }}>AI</div>
-                <div className="min-w-0">
-                  <div className="font-semibold text-sm">AI Receptionist Active</div>
-                  <div className="text-[13px] text-muted-foreground">Handling 47 calls right now</div>
-                </div>
-                <motion.span
-                  className="ml-auto w-2 h-2 rounded-full bg-primary shrink-0"
-                  animate={dotPulse}
-                  transition={{ duration: 2, ease: EASE_IN_OUT, repeat: Infinity }}
-                />
-              </div>
-            </Reveal>
-          </div>
-        </div>
+        <></>
       </HeroScrollSection>
+
+      <ProcessFlow />
 
       <ResultsScatter />
 
@@ -231,13 +138,6 @@ function Index() {
         </div>
       </section>
 
-      <VideoBand
-        clip={VIDEO_CLIPS.modernBrands}
-        headline="Built for modern brands."
-        sub="Premium presence for companies that compete at the top."
-        graded
-      />
-
       {/* Testimonials */}
       <section id="reviews" data-crossfade className="py-16 md:py-24 md:px-6 border-t border-border overflow-visible">
         <div className="max-w-7xl mx-auto">
@@ -298,12 +198,35 @@ function Index() {
         </div>
       </section>
 
-      <VideoBand
-        clip={VIDEO_CLIPS.alwaysAnswering}
-        headline="Always answering."
-        sub="Your AI receptionist never clocks out."
-        lightOverlay
-      />
+      <VideoBand clip={VIDEO_CLIPS.alwaysAnswering} lightOverlay>
+        <Reveal delay={0.2}>
+          <h1 className="font-semibold leading-tight mb-6" style={{ fontSize: "clamp(32px, 8vw, 72px)", letterSpacing: "-0.02em" }}>
+            24/7 AI Receptionist
+            <br />
+            <span style={{ color: "hsl(var(--primary))" }}>on Standby</span>
+          </h1>
+        </Reveal>
+        <Reveal delay={0.35}>
+          <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+            Built to answer the calls you're missing right now. FMG.
+          </p>
+        </Reveal>
+        <StaggerGroup tight className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4 mb-10 md:mb-12">
+          <Reveal delay={0.5}>
+            <MagneticButton href="tel:+17755464533" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
+              <span className="btn-label">Test Drive Our AI</span>
+            </MagneticButton>
+          </Reveal>
+          <Reveal delay={0.55}>
+            <button type="button" onClick={() => setVideoOpen(true)} className="btn-secondary relative z-10 inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium touch-manipulation">
+              <span className="btn-label inline-flex items-center justify-center gap-2">
+                <Play className="w-4 h-4 btn-icon" />
+                Watch Demo
+              </span>
+            </button>
+          </Reveal>
+        </StaggerGroup>
+      </VideoBand>
 
       <CtaSection />
 

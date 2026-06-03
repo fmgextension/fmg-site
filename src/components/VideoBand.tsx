@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -13,11 +13,12 @@ export const VIDEO_CLIPS = {
 
 type VideoBandProps = {
   clip: string;
-  headline: string;
-  sub: string;
+  headline?: string;
+  sub?: string;
   graded?: boolean;
   lightOverlay?: boolean;
   poster?: string;
+  children?: ReactNode;
 };
 
 function overlayStyle(graded: boolean, lightOverlay: boolean): CSSProperties | undefined {
@@ -43,6 +44,7 @@ export function VideoBand({
   graded = false,
   lightOverlay = false,
   poster,
+  children,
 }: VideoBandProps) {
   const reduced = useReducedMotion();
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -127,14 +129,18 @@ export function VideoBand({
       <div className="video-band-overlay" style={overlayStyle(graded, lightOverlay)} />
 
       <div className="video-band-content relative z-10 max-w-4xl mx-auto px-6 py-20 text-center">
-        <CascadeText
-          as="h2"
-          className="font-bold mb-4"
-          style={{ fontSize: "clamp(28px, 6vw, 48px)", lineHeight: 1.15 }}
-        >
-          {headline}
-        </CascadeText>
-        <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">{sub}</p>
+        {children ?? (
+          <>
+            <CascadeText
+              as="h2"
+              className="font-bold mb-4"
+              style={{ fontSize: "clamp(28px, 6vw, 48px)", lineHeight: 1.15 }}
+            >
+              {headline}
+            </CascadeText>
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">{sub}</p>
+          </>
+        )}
       </div>
     </section>
   );

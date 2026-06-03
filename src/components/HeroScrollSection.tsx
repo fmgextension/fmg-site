@@ -71,7 +71,6 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
         tl.to(bgVideo, { scale: 1.32, ease: "power2.out", duration: 0.4 }, 0);
       }
       tl.to(content, { opacity: 1, y: 0, ease: "power2.out", duration: 0.25 }, 0.25);
-      tl.to(black, { opacity: 1, ease: "power2.in", duration: 0.18 }, 0.82);
     }, outer);
 
     scheduleScrollRefresh();
