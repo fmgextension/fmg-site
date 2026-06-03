@@ -786,6 +786,10 @@
   transform: rotateY(0deg) translateZ(1px);
 }
 
+.card-flip-face-front.card-surface {
+  background-color: hsl(var(--background));
+}
+
 .card-flip-face-back {
   transform: rotateY(180deg) translateZ(1px);
 }
