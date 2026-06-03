@@ -61,7 +61,7 @@ const PHOTOS: Photo[] = [
 ];
 
 // Steady medium drift in px/second at speed = 1.
-const BASE_SPEED = 87;
+const BASE_SPEED = 87 * 2;
 
 // Minimum gap (px) enforced between any two photo bounding boxes.
 const MIN_GAP = 40;
