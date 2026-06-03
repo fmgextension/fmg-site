@@ -57,8 +57,8 @@ const DROP_D = statX.map((sx, i) => {
 });
 
 const STAT = [
-  { count: 500, suffix: "+", dec: 0, label: "Businesses Served" },
-  { count: 10000, suffix: "+", dec: 0, label: "Calls Handled / Day" },
+  { count: 50, suffix: "+", dec: 0, label: "Businesses Served" },
+  { count: 10000, suffix: "+", dec: 0, label: "Calls Handled / Week" },
   { count: 4.9, suffix: "", dec: 1, label: "Average Rating" },
 ];
 
