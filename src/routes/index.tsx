@@ -136,11 +136,35 @@ function Index() {
         </Reveal>
       </section>
 
-      <VideoBand
-        clip={VIDEO_CLIPS.dataLayer}
-        headline="Everything, tracked."
-        sub="Every call, lead, and metric — captured automatically."
-      />
+      <VideoBand clip={VIDEO_CLIPS.alwaysAnswering} lightOverlay>
+        <Reveal delay={0.2}>
+          <h1 className="font-semibold leading-tight mb-6" style={{ fontSize: "clamp(32px, 8vw, 72px)", letterSpacing: "-0.02em" }}>
+            24/7 AI Receptionist
+            <br />
+            <span style={{ color: "hsl(var(--primary))" }}>on Standby</span>
+          </h1>
+        </Reveal>
+        <Reveal delay={0.35}>
+          <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+            Built to answer the calls you're missing right now. FMG.
+          </p>
+        </Reveal>
+        <StaggerGroup tight className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4 mb-10 md:mb-12">
+          <Reveal delay={0.5}>
+            <MagneticButton href="tel:+17755464533" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
+              <span className="btn-label">Test Drive Our AI</span>
+            </MagneticButton>
+          </Reveal>
+          <Reveal delay={0.55}>
+            <button type="button" onClick={() => setVideoOpen(true)} className="btn-secondary relative z-10 inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium touch-manipulation">
+              <span className="btn-label inline-flex items-center justify-center gap-2">
+                <Play className="w-4 h-4 btn-icon" />
+                Watch Demo
+              </span>
+            </button>
+          </Reveal>
+        </StaggerGroup>
+      </VideoBand>
 
       {/* Features */}
       <section
@@ -233,36 +257,6 @@ function Index() {
           </div>
         </div>
       </section>
-
-      <VideoBand clip={VIDEO_CLIPS.alwaysAnswering} lightOverlay>
-        <Reveal delay={0.2}>
-          <h1 className="font-semibold leading-tight mb-6" style={{ fontSize: "clamp(32px, 8vw, 72px)", letterSpacing: "-0.02em" }}>
-            24/7 AI Receptionist
-            <br />
-            <span style={{ color: "hsl(var(--primary))" }}>on Standby</span>
-          </h1>
-        </Reveal>
-        <Reveal delay={0.35}>
-          <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-            Built to answer the calls you're missing right now. FMG.
-          </p>
-        </Reveal>
-        <StaggerGroup tight className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4 mb-10 md:mb-12">
-          <Reveal delay={0.5}>
-            <MagneticButton href="tel:+17755464533" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
-              <span className="btn-label">Test Drive Our AI</span>
-            </MagneticButton>
-          </Reveal>
-          <Reveal delay={0.55}>
-            <button type="button" onClick={() => setVideoOpen(true)} className="btn-secondary relative z-10 inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium touch-manipulation">
-              <span className="btn-label inline-flex items-center justify-center gap-2">
-                <Play className="w-4 h-4 btn-icon" />
-                Watch Demo
-              </span>
-            </button>
-          </Reveal>
-        </StaggerGroup>
-      </VideoBand>
 
       <CtaSection />
 
