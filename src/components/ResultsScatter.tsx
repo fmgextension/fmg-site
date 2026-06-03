@@ -256,10 +256,12 @@ export function ResultsScatter() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full"
-      style={{ minHeight: "140vh", backgroundColor: "hsl(var(--background))" }}
+      data-crossfade
+      className="relative w-full results-section"
+      style={{ minHeight: "250vh", backgroundColor: "hsl(var(--background))" }}
       aria-label="Results"
     >
+      <style>{`@media (min-width: 768px) { .results-section { min-height: 300vh !important; } }`}</style>
       {/* Scattered photo field (behind the type) */}
       <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 0 }}>
         {(layout ?? []).map((box, i) => {
@@ -310,7 +312,7 @@ export function ResultsScatter() {
             textWrap: "balance",
           }}
         >
-          Results,
+          <span style={{ color: "hsl(var(--primary))" }}>Results</span>,
           <br />
           on the record.
         </h2>
