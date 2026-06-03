@@ -11,7 +11,7 @@ import { StaggerGroup } from "@/components/StaggerGroup";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ServicesCarousel } from "@/components/ServicesCarousel";
-import { RevenueBars } from "@/components/RevenueBars";
+import { RevenuePie } from "@/components/RevenuePie";
 import { ResultsScatter } from "@/components/ResultsScatter";
 import { ProcessFlow } from "@/components/ProcessFlow";
 import { MagneticButton } from "@/components/MagneticButton";
@@ -114,9 +114,11 @@ function Index() {
               delay={0.1}
               className="font-bold mb-4"
               style={{ fontSize: "clamp(28px, 6vw, 48px)" }}
-            >
-              Everything Your Business Needs to Grow
-            </CascadeText>
+              segments={[
+                { text: "Everything Your Business Needs to" },
+                { text: "Grow", style: { color: "hsl(var(--primary))" } },
+              ]}
+            />
             <Reveal delay={0.2}>
               <p className="text-base text-muted-foreground max-w-2xl mx-auto">
                 We combine cutting-edge AI technology with premium design to deliver solutions that actually move the needle.
@@ -166,35 +168,16 @@ function Index() {
         </StaggerGroup>
       </VideoBand>
 
-      {/* Features */}
+      {/* Features — RevenuePie owns its own pinned scroll + heading.
+          No data-crossfade here: an opacity melt over the 640vh pin would
+          look broken and can disturb the sticky pin. */}
       <section
         id="features"
-        data-crossfade
         className="px-6 border-t border-border"
         style={{ paddingTop: "clamp(80px, 12vw, 120px)", paddingBottom: "clamp(80px, 12vw, 120px)" }}
       >
         <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="text-center mx-auto mb-8 lg:mb-12" style={{ maxWidth: 640 }}>
-            <Reveal><div className="text-sm text-primary font-medium mb-3">Why Choose Us</div></Reveal>
-            <CascadeText
-              as="h2"
-              delay={0.1}
-              className="font-bold mb-4"
-              style={{ fontSize: "clamp(28px, 5vw, 48px)", lineHeight: 1.15 }}
-              segments={[
-                { text: "Built for Businesses That" },
-                { text: "Demand Excellence", style: { color: "hsl(var(--primary))" } },
-              ]}
-            />
-            <Reveal delay={0.2}>
-              <p className="text-base text-muted-foreground">
-                Six channels. One revenue engine. Built to compound.
-              </p>
-            </Reveal>
-          </div>
-
-          <RevenueBars />
+          <RevenuePie />
         </div>
       </section>
 
@@ -208,9 +191,11 @@ function Index() {
               delay={0.1}
               className="font-bold mb-4"
               style={{ fontSize: "clamp(28px, 6vw, 48px)" }}
-            >
-              Loved by 50+ Businesses
-            </CascadeText>
+              segments={[
+                { text: "Loved", style: { color: "hsl(var(--primary))" } },
+                { text: "by 50+ Businesses" },
+              ]}
+            />
             <Reveal delay={0.2}>
               <p className="text-base text-muted-foreground max-w-2xl mx-auto">
                 Don't just take our word for it. Here's what our clients say about working with FMG.
@@ -258,10 +243,39 @@ function Index() {
         </div>
       </section>
 
-      <CtaSection />
+      {/* CTA + footer share one fiber-optic video backdrop that runs to the
+          absolute bottom of the page — one decode behind both, grade spanning
+          the whole zone, content floating directly on the video. */}
+      <style>{`
+        .cta-zone { position: relative; isolation: isolate; }
+        .cta-zone-media {
+          position: absolute; inset: 0;
+          z-index: 0; pointer-events: none;
+          overflow: hidden; background: #070A0F;
+        }
+        .cta-zone-media video {
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+          object-fit: cover;
+        }
+      `}</style>
+      <div className="cta-zone">
+        <div className="cta-zone-media" aria-hidden="true">
+          <video
+            src="/blue%20fiber%20optic%20cables.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          />
+          <div className="cta-section-overlay" aria-hidden="true" />
+        </div>
 
-      <footer className="py-10 px-6 border-t border-border text-center text-sm text-muted-foreground">
-        <div className="max-w-3xl mx-auto space-y-4">
+        <CtaSection />
+
+        <footer className="relative z-[1] py-10 px-6 text-center text-sm text-muted-foreground">
+          <div className="max-w-3xl mx-auto space-y-4">
           <p>© {new Date().getFullYear()} FMG. All rights reserved.</p>
           <p>FMG is a brand of Liantaud Holdings LLC, a Florida limited liability company.</p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
@@ -274,6 +288,7 @@ function Index() {
           </p>
         </div>
       </footer>
+      </div>
 
       {videoOpen && (
         <div

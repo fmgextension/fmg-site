@@ -893,13 +893,6 @@
   );
 }
 
-.cta-section-panel {
-  background-color: hsl(0 0% 6% / 0.2);
-  border: 1px solid hsl(var(--foreground) / 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
 .cta-section-content h2,
 .cta-section-content p {
   text-shadow: 0 1px 14px hsl(var(--background) / 0.75);
@@ -913,9 +906,5 @@
       hsl(0 0% 4% / 0.32) 50%,
       hsl(0 0% 4% / 0.48) 100%
     );
-  }
-
-  .cta-section-panel {
-    background-color: hsl(0 0% 6% / 0.22);
   }
 }
