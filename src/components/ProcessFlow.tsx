@@ -185,6 +185,12 @@ export function ProcessFlow() {
         .pf-node .pf-stepno{font-size:13px;letter-spacing:.28em;font-weight:700;color:#eef3fb;margin-bottom:6px;text-shadow:0 0 6px rgba(7,10,15,.95),0 0 12px rgba(7,10,15,.8)}
         .pf-node .pf-title{font-size:21px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px;color:#fff}
         .pf-node .pf-desc{font-size:12px;line-height:1.5;color:rgba(219,222,233,.62)}
+        @media(max-width:767px){
+          .pf-node .pf-glyph{width:36px;height:36px;margin-bottom:6px}
+          .pf-node .pf-stepno{font-size:12px;margin-bottom:3px}
+          .pf-node .pf-title{font-size:16px;margin-bottom:3px}
+          .pf-node .pf-desc{font-size:11px;line-height:1.35}
+        }
         @keyframes pf-chargeFlash{0%{filter:brightness(1.9) drop-shadow(0 0 18px rgba(47,128,255,.9));}100%{filter:brightness(1) drop-shadow(0 0 0 rgba(47,128,255,0));}}
         .pf-node.lit{animation:pf-chargeFlash .8s ease-out}
         .pf-statsrow{position:absolute;bottom:6vh;left:5vw;right:5vw;z-index:6;display:grid;grid-template-columns:repeat(3,1fr);column-gap:24px}
