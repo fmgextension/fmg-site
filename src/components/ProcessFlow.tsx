@@ -187,12 +187,12 @@ export function ProcessFlow() {
         .pf-node .pf-desc{font-size:12px;line-height:1.5;color:rgba(219,222,233,.62)}
         @keyframes pf-chargeFlash{0%{filter:brightness(1.9) drop-shadow(0 0 18px rgba(47,128,255,.9));}100%{filter:brightness(1) drop-shadow(0 0 0 rgba(47,128,255,0));}}
         .pf-node.lit{animation:pf-chargeFlash .8s ease-out}
-        .pf-statsrow{position:absolute;bottom:6vh;left:5vw;right:5vw;z-index:6;display:grid;grid-template-columns:repeat(3,1fr)}
-        .pf-statsrow .pf-c{padding:22px 18px 0;text-align:center;border-right:1px solid transparent;border-top:1px solid transparent;visibility:hidden;opacity:0;transform:translateY(14px)}
+        .pf-statsrow{position:absolute;bottom:6vh;left:5vw;right:5vw;z-index:6;display:grid;grid-template-columns:repeat(3,1fr);column-gap:24px}
+        .pf-statsrow .pf-c{min-width:0;padding:22px 18px 0;text-align:center;border-right:1px solid transparent;border-top:1px solid transparent;visibility:hidden;opacity:0;transform:translateY(14px)}
         .pf-statsrow .pf-c:last-child{border-right:none}
         .pf-statsrow .pf-c.on{visibility:visible;opacity:1;transform:none;border-top:1px solid rgba(219,222,233,.12);transition:opacity .3s, transform .3s}
         .pf-statsrow .pf-c.on:not(:last-child){border-right:1px solid rgba(219,222,233,.12)}
-        .pf-statsrow .pf-v{font-size:clamp(34px,5.4vw,76px);font-weight:800;letter-spacing:-.03em;line-height:1;font-feature-settings:"tnum";color:#fff}
+        .pf-statsrow .pf-v{display:flex;justify-content:center;font-size:clamp(34px,5.4vw,76px);font-weight:800;letter-spacing:-.03em;line-height:1;font-feature-settings:"tnum";color:#fff}
         .pf-statsrow .pf-l{margin-top:12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(219,222,233,.55)}
       `}</style>
 

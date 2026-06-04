@@ -61,7 +61,7 @@ export function InteractiveCard({
         </span>
       )}
 
-      <span className="relative z-[2] block">{children}</span>
+      <span className="relative z-[2] flex flex-1 flex-col min-h-0">{children}</span>
 
       <span
         aria-hidden
