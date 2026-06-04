@@ -5,6 +5,7 @@ import { CascadeText } from "@/components/CascadeText";
 import { HeroScrollSection } from "@/components/HeroScrollSection";
 import { VIDEO_CLIPS, VideoBand } from "@/components/VideoBand";
 import { CtaSection } from "@/components/CtaSection";
+import { FiberGrabTransition } from "@/components/FiberGrabTransition";
 import { SectionTransitions } from "@/components/SectionTransitions";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { Reveal } from "@/components/Reveal";
@@ -183,8 +184,13 @@ function Index() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section id="reviews" data-crossfade className="py-16 md:py-24 md:px-6 overflow-visible">
+      {/* Testimonials -> CTA "fiber grab-and-pull" transition. #reviews is the
+          pinned content layer inside the sticky stage so the grab can yank it
+          away; one shared fiber video spans the zone to the page bottom; the CTA
+          holds full-screen so the footer only appears on deliberate extra scroll. */}
+      <FiberGrabTransition
+        reviews={
+          <section id="reviews" className="py-16 md:py-24 md:px-6 overflow-visible">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 md:mb-16 px-6 md:px-0">
             <Reveal><div className="text-sm text-primary font-medium mb-3">Testimonials</div></Reveal>
@@ -243,54 +249,26 @@ function Index() {
             </StaggerGroup>
           </div>
         </div>
-      </section>
-
-      {/* CTA + footer share one fiber-optic video backdrop that runs to the
-          absolute bottom of the page — one decode behind both, grade spanning
-          the whole zone, content floating directly on the video. */}
-      <style>{`
-        .cta-zone { position: relative; isolation: isolate; }
-        .cta-zone-media {
-          position: absolute; inset: 0;
-          z-index: 0; pointer-events: none;
-          overflow: hidden; background: #070A0F;
+          </section>
         }
-        .cta-zone-media video {
-          position: absolute; inset: 0;
-          width: 100%; height: 100%;
-          object-fit: cover;
+        cta={<CtaSection />}
+        footer={
+          <footer className="relative z-[1] py-10 px-6 text-center text-sm text-muted-foreground">
+            <div className="max-w-3xl mx-auto space-y-4">
+              <p>© {new Date().getFullYear()} FMG. All rights reserved.</p>
+              <p>FMG is a brand of Liantaud Holdings LLC, a Florida limited liability company.</p>
+              <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                <Link to="/privacy" className="hover:text-foreground transition-colors underline-offset-2 hover:underline">Privacy Policy</Link>
+                <Link to="/terms" className="hover:text-foreground transition-colors underline-offset-2 hover:underline">Terms of Service</Link>
+              </div>
+              <p className="text-xs leading-relaxed opacity-70 max-w-2xl mx-auto">
+                By providing your phone number on this site or to FMG representatives, you consent to receive SMS messages from FMG regarding appointments, follow-ups, and service updates. Message and data rates may apply. Reply STOP to opt out at any time. Reply HELP for help. Message frequency varies. See our{" "}
+                <Link to="/privacy" className="underline">Privacy Policy</Link> for details.
+              </p>
+            </div>
+          </footer>
         }
-      `}</style>
-      <div className="cta-zone">
-        <div className="cta-zone-media" aria-hidden="true">
-          <video
-            src="/blue%20fiber%20optic%20cables.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-          />
-          <div className="cta-section-overlay" aria-hidden="true" />
-        </div>
-
-        <CtaSection />
-
-        <footer className="relative z-[1] py-10 px-6 text-center text-sm text-muted-foreground">
-          <div className="max-w-3xl mx-auto space-y-4">
-          <p>© {new Date().getFullYear()} FMG. All rights reserved.</p>
-          <p>FMG is a brand of Liantaud Holdings LLC, a Florida limited liability company.</p>
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-            <Link to="/privacy" className="hover:text-foreground transition-colors underline-offset-2 hover:underline">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-foreground transition-colors underline-offset-2 hover:underline">Terms of Service</Link>
-          </div>
-          <p className="text-xs leading-relaxed opacity-70 max-w-2xl mx-auto">
-            By providing your phone number on this site or to FMG representatives, you consent to receive SMS messages from FMG regarding appointments, follow-ups, and service updates. Message and data rates may apply. Reply STOP to opt out at any time. Reply HELP for help. Message frequency varies. See our{" "}
-            <Link to="/privacy" className="underline">Privacy Policy</Link> for details.
-          </p>
-        </div>
-      </footer>
-      </div>
+      />
 
       {videoOpen && (
         <div

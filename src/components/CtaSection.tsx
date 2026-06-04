@@ -8,7 +8,6 @@ export function CtaSection() {
       id="contact"
       className="cta-section relative overflow-hidden py-16 md:py-24 px-6"
       data-video
-      data-crossfade
     >
       <div className="cta-section-content cta-section-panel relative z-[1] max-w-4xl mx-auto text-center p-8 md:p-12">
         <Reveal>
