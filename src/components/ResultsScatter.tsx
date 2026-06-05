@@ -58,6 +58,12 @@ const PHOTOS: Photo[] = [
   { label: "scatter-12", src: "/scatter/rodrigo-rodrigues-wolf-r-t-5FRDoTNMvfI-unsplash.jpg", width: 172, height: 120, speed: 0.85, cell: [3, 3], bleed: "right" },
   // Center intrusion (small, partway in so the type overlaps it)
   { label: "scatter-13", src: "/scatter/stephen-phillips-hostreviews-co-uk-shr_Xn8S8QU-unsplash.jpg", width: 96, height: 96, speed: 1.1, intrude: { cx: 0.39, cy: 0.42 } },
+  // Google Business Profile analytics screenshots (1400px-wide line graphs / breakdowns)
+  { label: "scatter-14", src: "/scatter/gbp-interactions.png", width: 204, height: 85, speed: 0.9, cell: [1, 1] },
+  { label: "scatter-15", src: "/scatter/profile-views.png", width: 188, height: 102, speed: 1.2, cell: [2, 1] },
+  { label: "scatter-16", src: "/scatter/calls-growth.png", width: 200, height: 85, speed: 0.7, cell: [1, 2] },
+  { label: "scatter-17", src: "/scatter/directions.png", width: 190, height: 81, speed: 1.1, cell: [2, 2] },
+  { label: "scatter-18", src: "/scatter/website-clicks.png", width: 200, height: 83, speed: 0.6, intrude: { cx: 0.6, cy: 0.58 } },
 ];
 
 // Steady medium drift in px/second at speed = 1.
