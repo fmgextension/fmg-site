@@ -520,7 +520,8 @@
 .hero-scroll-pin {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100vh; /* fallback for browsers without large-viewport units */
+  height: 100lvh; /* large viewport: hero stage holds one height regardless of iOS Safari's collapsing bottom bar */
   overflow: hidden;
   /* Pin is transparent so the shared fiber video (rendered by <FiberZone> in the page) is visible behind it. */
 }
@@ -556,6 +557,21 @@
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
+}
+/* Wordmark load fade-in lives on this dedicated wrapper (own compositor layer,
+   separate from the masked element AND the scrub-animated .hero-scroll-mask-wrap).
+   The element paints hidden here (opacity 0); the actual fade is driven by rAF in
+   JS (see rafFade in HeroScrollSection) — NOT a CSS animation/transition, because
+   the GSAP pin removes + re-inserts this subtree dozens of times on load, which
+   restarts @keyframes and snaps transitions (= a pop/jitter). Inline styles survive
+   re-insertion, so the JS fade runs once, smoothly. */
+.hero-mask-fade {
+  opacity: 0;
+  transform: translateY(6px);
+  will-change: opacity, transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-mask-fade { opacity: 1; transform: none; }
 }
 
 .hero-scroll-mask video {

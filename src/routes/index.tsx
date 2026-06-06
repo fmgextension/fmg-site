@@ -41,11 +41,46 @@ function Index() {
   ];
   const heroScroll = !reduced;
   const fiberVideoRef = useRef<HTMLVideoElement>(null);
+  const fiberFadeRef = useRef<HTMLDivElement>(null);
   // Guarantee the shared hero/ProcessFlow fiber clip starts (incl. iOS Low Power Mode).
   useEffect(() => {
     const v = fiberVideoRef.current;
     if (!v) return;
     return ensureVideoPlays(v);
+  }, []);
+  // One-time load fade-in of the fiber backsplash. Triggered when a FRAME is
+  // actually rendering — 'playing', the first decoded frame ('loadeddata'), or
+  // first timeupdate>0 — never on bare mount, so it can't fade over an empty frame
+  // then pop. In gesture-gated LPM the frozen first frame still fires 'loadeddata',
+  // so that path fades too. Fades the WRAPPER (.fiber-fade); the scrub/shared-fiber
+  // continuity never touch this opacity, so the hand-off is clean. CSS owns the
+  // initial opacity:0 (no FOUC) and the reduced-motion = visible case.
+  useEffect(() => {
+    const video = fiberVideoRef.current;
+    const fade = fiberFadeRef.current;
+    if (!video || !fade) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; // CSS keeps it visible
+    let done = false;
+    const detach = () => {
+      video.removeEventListener("playing", reveal);
+      video.removeEventListener("loadeddata", reveal);
+      video.removeEventListener("timeupdate", onTime);
+    };
+    const reveal = () => {
+      if (done) return;
+      done = true;
+      fade.classList.add("is-in"); // CSS transitions opacity 0 -> 1
+      detach();
+    };
+    const onTime = () => {
+      if (video.currentTime > 0) reveal();
+    };
+    video.addEventListener("playing", reveal);
+    video.addEventListener("loadeddata", reveal);
+    video.addEventListener("timeupdate", onTime);
+    // Already rendering by the time we attached (cached / fast decode)? Reveal now.
+    if (video.readyState >= 2 || video.currentTime > 0) reveal();
+    return detach;
   }, []);
   return (
     <div className="min-h-screen text-foreground">
@@ -84,6 +119,14 @@ function Index() {
           width: 100%; height: 100%;
           object-fit: cover;
         }
+        /* One-time load fade-in of the backsplash (wrapper, so the scrub never
+           fights it). Slower than the wordmark fade so it blooms behind. Starts
+           hidden on first paint (no pop); JS adds .is-in once a frame renders. */
+        .fiber-fade { opacity: 0; transition: opacity 1100ms ease-out; }
+        .fiber-fade.is-in { opacity: 1; }
+        @media (prefers-reduced-motion: reduce) {
+          .fiber-fade { opacity: 1; transition: none; }
+        }
         .fiber-grade {
           position: sticky; top: 0;
           height: 100vh; width: 100%;
@@ -94,15 +137,17 @@ function Index() {
       `}</style>
       <div className="fiber-zone">
         <div className="fiber-shared" aria-hidden="true">
-          <video
-            ref={fiberVideoRef}
-            src="/blue%20fiber%20optic%20cables.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-          />
+          <div ref={fiberFadeRef} className="fiber-fade">
+            <video
+              ref={fiberVideoRef}
+              src="/blue%20fiber%20optic%20cables.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
+          </div>
         </div>
         <div className="fiber-grade" aria-hidden="true" />
         <HeroScrollSection active={heroScroll}>

@@ -14,9 +14,20 @@
 const pending = new Set<HTMLVideoElement>();
 let gestureArmed = false;
 
+// Whether a real first user gesture (touch/scroll) has occurred this session, plus
+// one-shot subscribers notified when it does. Used by the hero "scroll" hint to tell
+// gesture-gated autoplay (frozen in iOS Low Power Mode) apart from normal autoplay,
+// and to dismiss the hint on that first gesture.
+let gestureSeen = false;
+const gestureSubs = new Set<() => void>();
+
 function fireGesture() {
   // First real user gesture — the LPM-legal moment to start every pending video.
+  gestureSeen = true;
   for (const v of pending) void v.play().catch(() => {});
+  const subs = [...gestureSubs];
+  gestureSubs.clear();
+  for (const cb of subs) cb();
   disarmGesture();
 }
 
@@ -86,5 +97,29 @@ export function ensureVideoPlays(video: HTMLVideoElement): () => void {
     detach();
     pending.delete(video);
     if (pending.size === 0) disarmGesture();
+  };
+}
+
+/**
+ * Has a real first user gesture (touch/scroll) happened yet this session? Combined
+ * with `video.paused`, lets the hero distinguish gesture-gated autoplay (frozen in
+ * iOS Low Power Mode) from normal autoplay.
+ */
+export function hasUserGesture(): boolean {
+  return gestureSeen;
+}
+
+/**
+ * Run `cb` once, on the first user gesture (the same touch/scroll that wakes the
+ * videos). Fires immediately if a gesture already happened. Returns an unsubscribe.
+ */
+export function onFirstGesture(cb: () => void): () => void {
+  if (gestureSeen) {
+    cb();
+    return () => {};
+  }
+  gestureSubs.add(cb);
+  return () => {
+    gestureSubs.delete(cb);
   };
 }
