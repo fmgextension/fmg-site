@@ -55,7 +55,7 @@ function Index() {
           <a href="https://api.leadconnectorhq.com/widget/booking/GY7Wbc5EGo5NME2j6v9T" target="_blank" rel="noopener noreferrer" className="btn-primary hidden md:inline-flex px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium">
             <span className="btn-label">Book a Free Meeting</span>
           </a>
-          <MobileMenu items={navItems} ctaHref="tel:+17755464533" ctaLabel="Test Drive Our AI" />
+          <MobileMenu items={navItems} ctaHref="tel:+17866347595" ctaLabel="Test Drive Our AI" />
         </div>
       </Reveal>
 
@@ -117,10 +117,10 @@ function Index() {
           <span style={{ color: "hsl(var(--primary))" }}>on Standby</span>
         </h1>
         <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-          Built to answer the calls you're missing right now. FMG.
+          Built to answer the calls you're missing right now.
         </p>
         <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4 mb-10 md:mb-12">
-          <MagneticButton href="tel:+17755464533" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
+          <MagneticButton href="tel:+17866347595" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
             <span className="btn-label">Test Drive Our AI</span>
           </MagneticButton>
           <button type="button" onClick={() => setVideoOpen(true)} className="btn-secondary relative z-10 inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium touch-manipulation">

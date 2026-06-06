@@ -32,7 +32,7 @@ export function CtaSection() {
               <span className="btn-label">Get your free audit</span>
             </a>
             <a
-              href="tel:+17755464533"
+              href="tel:+17866347595"
               className="btn-secondary inline-flex items-center justify-center px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium w-full sm:w-auto"
             >
               <span className="btn-label">Test Drive Our AI</span>
@@ -40,11 +40,11 @@ export function CtaSection() {
           </div>
         </Reveal>
         <div className="mt-8 flex flex-wrap justify-center gap-4 md:gap-6 text-sm">
-          <a href="tel:+17755464533" className="text-link">
-            775-546-4533
+          <a href="tel:+17866347595" className="text-link">
+            786-634-7595
           </a>
-          <a href="mailto:fmg.extension@gmail.com" className="text-link">
-            fmg.extension@gmail.com
+          <a href="mailto:info@fmgfirm.com" className="text-link">
+            info@fmgfirm.com
           </a>
         </div>
       </div>

@@ -28,7 +28,7 @@ function TermsPage() {
           <a href="https://api.leadconnectorhq.com/widget/booking/GY7Wbc5EGo5NME2j6v9T" target="_blank" rel="noopener noreferrer" className="btn-primary hidden md:inline-flex px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium">
             <span className="btn-label">Book a Free Meeting</span>
           </a>
-          <MobileMenu items={navItems} ctaHref="tel:+17755464533" ctaLabel="Test Drive Our AI" />
+          <MobileMenu items={navItems} ctaHref="tel:+17866347595" ctaLabel="Test Drive Our AI" />
         </div>
       </Reveal>
 
