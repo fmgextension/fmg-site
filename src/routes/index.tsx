@@ -12,7 +12,7 @@ import { Reveal } from "@/components/Reveal";
 import { StaggerGroup } from "@/components/StaggerGroup";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { MobileMenu } from "@/components/MobileMenu";
-import { ServicesCarousel } from "@/components/ServicesCarousel";
+import { ServicesPinned } from "@/components/ServicesPinned";
 import { RevenuePie } from "@/components/RevenuePie";
 import { ResultsScatter } from "@/components/ResultsScatter";
 import { ProcessFlow } from "@/components/ProcessFlow";
@@ -22,9 +22,6 @@ import {
 } from "lucide-react";
 import {
   Star as PStar,
-  Globe as PGlobe,
-  PhoneCall as PPhoneCall,
-  Lightning as PLightning,
   X as PX,
 } from "@phosphor-icons/react";
 
@@ -107,68 +104,32 @@ function Index() {
 
       <ResultsScatter />
 
-      {/* Services */}
-      <section id="services" data-crossfade className="relative overflow-x-hidden overflow-y-visible py-16 md:py-24">
-        <div className="relative z-[1] max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12 md:mb-16">
-            <Reveal><div className="text-sm text-primary font-medium mb-3">Our Services</div></Reveal>
-            <CascadeText
-              as="h2"
-              delay={0.1}
-              className="font-bold mb-4"
-              style={{ fontSize: "clamp(28px, 6vw, 48px)" }}
-              segments={[
-                { text: "Everything Your Business Needs to" },
-                { text: "Grow", style: { color: "hsl(var(--primary))" } },
-              ]}
-            />
-            <Reveal delay={0.2}>
-              <p className="text-base text-muted-foreground max-w-2xl mx-auto">
-                We combine cutting-edge AI technology with premium design to deliver solutions that actually move the needle.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-        <Reveal delay={0.3} className="relative z-[1]">
-          <ServicesCarousel
-            items={[
-              { icon: PPhoneCall, title: "AI Receptionists", desc: "24/7 AI-powered receptionists that answer calls, book appointments, and never miss a lead.", items: ["24/7 Availability", "Natural Conversations", "Appointment Booking", "Lead Capture"] },
-              { icon: PStar, title: "5-Star Review Generation", desc: "Automatically collect and boost your Google reviews. Turn happy customers into your best marketing.", items: ["Automated Follow-ups", "Review Monitoring", "Response Templates", "Analytics Dashboard"] },
-              { icon: PGlobe, title: "High-End Web Design", desc: "Premium websites that convert visitors into customers. Stunning designs backed by conversion science.", items: ["Custom Design", "Mobile Optimized", "SEO Ready", "Fast Loading"] },
-              { icon: PLightning, title: "Increase Lead Flow", desc: "Supercharge your pipeline with AI-driven lead generation. More appointments, more revenue.", items: ["Book More Appts", "Schedule Consultations", "Lead Nurturing", "Pipeline Automation"] },
-            ]}
-          />
-        </Reveal>
-      </section>
+      {/* Services — pinned scroll-driver (cards assemble, then hold). */}
+      <ServicesPinned />
 
-      <VideoBand clip={VIDEO_CLIPS.alwaysAnswering} lightOverlay>
-        <Reveal delay={0.2}>
-          <h1 className="font-semibold leading-tight mb-6" style={{ fontSize: "clamp(32px, 8vw, 72px)", letterSpacing: "-0.02em" }}>
-            24/7 AI Receptionist
-            <br />
-            <span style={{ color: "hsl(var(--primary))" }}>on Standby</span>
-          </h1>
-        </Reveal>
-        <Reveal delay={0.35}>
-          <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-            Built to answer the calls you're missing right now. FMG.
-          </p>
-        </Reveal>
-        <StaggerGroup tight className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4 mb-10 md:mb-12">
-          <Reveal delay={0.5}>
-            <MagneticButton href="tel:+17755464533" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
-              <span className="btn-label">Test Drive Our AI</span>
-            </MagneticButton>
-          </Reveal>
-          <Reveal delay={0.55}>
-            <button type="button" onClick={() => setVideoOpen(true)} className="btn-secondary relative z-10 inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium touch-manipulation">
-              <span className="btn-label inline-flex items-center justify-center gap-2">
-                <Play className="w-4 h-4 btn-icon" />
-                Watch Demo
-              </span>
-            </button>
-          </Reveal>
-        </StaggerGroup>
+      {/* Receptionist — pinned scroll-driver (~150vh). Text scrubs in as the band
+          settles, then holds while the typing clip plays. VideoBand owns the
+          entrance beat, so the content here is plain (no in-view Reveals). */}
+      <VideoBand id="receptionist" clip={VIDEO_CLIPS.alwaysAnswering} lightOverlay pinVh={200}>
+        <h1 className="font-semibold leading-tight mb-6" style={{ fontSize: "clamp(32px, 8vw, 72px)", letterSpacing: "-0.02em" }}>
+          24/7 AI Receptionist
+          <br />
+          <span style={{ color: "hsl(var(--primary))" }}>on Standby</span>
+        </h1>
+        <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+          Built to answer the calls you're missing right now. FMG.
+        </p>
+        <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4 mb-10 md:mb-12">
+          <MagneticButton href="tel:+17755464533" className="btn-primary inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full bg-primary text-primary-foreground font-medium">
+            <span className="btn-label">Test Drive Our AI</span>
+          </MagneticButton>
+          <button type="button" onClick={() => setVideoOpen(true)} className="btn-secondary relative z-10 inline-flex w-full sm:w-auto items-center justify-center px-6 h-12 rounded-full border border-border bg-transparent text-foreground font-medium touch-manipulation">
+            <span className="btn-label inline-flex items-center justify-center gap-2">
+              <Play className="w-4 h-4 btn-icon" />
+              Watch Demo
+            </span>
+          </button>
+        </div>
       </VideoBand>
 
       {/* Features — RevenuePie owns its own pinned scroll + heading.

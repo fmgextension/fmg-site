@@ -138,8 +138,9 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
       media.style.opacity = String(0.35 + 0.65 * maskProgress);
       if (video) video.style.transform = `scale(${(1.07 - easeIn(maskProgress) * 0.07).toFixed(4)})`;
 
-      // CTA SETTLE 0.88–0.98, then held to 1.0.
-      const ca = clamp((p - 0.88) / 0.1);
+      // CTA SETTLE 0.84–0.94, then held to 1.0 (held slice widened 0.02→0.06 so
+      // momentum can't blow past the CTA into the footer; settle span unchanged at 0.10).
+      const ca = clamp((p - 0.84) / 0.1);
       ctaEl.style.opacity = String(ca);
       ctaEl.style.transform = `translateY(${((1 - ca) * 40).toFixed(2)}px)`;
       ctaEl.style.pointerEvents = ca > 0.5 ? "auto" : "none";
