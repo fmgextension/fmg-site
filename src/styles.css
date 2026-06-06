@@ -571,7 +571,12 @@
 
 /* Hero scroll splash (GSAP pin) */
 .hero-scroll-outer {
-  height: 240vh;
+  /* Drives only where ProcessFlow flows in — NOT the splash scrub (that's the
+     GSAP pin-spacer, height 190vh = 100vh pin + 90vh "+=90%" distance, which
+     overflows this box transparently over the shared fiber). Trimmed from 240vh
+     to 152vh to halve the dead empty-fiber gap between the splash completing
+     (~65vh) and the ProcessFlow snake-flow forming (was 240vh, now 152vh). */
+  height: 152vh;
 }
 
 .hero-scroll-pin {
