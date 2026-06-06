@@ -930,3 +930,19 @@
     );
   }
 }
+
+/* Page scroll-progress bar position + thickness (color/glow/animation stay on the
+   component's inline styles). Desktop sits flat on the bottom edge. On iPhone Safari
+   the bottom toolbar collapses while scrolling down, letting the page reach the
+   physical edge so the hairline bar hides under the home-indicator pill — so on
+   mobile only, lift it above the safe-area inset and thicken it a touch to read. */
+.scroll-progress-bar {
+  bottom: 0;
+  height: 2px;
+}
+@media (max-width: 767px) {
+  .scroll-progress-bar {
+    bottom: calc((env(safe-area-inset-bottom, 0px) + 8px) * 0.5);
+    height: 3px;
+  }
+}

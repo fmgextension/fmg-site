@@ -67,12 +67,11 @@ export function ScrollProgress() {
   return (
     <div
       aria-hidden="true"
+      className="scroll-progress-bar"
       style={{
         position: "fixed",
         left: 0,
         right: 0,
-        bottom: 0,
-        height: 2,
         zIndex: 2147483647,
         pointerEvents: "none",
         background: "rgba(255,255,255,0.04)",
