@@ -51,6 +51,7 @@ const LERP = 0.12;
 export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitionProps) {
   const reduced = useReducedMotion();
   const driverRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -75,10 +76,12 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
 
     let W = 0;
     let H = 0;
+    let lastW = -1;
     let strands: Strand[] = [];
-    const build = () => {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
+
+    // Seed the strand field. RANDOMIZED, so it must run ONCE per real width — never on
+    // a bare height change (see resize()).
+    const genStrands = () => {
       strands = [];
       const n = Math.round(W / 14);
       for (let i = 0; i < n; i++) {
@@ -93,13 +96,39 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
         });
       }
     };
-    build();
-    window.addEventListener("resize", build);
+
+    // Size the backing store and restore context state (assigning canvas.width/height
+    // wipes the bitmap AND resets all 2D context state — so lineCap/lineJoin are
+    // re-applied here, not once outside). Re-seed the strands ONLY when the WIDTH
+    // actually changes. iOS Safari fires 'resize' on every URL-bar/toolbar collapse —
+    // a HEIGHT-only change — during a jiggle; re-seeding there reshuffled the entire
+    // cable field to new random positions, the visible "reset/jump". Width is constant
+    // across a toolbar toggle, so this holds the field stable through a jiggle while
+    // still rebuilding on a true layout change (rotation). Desktop never changes width
+    // on scroll, so behaviour there is byte-identical.
+    const resize = () => {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      if (W !== lastW) {
+        lastW = W;
+        genStrands();
+      }
+    };
+    resize();
+
+    // Debounce so an iOS toolbar-collapse 'resize' burst coalesces into a single
+    // backing-store resize after the gesture settles (avoids per-event bitmap churn).
+    let resizeTimer = 0;
+    const onResize = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(resize, 120);
+    };
+    window.addEventListener("resize", onResize);
 
     const clamp = (v: number) => Math.max(0, Math.min(1, v));
     const easeIn = (v: number) => v * v;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
 
     if (video) {
       video.muted = true;
@@ -112,7 +141,14 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
     const loop = () => {
       const now = performance.now(); // wall clock — sway/wiggle, never scroll
       const r = driver.getBoundingClientRect();
-      const p = clamp(-r.top / (r.height - window.innerHeight)); // RAW p — CSS timeline only
+      // Pin travel = driver height − pinned-stage height. Use the sticky stage's own
+      // height (CSS 100vh) instead of live window.innerHeight: on iOS the visual
+      // viewport (innerHeight) shrinks/grows with the toolbar while the stage's vh
+      // basis stays fixed, so the live value stepped p ~2% on every toolbar toggle.
+      // On desktop stage.clientHeight === innerHeight, so this is identical.
+      const stage = stageRef.current;
+      const pinH = stage && stage.clientHeight ? stage.clientHeight : window.innerHeight;
+      const p = clamp(-r.top / (r.height - pinH)); // RAW p — CSS timeline only
       rendered = rendered === null ? p : rendered + (p - rendered) * LERP;
       const sp = rendered; // smoothed — cables
 
@@ -194,7 +230,8 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
 
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("resize", build);
+      window.clearTimeout(resizeTimer);
+      window.removeEventListener("resize", onResize);
     };
   }, [reduced]);
 
@@ -213,8 +250,11 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
         object-fit: cover; transform-origin: center center;
       }
       .fgt-grade { position: absolute; inset: 0; background: hsl(var(--background) / 0.45); }
-      .fgt-driver { position: relative; height: 550vh; }
-      .fgt-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+      /* overflow-anchor:none — defensive: keep iOS scroll-anchoring from ever
+         nudging scrollTop within the pinned region (belt-and-suspenders; the jiggle
+         reset was the resize re-seed, not anchoring). */
+      .fgt-driver { position: relative; height: 550vh; overflow-anchor: none; }
+      .fgt-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; overflow-anchor: none; }
       /* Testimonial layer: solid page-dark so the masked-out video stays hidden
          behind it until the grab reveals it. */
       .fgt-content {
@@ -262,7 +302,7 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
         <div className="fgt-grade" />
       </div>
       <div className="fgt-driver" ref={driverRef}>
-        <div className="fgt-stage">
+        <div className="fgt-stage" ref={stageRef}>
           <div className="fgt-content" ref={contentRef}>{reviews}</div>
           <canvas ref={canvasRef} className="fgt-strands" aria-hidden="true" />
           <div className="fgt-cta" ref={ctaRef}>{cta}</div>
