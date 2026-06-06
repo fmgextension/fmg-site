@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CascadeText } from "@/components/CascadeText";
 import { useViewportInView } from "@/hooks/useViewportInView";
+import { ensureVideoPlays } from "@/lib/ensureVideoPlays";
 
 export const VIDEO_CLIPS = {
   alwaysAnswering: "/macbook%20typing%20blue%20close%20extended.mp4",
@@ -117,6 +118,14 @@ export function VideoBand({
     video.currentTime = 0;
     void video.play().catch(() => {});
   }, [inView]);
+
+  // Guarantee the clip starts (incl. iOS Low Power Mode). Pause/resume stays with
+  // the inView effect above — this only handles the initial start + gesture backstop.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    return ensureVideoPlays(video);
+  }, []);
 
   // Pinned "beat": scroll-scrub the text content in as the band rises into view
   // and settles into its pin, then hold. The video keeps playing throughout, so

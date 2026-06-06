@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { useReducedMotion } from "framer-motion";
 import { scheduleScrollRefresh } from "@/lib/lenis-scroll";
+import { ensureVideoPlays } from "@/lib/ensureVideoPlays";
 
 // Same fiber clip the hero/ProcessFlow use — ONE decode for the whole CTA zone.
 const VIDEO_SRC = "/blue%20fiber%20optic%20cables.mp4";
@@ -130,10 +131,7 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
     const clamp = (v: number) => Math.max(0, Math.min(1, v));
     const easeIn = (v: number) => v * v;
 
-    if (video) {
-      video.muted = true;
-      void video.play().catch(() => {});
-    }
+    const stopVideo = video ? ensureVideoPlays(video) : null;
 
     let rendered: number | null = null; // smoothed scroll progress — CABLE GEOMETRY ONLY
     let raf = 0;
@@ -232,6 +230,7 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
       cancelAnimationFrame(raf);
       window.clearTimeout(resizeTimer);
       window.removeEventListener("resize", onResize);
+      stopVideo?.();
     };
   }, [reduced]);
 

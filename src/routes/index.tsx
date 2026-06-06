@@ -17,6 +17,7 @@ import { RevenuePie } from "@/components/RevenuePie";
 import { ResultsScatter } from "@/components/ResultsScatter";
 import { ProcessFlow } from "@/components/ProcessFlow";
 import { MagneticButton } from "@/components/MagneticButton";
+import { ensureVideoPlays } from "@/lib/ensureVideoPlays";
 import {
   Play,
 } from "lucide-react";
@@ -39,6 +40,13 @@ function Index() {
     { href: "#contact", label: "Contact" },
   ];
   const heroScroll = !reduced;
+  const fiberVideoRef = useRef<HTMLVideoElement>(null);
+  // Guarantee the shared hero/ProcessFlow fiber clip starts (incl. iOS Low Power Mode).
+  useEffect(() => {
+    const v = fiberVideoRef.current;
+    if (!v) return;
+    return ensureVideoPlays(v);
+  }, []);
   return (
     <div className="min-h-screen text-foreground">
       <SectionTransitions />
@@ -87,6 +95,7 @@ function Index() {
       <div className="fiber-zone">
         <div className="fiber-shared" aria-hidden="true">
           <video
+            ref={fiberVideoRef}
             src="/blue%20fiber%20optic%20cables.mp4"
             autoPlay
             muted

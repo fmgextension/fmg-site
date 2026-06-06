@@ -2,6 +2,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { scheduleScrollRefresh } from "@/lib/lenis-scroll";
+import { ensureVideoPlays } from "@/lib/ensureVideoPlays";
 
 const HERO_VIDEO_SRC = "/blue%20fiber%20optic%20cables.mp4";
 
@@ -96,6 +97,15 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
 
     observer.observe(section);
     return () => observer.disconnect();
+  }, [active]);
+
+  // Guarantee the mask clip starts (incl. iOS Low Power Mode). The observer above
+  // still owns pause-on-exit / resume-on-enter — this only handles the start.
+  useEffect(() => {
+    if (!active) return;
+    const mask = maskVideoRef.current;
+    if (!mask) return;
+    return ensureVideoPlays(mask);
   }, [active]);
 
   if (!active) {
