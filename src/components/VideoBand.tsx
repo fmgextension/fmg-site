@@ -6,8 +6,6 @@ import { CascadeText } from "@/components/CascadeText";
 import { useViewportInView } from "@/hooks/useViewportInView";
 
 export const VIDEO_CLIPS = {
-  dataLayer: "/code%20closeup%20extended.mov",
-  modernBrands: "/skyscrape%20glass%20extended.mp4",
   alwaysAnswering: "/macbook%20typing%20blue%20close%20extended.mp4",
 } as const;
 

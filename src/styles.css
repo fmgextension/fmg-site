@@ -130,37 +130,7 @@
   body.no-scroll { overflow: hidden; }
 }
 
-@keyframes wave-drift-slow {
-  from { transform: translateX(0); }
-  to { transform: translateX(-25%); }
-}
-
-@keyframes wave-drift-medium {
-  from { transform: translateX(0); }
-  to { transform: translateX(-33%); }
-}
-
 @layer utilities {
-  .awb-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 200%;
-    height: 100%;
-    will-change: transform;
-  }
-  .awb-slow {
-    animation: wave-drift-slow 30s linear infinite;
-  }
-  .awb-fast {
-    animation: wave-drift-medium 20s linear infinite;
-  }
-  .awb-slow svg { stroke-opacity: 0.14; }
-  .awb-fast svg { stroke-opacity: 0.18; }
-  @media (prefers-reduced-motion: reduce) {
-    .awb-layer { animation: none !important; }
-  }
-
   .text-gradient-primary {
     color: hsl(var(--primary));
   }
@@ -484,38 +454,6 @@
   /* Safe area helpers for notch / home indicator */
   .safe-top { padding-top: env(safe-area-inset-top); }
   .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
-
-  /* Revenue Constellation outer node states */
-  .rc-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-color: hsl(var(--border));
-    box-shadow: none;
-    transition: border-color 400ms ease-out, box-shadow 400ms ease-out;
-  }
-  .rc-node.is-active {
-    border-color: hsl(var(--primary));
-    animation: rc-pulse 2.5s ease-in-out infinite;
-  }
-  @keyframes rc-pulse {
-    0%, 100% { box-shadow: 0 0 16px hsl(var(--primary) / 0.2); }
-    50% { box-shadow: 0 0 32px hsl(var(--primary) / 0.4); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .rc-node { transition: none; }
-    .rc-node.is-active {
-      animation: none;
-      box-shadow: 0 0 32px hsl(var(--primary) / 0.3);
-    }
-  }
-
-  /* Revenue Constellation scroll-pinned outer container */
-  .rc-outer { height: 480vh; }
-  @media (min-width: 1024px) {
-    .rc-outer { height: 600vh; }
-  }
 
   /* Mobile tap states (touch devices only) */
   @media (hover: none) {
