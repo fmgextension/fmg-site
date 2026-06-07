@@ -541,22 +541,40 @@
   justify-content: center;
   pointer-events: none;
   will-change: transform, opacity;
-  /* Filter applies to the already-masked child, so the shadow follows the
-     exact FMG letter shapes: a crisp dark edge plus a soft dark plate behind
-     the letters, lifting them off the matching fiber background. */
-  filter: drop-shadow(0 1px 2px hsl(var(--background) / 0.95)) drop-shadow(0 0 16px hsl(var(--background) / 0.85));
 }
 
 .hero-scroll-mask {
   width: min(92vw, 1180px);
   aspect-ratio: 3 / 1;
   position: relative;
+}
+
+/* The two stacked FMG layers share the mask geometry. The mask IMAGE itself is
+   set inline (FMG_MASK) on each so the data-URI lives in one place in the TSX. */
+.hero-mask-shape {
+  position: absolute;
+  inset: 0;
   -webkit-mask-size: contain;
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
+}
+
+/* Dark cutout: a solid-dark FMG plate whose UNMASKED wrapper casts the shadow.
+   Drop-shadow lives on the wrapper (not the masked plate) so the halo extends
+   OUTWARD past the glyph edges instead of being clipped by the mask. Because the
+   shadow source is a plain <div> (never a <video>), WebKit/iOS renders it — the
+   crisp dark edge + soft dark plate that lift the letters off the matching
+   fiber background, identical to desktop. */
+.hero-mask-plate-wrap {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(0 1px 2px hsl(var(--background) / 0.95)) drop-shadow(0 0 16px hsl(var(--background) / 0.85));
+}
+.hero-mask-plate {
+  background: hsl(var(--background));
 }
 /* Wordmark load fade-in lives on this dedicated wrapper (own compositor layer,
    separate from the masked element AND the scrub-animated .hero-scroll-mask-wrap).

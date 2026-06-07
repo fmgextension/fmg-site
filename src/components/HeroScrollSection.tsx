@@ -239,26 +239,41 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
 
         <div ref={maskWrapRef} className="hero-scroll-mask-wrap" aria-hidden="true">
           <div ref={maskFadeRef} className="hero-mask-fade">
-            <div
-              className="hero-scroll-mask"
-              style={{
-                WebkitMaskImage: FMG_MASK,
-                maskImage: FMG_MASK,
-              }}
-            >
-              <video
-                ref={maskVideoRef}
-                src={HERO_VIDEO_SRC}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-              />
+            <div className="hero-scroll-mask">
+              {/* Dark letter-defining plate. iOS Safari promotes a <video> to a
+                  hardware overlay layer that BYPASSES ancestor filter/drop-shadow
+                  compositing, so the old drop-shadow on .hero-scroll-mask-wrap —
+                  which shadowed the masked <video> — silently dropped on iOS and
+                  the letters washed out (bright fiber on bright fiber, no dark
+                  cutout). This non-video div carries the SAME FMG mask and casts
+                  the dark halo from its own (unmasked) wrapper, so the effect
+                  renders identically on WebKit. The bright video below paints on
+                  top and hides the plate's letter interiors; only the dark halo
+                  around the glyphs shows — byte-identical to the desktop look. */}
+              <div className="hero-mask-plate-wrap">
+                <div
+                  className="hero-mask-shape hero-mask-plate"
+                  style={{ WebkitMaskImage: FMG_MASK, maskImage: FMG_MASK }}
+                />
+              </div>
               <div
-                className="hero-mask-glow"
-                style={{ position: "absolute", inset: 0, background: "rgba(47,128,255,0.22)", mixBlendMode: "screen", pointerEvents: "none" }}
-              />
+                className="hero-mask-shape hero-mask-video"
+                style={{ WebkitMaskImage: FMG_MASK, maskImage: FMG_MASK }}
+              >
+                <video
+                  ref={maskVideoRef}
+                  src={HERO_VIDEO_SRC}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                />
+                <div
+                  className="hero-mask-glow"
+                  style={{ position: "absolute", inset: 0, background: "rgba(47,128,255,0.22)", mixBlendMode: "screen", pointerEvents: "none" }}
+                />
+              </div>
             </div>
           </div>
         </div>
