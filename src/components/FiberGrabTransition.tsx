@@ -131,7 +131,23 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
     const clamp = (v: number) => Math.max(0, Math.min(1, v));
     const easeIn = (v: number) => v * v;
 
-    const stopVideo = video ? ensureVideoPlays(video) : null;
+    // Defer this below-the-fold clip's ~11MB fetch until the CTA nears the
+    // viewport. The element has preload="none" and no autoPlay, so nothing loads on
+    // mount; ensureVideoPlays (which starts playback, triggering the fetch) runs
+    // only on first intersection. Keeps the fiber clip off the initial page load.
+    let stopVideo: (() => void) | null = null;
+    const videoObserver =
+      video && media
+        ? new IntersectionObserver(
+            (entries) => {
+              if (entries.some((e) => e.isIntersecting) && !stopVideo) {
+                stopVideo = ensureVideoPlays(video);
+              }
+            },
+            { rootMargin: "300px" },
+          )
+        : null;
+    if (videoObserver && media) videoObserver.observe(media);
 
     let rendered: number | null = null; // smoothed scroll progress — CABLE GEOMETRY ONLY
     let raf = 0;
@@ -230,6 +246,7 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
       cancelAnimationFrame(raf);
       window.clearTimeout(resizeTimer);
       window.removeEventListener("resize", onResize);
+      videoObserver?.disconnect();
       stopVideo?.();
     };
   }, [reduced]);
@@ -283,7 +300,7 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
       <div className="cta-zone">
         {styleBlock}
         <div className="fgt-media" aria-hidden="true">
-          <video ref={videoRef} src={VIDEO_SRC} autoPlay muted loop playsInline />
+          <video ref={videoRef} src={VIDEO_SRC} autoPlay muted loop playsInline preload="none" />
           <div className="fgt-grade" />
         </div>
         <div className="fgt-reviews-static">{reviews}</div>
@@ -297,7 +314,9 @@ export function FiberGrabTransition({ reviews, cta, footer }: FiberGrabTransitio
     <div className="cta-zone">
       {styleBlock}
       <div className="fgt-media" ref={mediaRef} aria-hidden="true">
-        <video ref={videoRef} src={VIDEO_SRC} autoPlay muted loop playsInline />
+        {/* No autoPlay — playback (and therefore the fetch) is started by the
+            IntersectionObserver above once the CTA nears the viewport. */}
+        <video ref={videoRef} src={VIDEO_SRC} muted loop playsInline preload="none" />
         <div className="fgt-grade" />
       </div>
       <div className="fgt-driver" ref={driverRef}>

@@ -62,6 +62,7 @@ function Index() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; // CSS keeps it visible
     let done = false;
     const detach = () => {
+      window.clearTimeout(timeout);
       video.removeEventListener("playing", reveal);
       video.removeEventListener("loadeddata", reveal);
       video.removeEventListener("timeupdate", onTime);
@@ -78,10 +79,16 @@ function Index() {
     video.addEventListener("playing", reveal);
     video.addEventListener("loadeddata", reveal);
     video.addEventListener("timeupdate", onTime);
+    // Starvation fallback: if no frame decodes (slow/stalled cellular, no range
+    // support on the clip), bloom in anyway after 2.5s so the backsplash never
+    // stays black. A decoded frame first (the normal/desktop case) runs reveal()
+    // and clears this — identical to before.
+    const timeout = window.setTimeout(reveal, 2500);
     // Already rendering by the time we attached (cached / fast decode)? Reveal now.
     if (video.readyState >= 2 || video.currentTime > 0) reveal();
     return detach;
   }, []);
+
   return (
     <div className="min-h-screen text-foreground">
       <SectionTransitions />

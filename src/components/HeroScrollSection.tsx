@@ -173,6 +173,7 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
     let cancelFade: (() => void) | null = null;
     let started = false;
     const detach = () => {
+      window.clearTimeout(timeout);
       video.removeEventListener("playing", start);
       video.removeEventListener("loadeddata", start);
       video.removeEventListener("timeupdate", onTime);
@@ -189,6 +190,12 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
     video.addEventListener("playing", start);
     video.addEventListener("loadeddata", start);
     video.addEventListener("timeupdate", onTime);
+    // Starvation fallback: on a slow/stalled connection no frame may decode for a
+    // long time (the clip has no HTTP range support, so first frame can mean a big
+    // download). Without this the wordmark would stay invisible indefinitely. Fade
+    // in anyway after 2.5s. When a frame arrives first (the normal case, incl. all
+    // desktop loads), start() runs and clears this — behavior identical to before.
+    const timeout = window.setTimeout(start, 2500);
     // Already decoded by the time we attached (cached / fast desktop decode)? Go now.
     if (video.readyState >= 2 || video.currentTime > 0) start();
     return () => {

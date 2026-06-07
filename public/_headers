@@ -1,0 +1,28 @@
+# Cloudflare Workers Assets header overrides.
+# Default for Workers Assets is `public, max-age=0, must-revalidate`, which makes
+# Safari revalidate (and, for the no-range video, re-download) every asset on each
+# refresh. Override per type below. Vite gives /assets/* content-hashed names, so
+# they are safe to cache forever; media/images use a stable max-age.
+
+# Content-hashed JS/CSS — immutable, cache for a year.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Videos — stable filenames, rarely change. Cache 30 days so a refresh serves from
+# cache instead of re-downloading ~11MB/~7MB clips.
+/*.mp4
+  Cache-Control: public, max-age=2592000
+
+# Raster images (og-image, scatter shots, icons) — cache 7 days.
+/*.png
+  Cache-Control: public, max-age=604800
+/*.jpg
+  Cache-Control: public, max-age=604800
+/*.jpeg
+  Cache-Control: public, max-age=604800
+/*.webp
+  Cache-Control: public, max-age=604800
+/*.avif
+  Cache-Control: public, max-age=604800
+/*.ico
+  Cache-Control: public, max-age=604800
