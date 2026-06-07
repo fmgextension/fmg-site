@@ -150,16 +150,51 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
   // One-time wordmark load fade-in (opacity 0->1 + 6px upward drift), driven by rAF
   // so the GSAP pin's remove/re-insert churn can't restart or snap it. The element
   // paints hidden via CSS (no FOUC); reduced-motion just shows it.
+  //
+  // GATED on the masked clip having a decoded frame — the SAME frame-gating the
+  // fiber backsplash uses (index route). The wordmark assembly now includes the
+  // solid .hero-mask-plate (a CSS div that needs no decode), so an ungated fade
+  // would, during the mobile decode gap, reveal a bare dark FMG plate on black
+  // before the video letters and backsplash bloom land (a 3-stage pop on iOS).
+  // Waiting for the frame collapses plate + bright letters into one fade that
+  // arrives just after the backsplash (same clip, mounted earlier, so it decodes
+  // first) has begun blooming. On desktop the frame is ready immediately, so the
+  // gate is a no-op and the sequence is unchanged.
   useEffect(() => {
     if (!active) return;
     const fade = maskFadeRef.current;
-    if (!fade) return;
+    const video = maskVideoRef.current;
+    if (!fade || !video) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       fade.style.opacity = "1";
       fade.style.transform = "none";
       return;
     }
-    return rafFade(fade, { from: 0, to: 1, durationMs: 800, driftPx: 6 });
+    let cancelFade: (() => void) | null = null;
+    let started = false;
+    const detach = () => {
+      video.removeEventListener("playing", start);
+      video.removeEventListener("loadeddata", start);
+      video.removeEventListener("timeupdate", onTime);
+    };
+    const start = () => {
+      if (started) return;
+      started = true;
+      detach();
+      cancelFade = rafFade(fade, { from: 0, to: 1, durationMs: 800, driftPx: 6 });
+    };
+    const onTime = () => {
+      if (video.currentTime > 0) start();
+    };
+    video.addEventListener("playing", start);
+    video.addEventListener("loadeddata", start);
+    video.addEventListener("timeupdate", onTime);
+    // Already decoded by the time we attached (cached / fast desktop decode)? Go now.
+    if (video.readyState >= 2 || video.currentTime > 0) start();
+    return () => {
+      detach();
+      cancelFade?.();
+    };
   }, [active]);
 
   // Show the "scroll" hint ONLY when autoplay is gesture-gated (iOS Low Power Mode):
