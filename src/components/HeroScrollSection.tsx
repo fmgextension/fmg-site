@@ -51,6 +51,7 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
   const outerRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const maskVideoRef = useRef<HTMLVideoElement>(null);
+  const maskVideoLayerRef = useRef<HTMLDivElement>(null);
   const maskWrapRef = useRef<HTMLDivElement>(null);
   const maskFadeRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -147,33 +148,52 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
     return ensureVideoPlays(mask);
   }, [active]);
 
-  // One-time wordmark load fade-in (opacity 0->1 + 6px upward drift), driven by rAF
-  // so the GSAP pin's remove/re-insert churn can't restart or snap it. The element
-  // paints hidden via CSS (no FOUC); reduced-motion just shows it.
+  // Wordmark load fade-in (opacity 0->1 + 6px upward drift), driven by rAF so the
+  // GSAP pin's remove/re-insert churn can't restart or snap it. The element paints
+  // hidden via CSS (no FOUC); reduced-motion just shows it.
   //
-  // GATED on the masked clip having a decoded frame — the SAME frame-gating the
-  // fiber backsplash uses (index route). The wordmark assembly now includes the
-  // solid .hero-mask-plate (a CSS div that needs no decode), so an ungated fade
-  // would, during the mobile decode gap, reveal a bare dark FMG plate on black
-  // before the video letters and backsplash bloom land (a 3-stage pop on iOS).
-  // Waiting for the frame collapses plate + bright letters into one fade that
-  // arrives just after the backsplash (same clip, mounted earlier, so it decodes
-  // first) has begun blooming. On desktop the frame is ready immediately, so the
-  // gate is a no-op and the sequence is unchanged.
+  // DECOUPLED from the video: this fades in the dark FMG plate + glow ~600ms after
+  // mount, i.e. AFTER the gradient backdrop (index route) has bloomed — never on
+  // bare black, so it no longer needs to wait for a decoded frame. The bright fiber
+  // FILL crossfades into the letters separately, on decode (the effect below). This
+  // is the (a) gradient -> (b) wordmark -> (c) video-fill sequence; on a starved
+  // connection the wordmark still appears at ~600ms instead of waiting indefinitely.
   useEffect(() => {
     if (!active) return;
     const fade = maskFadeRef.current;
-    const video = maskVideoRef.current;
-    if (!fade || !video) return;
+    if (!fade) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       fade.style.opacity = "1";
       fade.style.transform = "none";
       return;
     }
     let cancelFade: (() => void) | null = null;
+    const timer = window.setTimeout(() => {
+      cancelFade = rafFade(fade, { from: 0, to: 1, durationMs: 800, driftPx: 6 });
+    }, 600);
+    return () => {
+      window.clearTimeout(timer);
+      cancelFade?.();
+    };
+  }, [active]);
+
+  // (c) Fiber FILL crossfade: the masked clip layer (bright fiber inside the FMG
+  // letters, + the blue glow) starts hidden and crossfades in over the dark plate
+  // once the clip has a decoded frame ('playing'/'loadeddata'/timeupdate>0, or it's
+  // already buffered). No timeout fallback by design — with no frame the dark plate
+  // simply remains (the intended cutout look over the gradient), never bare black.
+  useEffect(() => {
+    if (!active) return;
+    const layer = maskVideoLayerRef.current;
+    const video = maskVideoRef.current;
+    if (!layer || !video) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      layer.style.opacity = "1";
+      return;
+    }
+    let cancelFade: (() => void) | null = null;
     let started = false;
     const detach = () => {
-      window.clearTimeout(timeout);
       video.removeEventListener("playing", start);
       video.removeEventListener("loadeddata", start);
       video.removeEventListener("timeupdate", onTime);
@@ -182,7 +202,7 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
       if (started) return;
       started = true;
       detach();
-      cancelFade = rafFade(fade, { from: 0, to: 1, durationMs: 800, driftPx: 6 });
+      cancelFade = rafFade(layer, { from: 0, to: 1, durationMs: 600 });
     };
     const onTime = () => {
       if (video.currentTime > 0) start();
@@ -190,13 +210,6 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
     video.addEventListener("playing", start);
     video.addEventListener("loadeddata", start);
     video.addEventListener("timeupdate", onTime);
-    // Starvation fallback: on a slow/stalled connection no frame may decode for a
-    // long time (the clip has no HTTP range support, so first frame can mean a big
-    // download). Without this the wordmark would stay invisible indefinitely. Fade
-    // in anyway after 2.5s. When a frame arrives first (the normal case, incl. all
-    // desktop loads), start() runs and clears this — behavior identical to before.
-    const timeout = window.setTimeout(start, 2500);
-    // Already decoded by the time we attached (cached / fast desktop decode)? Go now.
     if (video.readyState >= 2 || video.currentTime > 0) start();
     return () => {
       detach();
@@ -299,6 +312,7 @@ export function HeroScrollSection({ active, children }: HeroScrollSectionProps) 
                 />
               </div>
               <div
+                ref={maskVideoLayerRef}
                 className="hero-mask-shape hero-mask-video"
                 style={{ WebkitMaskImage: FMG_MASK, maskImage: FMG_MASK }}
               >

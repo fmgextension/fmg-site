@@ -119,12 +119,29 @@ export function VideoBand({
     void video.play().catch(() => {});
   }, [inView]);
 
-  // Guarantee the clip starts (incl. iOS Low Power Mode). Pause/resume stays with
-  // the inView effect above — this only handles the initial start + gesture backstop.
+  // Guarantee the clip starts (incl. iOS Low Power Mode), but DEFER its fetch until
+  // the band approaches the viewport. With preload="none" and no autoplay, nothing
+  // loads on page load; the observer (300px lead) runs ensureVideoPlays — which
+  // starts playback and therefore the fetch — only as the section nears view. This
+  // keeps the ~7MB clip off the first paint. inView pause/resume above is unchanged.
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
-    return ensureVideoPlays(video);
+    const section = sectionRef.current;
+    if (!video || !section) return;
+    let stopVideo: (() => void) | null = null;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting) && !stopVideo) {
+          stopVideo = ensureVideoPlays(video);
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    obs.observe(section);
+    return () => {
+      obs.disconnect();
+      stopVideo?.();
+    };
   }, []);
 
   // Pinned "beat": scroll-scrub the text content in as the band rises into view
@@ -163,7 +180,7 @@ export function VideoBand({
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="none"
             poster={poster}
           />
         </div>

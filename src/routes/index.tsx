@@ -42,6 +42,18 @@ function Index() {
   const heroScroll = !reduced;
   const fiberVideoRef = useRef<HTMLVideoElement>(null);
   const fiberFadeRef = useRef<HTMLDivElement>(null);
+  const fiberGradientRef = useRef<HTMLDivElement>(null);
+  // Instant backdrop: a palette-matched dark-navy→blue gradient that fades in on
+  // mount (~600ms) with NO network dependency, so the hero is never bare black.
+  // The real fiber video crossfades in OVER this whenever its first frame decodes
+  // (the .fiber-fade effect below). Reduced-motion: CSS keeps it visible, no fade.
+  useEffect(() => {
+    const g = fiberGradientRef.current;
+    if (!g) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; // CSS keeps it visible
+    const raf = requestAnimationFrame(() => g.classList.add("is-in")); // CSS transitions opacity 0 -> 1
+    return () => cancelAnimationFrame(raf);
+  }, []);
   // Guarantee the shared hero/ProcessFlow fiber clip starts (incl. iOS Low Power Mode).
   useEffect(() => {
     const v = fiberVideoRef.current;
@@ -126,6 +138,21 @@ function Index() {
           width: 100%; height: 100%;
           object-fit: cover;
         }
+        /* Instant backdrop matching the fiber clip's palette (dark navy field with a
+           lower-center royal-blue bloom). Fades in on mount with NO network wait, so
+           the hero is never bare black; the video crossfades in over it. Sits behind
+           the .fiber-fade video (earlier in DOM = painted under it). */
+        .fiber-gradient {
+          position: absolute; inset: 0;
+          opacity: 0; transition: opacity 600ms ease-out;
+          background:
+            radial-gradient(125% 85% at 50% 72%, rgba(38, 92, 232, 0.42) 0%, rgba(20, 46, 130, 0.16) 38%, rgba(7, 10, 18, 0) 68%),
+            linear-gradient(180deg, #05070f 0%, #070b1c 52%, #0a1430 100%);
+        }
+        .fiber-gradient.is-in { opacity: 1; }
+        @media (prefers-reduced-motion: reduce) {
+          .fiber-gradient { opacity: 1; transition: none; }
+        }
         /* One-time load fade-in of the backsplash (wrapper, so the scrub never
            fights it). Slower than the wordmark fade so it blooms behind. Starts
            hidden on first paint (no pop); JS adds .is-in once a frame renders. */
@@ -144,6 +171,7 @@ function Index() {
       `}</style>
       <div className="fiber-zone">
         <div className="fiber-shared" aria-hidden="true">
+          <div ref={fiberGradientRef} className="fiber-gradient" />
           <div ref={fiberFadeRef} className="fiber-fade">
             <video
               ref={fiberVideoRef}
@@ -153,6 +181,7 @@ function Index() {
               loop
               playsInline
               preload="metadata"
+              poster="/hero-poster.jpg"
             />
           </div>
         </div>

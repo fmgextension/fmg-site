@@ -576,6 +576,17 @@
 .hero-mask-plate {
   background: hsl(var(--background));
 }
+/* (c) The bright fiber FILL (masked clip + glow) starts hidden and crossfades in
+   over the dark plate once the clip decodes a frame (rAF in JS, see HeroScrollSection).
+   CSS owns the initial hidden state so there's no FOUC of the fill; reduced-motion
+   shows it immediately. */
+.hero-mask-video {
+  opacity: 0;
+  will-change: opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-mask-video { opacity: 1; }
+}
 /* Wordmark load fade-in lives on this dedicated wrapper (own compositor layer,
    separate from the masked element AND the scrub-animated .hero-scroll-mask-wrap).
    The element paints hidden here (opacity 0); the actual fade is driven by rAF in
